@@ -5,8 +5,8 @@ CREATE TABLE `genres` (
   `updated_at` timestamp
 );
 
-CREATE TABLE `concerts` (
-  `concert_id` bigint PRIMARY KEY,
+CREATE TABLE `concert_basics` (
+  `concert_basic_id` bigint PRIMARY KEY,
   `concert_name` varchar(255),
   `genre_id` bigint,
   `created_at` timestamp,
@@ -22,7 +22,8 @@ CREATE TABLE `concert_detail_registers` (
 
 CREATE TABLE `concert_details` (
   `concert_detail_id` bigint PRIMARY KEY,
-  `concert_id` bigint UNIQUE,
+  `concert_basic_id` bigint UNIQUE,
+  `status` varchar(255) DEFAULT 'reservable',
   `start_date` timestamp UNIQUE,
   `end_datee` timestamp UNIQUE,
   `concert_detail_register_id` varchar(255),
@@ -84,9 +85,9 @@ CREATE TABLE `reservations` (
   `updated_at` timestamp
 );
 
-ALTER TABLE `concerts` ADD FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`);
+ALTER TABLE `concert_basics` ADD FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`);
 
-ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_id`) REFERENCES `concerts` (`concert_id`);
+ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_basic_id`) REFERENCES `concert_basics` (`concert_basic_id`);
 
 ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_detail_register_id`) REFERENCES `concert_detail_registers` (`concert_detail_register_id`);
 
