@@ -125,18 +125,18 @@ Table waiting_statuses{
   deleted_at          timestamp
 }
 
-Table waitings {
+Table tokens {
   waiting_id             bigint     [pk]              // 대기열 아이디
   member_id              varchar                      // 회원 아이디, uuid
   waiting_status_id      integer    [default: 01]     // 상태(wait:01, active:02, expired:03)
-  expired_at             timestamp                    // 만료 시각
+  expired_at             timestamp                    // 이용 만료 시각
   created_at             timestamp  [not null]        // 대기열 진입일, 진입 시각
   updated_at             timestamp  [not null]        // 대기 상태 수정일, 수정 시각
   deleted_at             timestamp                    // 대기 정보 삭제 시각
 }
 
-Ref: waitings.member_id > members.member_id   // many-to-one
-Ref: waitings.waiting_status_id > waiting_statuses.waiting_status_id // many-to-one
+Ref: tokens.member_id > members.member_id   // many-to-one
+Ref: tokens.waiting_status_id > waiting_statuses.waiting_status_id // many-to-one
 
 Table reservation_statuses{
   reservation_status_id   integer      [pk]         // 회원의 좌석 예약 정보 상태 아이디
