@@ -5,7 +5,7 @@ Table concerts {
   concert_id    bigint [pk] // 콘서트 아이디
   concert_name  varchar     // 콘서트 이름
   genre_name    varchar     // 콘서트 장르명
-  start_date    datetetime  // 콘서트 시작일, 시작 시각
+  start_date    datetime  // 콘서트 시작일, 시작 시각
   end_date      timestamp   // 콘서트 종료일, 종료 시각
   created_at    timestamp   // 콘서트 등록일, 등록 시각
   updated_at    timestamp   // 콘서트 수정일, 수정 시각
@@ -13,8 +13,8 @@ Table concerts {
 
 Table reservations {
   reservation_id bigint [pk]       // 콘서트 예약 아이디
-  stand_id       bigint            // 좌석 아이디
   member_id      bigint            // 회원 아이디, uuid
+  stand_id       bigint            // 좌석 아이디
   status         varchar           // 예약 상태 (paid, cancle, temp)
   created_at     timestamp         // 콘서트 예약 생성일, 생성 시각
   updated_at     timestamp         // 콘서트 예약 수정일, 수정 시각
@@ -22,12 +22,12 @@ Table reservations {
 
 Table stands {
   stand_id     bigint   [pk]         // 좌석 아이디
-  concert_id   bigint   [unique]     // 콘서트 아이디 
+  concert_id   bigint   [unique]     // 콘서트 아이디
   stand_column varchar  [unique]     // 좌석열
   stand_row    integer  [unique]     // 좌석행
   status       varchar               // 좌석 예약 상태 (reserved, reservatable, temp)
-  price        integer               // 콘서트  좌석 가격 
-  created_at   timestamp             // 좌석 생성일, 생성 시각 
+  price        integer               // 콘서트  좌석 가격
+  created_at   timestamp             // 좌석 생성일, 생성 시각
   updated_at   timestamp             // 좌석 정보 수정일, 수정 시각
 }
 
@@ -41,6 +41,7 @@ Table members {
 Table waitings {
   waiting_id  bigint [pk]                 // 대기열 아이디
   member_id   varchar                     // 회원 아이디, uuid
+  stand_id    bigint                      // 좌석 아이디
   status      varchar   [default: 'wait']  // 상태(wait or active)
   expired_at  timestamp                   // 만료 시각
   created_at  timestamp                   // 대기열 진입일, 진입 시각
@@ -57,7 +58,7 @@ Ref: stands.concert_id > concerts.concert_id          // many-to-one
 
 Ref: waitings.member_id > members.member_id            // many-to-one
 
-               // one-to-one
+Ref: waitings.stand_id > stands.stand_id          // many-to-one
 
 
 
