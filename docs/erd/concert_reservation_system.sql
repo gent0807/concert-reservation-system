@@ -13,12 +13,19 @@ CREATE TABLE `concerts` (
   `updated_at` timestamp
 );
 
+CREATE TABLE `concert_detail_registers` (
+  `concert_detail_register_id` bigint PRIMARY KEY,
+  `concert_detail_register_name` varchar(255),
+  `created_at` timestamp,
+  `updated_at` timestamp
+);
+
 CREATE TABLE `concert_details` (
   `concert_detail_id` bigint PRIMARY KEY,
   `concert_id` bigint UNIQUE,
   `start_date` timestamp UNIQUE,
   `end_datee` timestamp UNIQUE,
-  `concert_detail_register` varchar(255),
+  `concert_detail_register_id` varchar(255),
   `created_at` timestamp,
   `updated_at` timestamp
 );
@@ -80,6 +87,8 @@ CREATE TABLE `reservations` (
 ALTER TABLE `concerts` ADD FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`);
 
 ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_id`) REFERENCES `concerts` (`concert_id`);
+
+ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_detail_register_id`) REFERENCES `concert_detail_registers` (`concert_detail_register_id`);
 
 ALTER TABLE `casts` ADD FOREIGN KEY (`concert_detail_id`) REFERENCES `concert_details` (`concert_detail_id`);
 
