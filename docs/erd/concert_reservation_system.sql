@@ -36,7 +36,7 @@ CREATE TABLE `concert_details` (
   `concert_basic_id` bigint UNIQUE,
   `concert_detail_status_id` integer DEFAULT 1,
   `start_date` timestamp UNIQUE,
-  `end_datee` timestamp UNIQUE,
+  `end_date` timestamp UNIQUE,
   `concert_detail_register_id` varchar(255),
   `created_at` timestamp,
   `updated_at` timestamp,
