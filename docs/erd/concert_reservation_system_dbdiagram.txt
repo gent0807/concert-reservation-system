@@ -5,35 +5,45 @@ Table genres {
   genre_id      bigint    [pk]        // 콘서트 장르 아이디
   genre_name    varcahr               // 콘서트 장르 이름
   created_at    timestamp [not null]  // 콘서트 장르 등록일, 등록 시각
-  updated_at    timestamp             // 콘서트 장르 수정일, 수정 시각
+  updated_at    timestamp [not null]  // 콘서트 장르 수정일, 수정 시각
   deleted_at    timestamp
+}
+
+Table super_managers{
+  super_manager_id      bigint     [pk]       // 슈퍼 관리자 계정 아이디
+  super_manager_name    varchar               // 슈퍼 관리자 이름
+  created_at            timestamp  [not null] // 슈퍼 관리자 생성일, 생성 시각
+  updated_at            timpestamp [not null] // 슈퍼 관리자 수정일, 수정 시각
+  deleted_at            timestamp             // 슈퍼 관리자 삭제일, 삭제 시각
 }
 
 Table concert_basics {
   concert_basic_id    bigint    [pk]          // 콘서트 아이디
   concert_name        varchar                 // 콘서트 이름
   genre_id            bigint                  // 콘서트 장르 아이디
+  super_manager_id    bigint                  // 슈퍼 관리자 아이디
   created_at          timestamp [not null]    // 콘서트 등록일, 등록 시각
-  updated_at          timestamp               // 콘서트 수정일, 수정 시각
-  deleted_at          timestamp
+  updated_at          timestamp [not null]    // 콘서트 수정일, 수정 시각
+  deleted_at          timestamp               // 콘서트 삭제일, 삭제 시각
 }
 
 Ref: concert_basics.genre_id > genres.genre_id      // many-to-one
+Ref: concert_basics.super_manager_id > super_managers.super_manager_id // many-to-one
 
 Table concert_detail_registers{
    concert_detail_register_id   bigint     [pk]           // 콘서트 상세 정보 등록자 아이디
    concert_detail_register_name varchar    [not null]     // 콘서트 상세 정보 등록자 이름
    created_at                   timestamp  [not null]     // 콘서트 상세 정보 등록자 생성일, 생성 시각
-   updated_at                   timestamp                 // 콘서트 상세 정보 등록자 수정일, 수정 시각
+   updated_at                   timestamp  [not null]     // 콘서트 상세 정보 등록자 수정일, 수정 시각
    deleted_at                   timestamp
 }
 
 Table concert_detail_statuses{
   concert_detail_status_id   integer    [pk]       // 콘서트 상세 정보 예약 상태 아이디
   concert_detail_status_name varchar    [not null] // 콘서트 상세 정보 예약 상태 이름 (reservable: 01, finished: 02, deleted:03)
-  created_at                 timestamp  [not null]
-  updated_at                 timestamp
-  deleted_at                 timestamp
+  created_at                 timestamp  [not null] // 콘서트 상세 정보 생성일, 생성 시각
+  updated_at                 timestamp  [not null] // 콘서트 상세 정보 수정일, 수정 시각
+  deleted_at                 timestamp             // 콘서트 상세 정보 삭제일, 삭제 시각
 }
 
 Table concert_details{
@@ -44,7 +54,7 @@ Table concert_details{
   end_date                    timestamp [unique]                // 콘서트 종료일, 종료 시각
   concert_detail_register_id  varchar   [not null]              // 콘서트 상세 정보 등록자
   created_at                  timestamp [not null]              // 콘서트 상세 정보 생성일, 생성 시각
-  updated_at                  timestamp                         // 콘서트 상세 정보 수정일, 수정 시각
+  updated_at                  timestamp [not null]              // 콘서트 상세 정보 수정일, 수정 시각
   deleted_at                  timestamp                         // 콘서트 상세 정보 삭제일
 }
 
@@ -58,7 +68,7 @@ Table artists{
   artist_age    integer              // 공연자 나이
   artist_gender varchar              // 공연자 성별
   created_at    timestamp [not null] // 공연자 정보 생성일, 생성 시각
-  updated_at    timestamp            // 공연자 정보 수정일, 수정 시각
+  updated_at    timestamp [not null] // 공연자 정보 수정일, 수정 시각
   deleted_at    timestamp
 }
 
@@ -67,7 +77,7 @@ Table casts{
   concert_detail_id     bigint     [not null]  // 콘서트 상세 정보 아이디
   arist_id              bigint     [not null]  // 콘서트 출연자 정보 아이디
   created_at            timestamp  [not null]  // 콘서트 캐스팅 정보 생성일, 생성 시각
-  updated_at            timestamp              // 콘서트 캐스팅 정보 수정일, 수정 시각
+  updated_at            timestamp  [not null]  // 콘서트 캐스팅 정보 수정일, 수정 시각
   deleted_at            timestamp
 }
 
@@ -78,7 +88,7 @@ Table seat_statuses{
   seat_status_id    integer   [pk]         // 좌석 예약 상태 아이디
   seat_status_name  varchar   [not null]   // 좌석 예약 상태 이름 (reservable: 01, temp: 02, reserved: 03, delted: 04)
   created_at        timestamp [not null]
-  updated_at        timestamp
+  updated_at        timestamp [not null]
   deleted_at        timestamp
 }
 
@@ -89,7 +99,7 @@ Table seats {
   seat_status_id      integer    [default: 01]  // 좌석 예약 상태 아이디
   price               integer    [not null]     // 콘서트  좌석 가격
   created_at          timestamp  [not null]     // 좌석 생성일, 생성 시각
-  updated_at          timestamp                 // 좌석 정보 수정일, 수정 시각
+  updated_at          timestamp  [not null]     // 좌석 정보 수정일, 수정 시각
   deleted_at          timestamp
 }
 
@@ -98,9 +108,12 @@ Ref: seats.seat_status_id > seat_statuses.seat_status_id           // many-to-on
 
 Table members {
   member_id    varchar    [pk]            // 회원 아이디, uuid
-  balance      int                        // 회원 잔고
+  member_name  varchar                    // 회원 이름
+  age          integer                    // 나이
+  gender       varchar
+  balance      integer                    // 회원 잔고
   created_at   timestamp  [not null]      // 회원 생성일, 생성 시각
-  updated_at   timestamp                  // 회원 정보 수정일, 수정 시각
+  updated_at   timestamp  [not null]      // 회원 정보 수정일, 수정 시각
   deleted_at   timestamp
 }
 
@@ -108,7 +121,7 @@ Table waiting_statuses{
   waiting_status_id   integer     [pk]           // 콘서트 좌석 예약 서비스 이용 회원 대기 상태 아이디
   waiting_status_name varchar     [not null]     // 콘서트 좌석 예약 서비스 이용 회원 대기 상태 이름(01:'wait', 02:'active')
   created_at          timestamp   [not null]
-  updated_at          timestamp
+  updated_at          timestamp   [not null]
   deleted_at          timestamp
 }
 
@@ -118,7 +131,7 @@ Table waitings {
   waiting_status_id      integer    [default: 01]     // 상태(wait:01 or active:02)
   expired_at             timestamp  [not null]        // 만료 시각
   created_at             timestamp  [not null]        // 대기열 진입일, 진입 시각
-  updated_at             timestamp                    // 대기 상태 수정일, 수정 시각
+  updated_at             timestamp  [not null]        // 대기 상태 수정일, 수정 시각
   deleted_at             timestamp                    // 대기 정보 삭제 시각
 }
 
@@ -129,17 +142,17 @@ Table reservation_statuses{
   reservation_status_id   integer      [pk]         // 회원의 좌석 예약 정보 상태 아이디
   reservation_status_name varchar                   // 회원의 좌석 예약 정보 상태 이름 (temp: 01, paid: 02, cancled:03, watched:04, unwatched:05)
   created_at              timestamp    [not null]
-  updated_at              timestamp
+  updated_at              timestamp    [not null]
   deleted_at              timestamp
 }
 
 Table reservations {
   reservation_id        bigint       [pk]                // 콘서트 예약 아이디
   seat_id               bigint                           // 좌석 아이디
-  member_id             bigint                           // 회원 아이디, uuid
+  member_id             varchar                          // 회원 아이디, uuid
   reservation_status_id integer      [default: 01]       // 회원의 좌석 예약 정보 상태 아이디
   created_at            timestamp    [not null]          // 콘서트 예약 생성일, 생성 시각
-  updated_at            timestamp                        // 콘서트 예약 수정일, 수정 시각
+  updated_at            timestamp    [not null]          // 콘서트 예약 수정일, 수정 시각
   deleted_at            timestamp
 }
 
