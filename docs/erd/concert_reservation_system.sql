@@ -113,7 +113,7 @@ CREATE TABLE `waitings` (
   `waiting_id` bigint PRIMARY KEY,
   `member_id` varchar(255),
   `waiting_status_id` integer DEFAULT 1,
-  `expired_at` timestamp NOT NULL,
+  `expired_at` timestamp,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp
