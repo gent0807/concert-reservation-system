@@ -8,15 +8,15 @@ Table genres {
   updated_at    timestamp     // 콘서트 장르 수정일, 수정 시각
 }
 
-Table concerts {
-  concert_id    bigint [pk]   // 콘서트 아이디
+Table concert_basics {
+  concert_basic_id    bigint [pk]   // 콘서트 아이디
   concert_name  varchar       // 콘서트 이름
   genre_id      bigint        // 콘서트 장르 아이디
   created_at    timestamp     // 콘서트 등록일, 등록 시각
   updated_at    timestamp     // 콘서트 수정일, 수정 시각
 }
 
-Ref: concerts.genre_id > genres.genre_id      // many-to-one
+Ref: concert_basics.genre_id > genres.genre_id      // many-to-one
 
 Table concert_detail_registers{
    concert_detail_register_id   bigint  [pk]    // 콘서트 상세 정보 등록자 아이디
@@ -26,16 +26,17 @@ Table concert_detail_registers{
 }
 
 Table concert_details{
-  concert_detail_id           bigint    [pk]         // 콘서트 상세 정보 아이디
-  concert_id                  bigint    [unique]     // 콘서트 아이디
-  start_date                  timestamp [unique]     // 콘서트 시작일, 시작  시각
-  end_datee                   timestamp [unique]     // 콘서트 종료일, 종료 시각
-  concert_detail_register_id  varchar                // 콘서트 상세 정보 등록자
-  created_at                  timestamp              // 콘서트 상세 정보 생성일, 생성 시각
-  updated_at                  timestamp              // 콘서트 상세 정보 수정일, 수정 시각
+  concert_detail_id           bigint    [pk]                    // 콘서트 상세 정보 아이디
+  concert_basic_id                  bigint    [unique]                // 콘서트 아이디
+  status                      varchar   [default: 'reservable'] // 콘서트 예약 가능 상태
+  start_date                  timestamp [unique]                // 콘서트 시작일, 시작  시각
+  end_datee                   timestamp [unique]                // 콘서트 종료일, 종료 시각
+  concert_detail_register_id  varchar                           // 콘서트 상세 정보 등록자
+  created_at                  timestamp                         // 콘서트 상세 정보 생성일, 생성 시각
+  updated_at                  timestamp                         // 콘서트 상세 정보 수정일, 수정 시각
 }
 
-Ref: concert_details.concert_id > concerts.concert_id // many-to-one
+Ref: concert_details.concert_basic_id > concert_basics.concert_basic_id // many-to-one
 Ref: concert_details.concert_detail_register_id > concert_detail_registers.concert_detail_register_id // many-to-one
 
 Table artists{
