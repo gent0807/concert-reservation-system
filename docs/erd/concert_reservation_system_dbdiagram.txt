@@ -2,8 +2,8 @@
 // Docs: https://dbml.dbdiagram.io/docs
 
 Table genres {
-  genre_id      bigint    [pk]        // 콘서트 장르 아이디
-  genre_name    varcahr               // 콘서트 장르 이름
+  genre_id      bigint    [pk]                            // 콘서트 장르 아이디
+  genre_name    varcahr                                   // 콘서트 장르 이름
   created_at    timestamp [not null]  // 콘서트 장르 등록일, 등록 시각
   updated_at    timestamp [not null]  // 콘서트 장르 수정일, 수정 시각
   deleted_at    timestamp
@@ -128,7 +128,7 @@ Table waiting_statuses{
 Table waitings {
   waiting_id             bigint     [pk]              // 대기열 아이디
   member_id              varchar                      // 회원 아이디, uuid
-  waiting_status_id      integer    [default: 01]     // 상태(wait:01 or active:02)
+  waiting_status_id      integer    [default: 01]     // 상태(wait:01, active:02, expired:03)
   expired_at             timestamp  [not null]        // 만료 시각
   created_at             timestamp  [not null]        // 대기열 진입일, 진입 시각
   updated_at             timestamp  [not null]        // 대기 상태 수정일, 수정 시각
@@ -159,6 +159,8 @@ Table reservations {
 Ref: reservations.seat_id   > seats.seat_id      // many-to-one
 Ref: reservations.member_id > members.member_id  // many-to-one
 Ref: reservations.reservation_status_id > reservation_statuses.reservation_status_id // many-to-one
+
+
 
 
 
