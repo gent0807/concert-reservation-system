@@ -1,7 +1,7 @@
 CREATE TABLE `genres` (
   `genre_id` bigint PRIMARY KEY,
   `genre_name` varcahr,
-  `created_at` timestamp,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -10,23 +10,23 @@ CREATE TABLE `concert_basics` (
   `concert_basic_id` bigint PRIMARY KEY,
   `concert_name` varchar(255),
   `genre_id` bigint,
-  `created_at` timestamp,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
 
 CREATE TABLE `concert_detail_registers` (
   `concert_detail_register_id` bigint PRIMARY KEY,
-  `concert_detail_register_name` varchar(255),
-  `created_at` timestamp,
+  `concert_detail_register_name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
 
 CREATE TABLE `concert_detail_statuses` (
   `concert_detail_status_id` integer PRIMARY KEY,
-  `concert_detail_status_name` varchar(255),
-  `created_at` timestamp,
+  `concert_detail_status_name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -37,35 +37,35 @@ CREATE TABLE `concert_details` (
   `concert_detail_status_id` integer DEFAULT 1,
   `start_date` timestamp UNIQUE,
   `end_date` timestamp UNIQUE,
-  `concert_detail_register_id` varchar(255),
-  `created_at` timestamp,
+  `concert_detail_register_id` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
 
 CREATE TABLE `artists` (
   `artist_id` bigint PRIMARY KEY,
-  `artist_name` varchar(255),
+  `artist_name` varchar(255) NOT NULL,
   `artist_age` integer,
   `artist_gender` varchar(255),
-  `created_at` timestamp,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
 
 CREATE TABLE `casts` (
   `cast_id` bigint PRIMARY KEY,
-  `concert_detail_id` bigint,
-  `arist_id` bigint,
-  `created_at` timestamp,
+  `concert_detail_id` bigint NOT NULL,
+  `arist_id` bigint NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
 
 CREATE TABLE `seat_statuses` (
   `seat_status_id` integer PRIMARY KEY,
-  `seat_status_name` varchar(255),
-  `created_at` timestamp,
+  `seat_status_name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -75,8 +75,8 @@ CREATE TABLE `seats` (
   `concert_detail_id` bigint UNIQUE,
   `seat_number` bigint UNIQUE,
   `seat_status_id` integer DEFAULT 1,
-  `price` integer,
-  `created_at` timestamp,
+  `price` integer NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -84,7 +84,15 @@ CREATE TABLE `seats` (
 CREATE TABLE `members` (
   `member_id` varchar(255) PRIMARY KEY,
   `balance` int,
-  `created_at` timestamp,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp,
+  `deleted_at` timestamp
+);
+
+CREATE TABLE `waiting_statuses` (
+  `waiting_status_id` integer PRIMARY KEY,
+  `waiting_status_name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -92,10 +100,9 @@ CREATE TABLE `members` (
 CREATE TABLE `waitings` (
   `waiting_id` bigint PRIMARY KEY,
   `member_id` varchar(255),
-  `seat_id` bigint,
-  `status` varchar(255) DEFAULT 'wait',
-  `expired_at` timestamp,
-  `created_at` timestamp,
+  `waiting_status_id` integer DEFAULT 1,
+  `expired_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -103,7 +110,7 @@ CREATE TABLE `waitings` (
 CREATE TABLE `reservation_statuses` (
   `reservation_status_id` integer PRIMARY KEY,
   `reservation_status_name` varchar(255),
-  `created_at` timestamp,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -113,7 +120,7 @@ CREATE TABLE `reservations` (
   `seat_id` bigint,
   `member_id` bigint,
   `reservation_status_id` integer DEFAULT 1,
-  `created_at` timestamp,
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp,
   `deleted_at` timestamp
 );
@@ -135,6 +142,8 @@ ALTER TABLE `seats` ADD FOREIGN KEY (`concert_detail_id`) REFERENCES `concert_de
 ALTER TABLE `seats` ADD FOREIGN KEY (`seat_status_id`) REFERENCES `seat_statuses` (`seat_status_id`);
 
 ALTER TABLE `waitings` ADD FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`);
+
+ALTER TABLE `waitings` ADD FOREIGN KEY (`waiting_status_id`) REFERENCES `waiting_statuses` (`waiting_status_id`);
 
 ALTER TABLE `reservations` ADD FOREIGN KEY (`seat_id`) REFERENCES `seats` (`seat_id`);
 
