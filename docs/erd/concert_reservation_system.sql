@@ -101,8 +101,8 @@ CREATE TABLE `members` (
   `deleted_at` timestamp
 );
 
-CREATE TABLE `waiting_statuses` (
-  `waiting_status_id` integer PRIMARY KEY,
+CREATE TABLE `token_statuses` (
+  `token_status_id` integer PRIMARY KEY,
   `waiting_status_name` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE `waiting_statuses` (
 CREATE TABLE `tokens` (
   `waiting_id` bigint PRIMARY KEY,
   `member_id` varchar(255),
-  `waiting_status_id` integer DEFAULT 1,
+  `token_status_id` integer DEFAULT 1,
   `expired_at` timestamp,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
@@ -157,7 +157,7 @@ ALTER TABLE `seats` ADD FOREIGN KEY (`seat_status_id`) REFERENCES `seat_statuses
 
 ALTER TABLE `tokens` ADD FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`);
 
-ALTER TABLE `tokens` ADD FOREIGN KEY (`waiting_status_id`) REFERENCES `waiting_statuses` (`waiting_status_id`);
+ALTER TABLE `tokens` ADD FOREIGN KEY (`token_status_id`) REFERENCES `token_statuses` (`token_status_id`);
 
 ALTER TABLE `reservations` ADD FOREIGN KEY (`seat_id`) REFERENCES `seats` (`seat_id`);
 

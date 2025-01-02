@@ -1,0 +1,28 @@
+sequenceDiagram
+
+  participant TokenSchedueler as TokenSchedueler
+  participant TokenService as TokenService
+  participant TokenRepository as TokenRepository
+loop
+TokenSchedueler ->>+ TokenService: 상태가 wait인 토큰들 중 생성일/생성 시각 기준 최근 10개까지만 active 상태로 수정 요청
+TokenService ->>+ TokenRepository: 상태가 wait인 토큰들 생성일/생성 시각 기준 최근 10개까지만 조회 요청
+    alt 조회 성공
+        loop
+            TokenService ->> TokenService: 상태를 active로 수정
+        end
+        loop
+            TokenService ->>+ TokenRepository: 토큰 수정 정보 저장
+        end
+        alt 토큰 수정 정보 저장 성공
+            TokenService -->> TokenSchedueler: 토큰 수정 정보 목록 반환
+        else 토큰 수정 정보 저장 실패
+            TokenRepository -->> TokenService: exception
+            TokenService  -->> TokenSchedueler:exception
+        end
+
+
+    else 조회 실패
+
+    end
+end
+
