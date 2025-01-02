@@ -44,7 +44,7 @@ sequenceDiagram
                         ReservationService ->>+ ReservationRepository: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청(member_id, seat_id)
                         alt 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청 성공
                            ReservationService ->>+  ConcertReservationFacade: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보
-                           ConcertReservationFacade ->>+ TokenSchedueler: 해당 임시 예약 정보 상태가 결제 완료가 아니면 임시 예약 정보를 delte 상태로 바꾸는 스케줄을 중단한다.
+                           ConcertReservationFacade ->>+ TokenSchedueler: 해당 임시 예약 정보 상태가 결제 완료가 아니면 임시 예약 정보를 delete 상태로 바꾸는 스케줄을 중단한다.
                            ConcertReservationFacade ->>+ ReservationController: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보
                            ReservationController -->> Client : 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 성공 Response
                         else 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청 실패, rollback
