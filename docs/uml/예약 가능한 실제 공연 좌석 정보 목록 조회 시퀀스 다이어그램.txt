@@ -1,0 +1,40 @@
+---
+config:
+  theme: neo
+---
+sequenceDiagram
+  actor Client as Client
+  participant SeatController as SeatController
+  participant ConcertReservationFacade as ConcertReservationFacade
+  participant TokenService as TokenService
+  participant SeatService as SeatService
+  participant TokenRepository as TokenRepository
+  participant SeatRepository as SeatRepository
+
+  Client ->>+ SeatController:  선택한 실제 공연의 예약 가능한 좌석 목록 조회 Request
+  SeatController ->>+ ConcertReservationFacade: 선택한 실제 공연의 예약 가능한 좌석 목록 조회 요청(token, concert_detail_id)
+  ConcertReservationFacade ->>+ TokenService: 상태가 active이면서 요청에 담긴 토큰 아이디 고유하게 존재하는지 확인 요청(token)
+  TokenService ->>+ TokenRepository: 상태가 active이면서 요청에 담긴 토큰 아이디와 같은 토큰 아이디 조회 요청(token)
+  alt active 상태가 active이면서 요청에 담긴 토큰 아이디와 같은 토큰 아이디 조회  성공
+        TokenRepository -->> TokenService: token
+        TokenService -->> ConcertReservationFacade: token
+        ConcertReservationFacade ->>+ SeatService: 선택한 실제 공연의 예약 가능한 좌석 목록 조회 요청(concert_detail_id)
+        SeatService ->>+ SeatRepository: 선택한 실제 공연의 예약 가능한 좌석 목록 조회 요청(concert_detail_id)
+        alt 선택한 실제 공연의 예약 가능한 좌석 목록 조회 성공
+            SeatRepository -->>  SeatService: 선택한 실제 공연의 예약 가능한 좌석 목록
+            SeatService -->>  ConcertReservationFacade: 선택한 실제 공연의 예약 가능한 좌석 목록
+            ConcertReservationFacade -->> SeatController: 선택한 실제 공연의 예약 가능한 좌석 목록
+            SeatController -->> Client: 선택한 실제 공연의 예약 가능한 좌석 목록 조회 성공 Response
+        else 선택한 실제 공연의 예약 가능한 좌석 목록 조회 실패
+            SeatRepository -->> SeatService: exception
+            SeatService -->> ConcertReservationFacade : exception
+            ConcertReservationFacade -->> SeatController: exception
+            SeatController -->> Client: 선택한 실제 공연의 예약 가능한 좌석 목록 조회 실패 Response
+        end
+  else active 상태가 active이면서 요청에 담긴 토큰 아이디와 같은 토큰 아이디 조회  실패
+    TokenRepository -->> TokenService: exception
+    TokenService -->> ConcertReservationFacade:exception
+    ConcertReservationFacade -->> SeatController: exception
+    SeatController -->> Client: 선택한 실제 공연의 예약 가능한 좌석 목록 조회 실패 Response
+  end
+
