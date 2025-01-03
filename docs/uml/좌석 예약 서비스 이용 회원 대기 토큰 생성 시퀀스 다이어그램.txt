@@ -1,0 +1,33 @@
+---
+config:
+  theme: neo
+---
+sequenceDiagram
+  actor Client as Client
+  participant TokenController as TokenController
+  participant MemberService as MemberService
+  participant TokenService as TokenService
+  participant MemberRepository as MemberRepository
+  participant TokenRepository as TokenRepository
+
+  Client ->>+ TokenController:  좌석 예약 서비스 이용 회원 대기 토큰 생성 Request(UUID)
+  TokenController ->>+ MemberService: 회원정보(UUID) 고유 존재 여부 확인 요청
+  MemberService ->>+ MemberRepository: 회원정보(UUID)로 조회 요청
+  alt UUID 고유 존재 확인 실패
+    MemberRepository -->> MemberService: exception
+    MemberService -->> TokenController: exception
+    TokenController -->> Client : 좌석 예약 서비스 이용 회원 대기 토큰 생성 실패 Response
+  else UUID 고유 존재 확인 성공
+    TokenController ->>+ TokenService: 좌석 예약 서비스 이용 회원 대기 토큰 생성 요청(UUID)
+    TokenService ->>+  TokenRepository: 좌석 예약 서비스 이용 회원 대기 토큰 생성 요청(UUID)
+
+    alt 좌석 예약 서비스 이용 회원 대기 토큰 생성 성공
+        TokenRepository -->> TokenService: token
+        TokenService -->> TokenController: token
+        TokenController -->> Client : 좌석 예약 서비스 이용 회원 대기 토큰 생성 성공 Response(token)
+    else 좌석 예약 서비스 이용 회원 대기 토큰 생성 실패
+        TokenRepository -->> TokenService: exception
+        TokenService -->> TokenController: exception
+         TokenController -->> Client : 좌석 예약 서비스 이용 회원 대기 토큰 생성 실패 Response
+    end
+  end
