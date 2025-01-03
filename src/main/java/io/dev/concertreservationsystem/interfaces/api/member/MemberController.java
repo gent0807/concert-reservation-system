@@ -16,9 +16,9 @@ import java.util.UUID;
 @Tag(name = "Member API", description = "MemberController")
 public class MemberController {
 
-    @GetMapping("{id}")
+    @GetMapping
     @Operation(summary = "임시 로그인", description = "요청에 담긴 UUID를 이용하여 임시 로그인합니다.")
-    public ResponseEntity<MemberResponseDTO> getMemberById(@PathVariable String id) {
+    public ResponseEntity<MemberResponseDTO> getMemberById(@RequestParam String id) {
         return ResponseEntity.status(HttpStatus.OK).body(new MemberResponseDTO(id, null, null, null, null));
     }
 
