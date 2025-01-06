@@ -34,12 +34,12 @@ sequenceDiagram
         ConcertDetailService ->>+ ConcertDetailRepository: 예약 가능한 콘서트 실제 공연 정보 목록 조회 요청
         alt 예약 가능한 콘서트 실제 공연 정보 목록 조회 성공
             ConcertDetailRepository -->> ConcertDetailService : 예약 가능한 콘서트 실제 공연 정보 목록
-            ConcertDetailService --> ConcertReservationFacade : 예약 가능한 콘서트 실제 공연 정보 목록
+            ConcertDetailService -->> ConcertReservationFacade : 예약 가능한 콘서트 실제 공연 정보 목록
             ConcertReservationFacade -->> ConcertDetailController : 예약 가능한 콘서트 실제 공연 정보 목록
             ConcertDetailController -->> Client : 예약 가능한 콘서트 실제 공연 정보 목록 조회 성공 Response
         else 예약 가능한 콘서트 실제 공연 정보 목록 조회 실패
             ConcertDetailRepository -->> ConcertDetailService : exception
-            ConcertDetailService --> ConcertReservationFacade:exception
+            ConcertDetailService -->> ConcertReservationFacade:exception
             ConcertReservationFacade -->> ConcertDetailController: exception
             ConcertDetailController -->> Client: 예약 가능 콘서트 실제 공연 정보 목록 조회 실패 Response
         end

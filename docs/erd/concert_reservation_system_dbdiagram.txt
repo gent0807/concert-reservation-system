@@ -1,166 +1,101 @@
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
-
-Table genres {
-  genre_id      bigint    [pk]                            // 콘서트 장르 아이디
-  genre_name    varcahr                                   // 콘서트 장르 이름
-  created_at    timestamp [not null]  // 콘서트 장르 등록일, 등록 시각
-  updated_at    timestamp [not null]  // 콘서트 장르 수정일, 수정 시각
-  deleted_at    timestamp
-}
-
-Table super_managers{
-  super_manager_id      bigint     [pk]       // 슈퍼 관리자 계정 아이디
-  super_manager_name    varchar               // 슈퍼 관리자 이름
-  created_at            timestamp  [not null] // 슈퍼 관리자 생성일, 생성 시각
-  updated_at            timpestamp [not null] // 슈퍼 관리자 수정일, 수정 시각
-  deleted_at            timestamp             // 슈퍼 관리자 삭제일, 삭제 시각
-}
-
-Table concert_basics {
+Table concert_basic {
   concert_basic_id    bigint    [pk]          // 콘서트 아이디
   concert_name        varchar                 // 콘서트 이름
-  genre_id            bigint                  // 콘서트 장르 아이디
-  super_manager_id    bigint                  // 슈퍼 관리자 아이디
   created_at          timestamp [not null]    // 콘서트 등록일, 등록 시각
   updated_at          timestamp [not null]    // 콘서트 수정일, 수정 시각
   deleted_at          timestamp               // 콘서트 삭제일, 삭제 시각
 }
 
-Ref: concert_basics.genre_id > genres.genre_id      // many-to-one
-Ref: concert_basics.super_manager_id > super_managers.super_manager_id // many-to-one
-
-Table concert_detail_registers{
-   concert_detail_register_id   bigint     [pk]           // 콘서트 상세 정보 등록자 아이디
-   concert_detail_register_name varchar    [not null]     // 콘서트 상세 정보 등록자 이름
-   created_at                   timestamp  [not null]     // 콘서트 상세 정보 등록자 생성일, 생성 시각
-   updated_at                   timestamp  [not null]     // 콘서트 상세 정보 등록자 수정일, 수정 시각
-   deleted_at                   timestamp
-}
-
-Table concert_detail_statuses{
-  concert_detail_status_id   integer    [pk]       // 콘서트 상세 정보 예약 상태 아이디
-  concert_detail_status_name varchar    [not null] // 콘서트 상세 정보 예약 상태 이름 (reservable: 01, finished: 02, deleted:03)
-  created_at                 timestamp  [not null] // 콘서트 상세 정보 생성일, 생성 시각
-  updated_at                 timestamp  [not null] // 콘서트 상세 정보 수정일, 수정 시각
-  deleted_at                 timestamp             // 콘서트 상세 정보 삭제일, 삭제 시각
-}
-
-Table concert_details{
+Table concert_detail{
   concert_detail_id           bigint    [pk]                    // 콘서트 상세 정보 아이디
   concert_basic_id            bigint    [unique]                // 콘서트 아이디
-  concert_detail_status_id    integer   [default: 01]           // 콘서트 예약 가능 상태
+  concert_detail_status       varchar   [default: 'reservable'] // 콘서트 예약 가능 상태
   start_date                  timestamp [unique]                // 콘서트 시작일, 시작  시각
   end_date                    timestamp [unique]                // 콘서트 종료일, 종료 시각
-  concert_detail_register_id  varchar   [not null]              // 콘서트 상세 정보 등록자
   created_at                  timestamp [not null]              // 콘서트 상세 정보 생성일, 생성 시각
   updated_at                  timestamp [not null]              // 콘서트 상세 정보 수정일, 수정 시각
   deleted_at                  timestamp                         // 콘서트 상세 정보 삭제일
 }
 
-Ref: concert_details.concert_basic_id > concert_basics.concert_basic_id // many-to-one
-Ref: concert_details.concert_detail_register_id > concert_detail_registers.concert_detail_register_id // many-to-one
-Ref: concert_details.concert_detail_status_id > concert_detail_statuses.concert_detail_status_id      // many-to-one
+Ref: concert_detail.concert_basic_id > concert_basic.concert_basic_id // many-to-one
 
-Table artists{
-  artist_id     bigint    [pk]       // 공연자 정보 아이디
-  artist_name   varchar   [not null] // 공연자 이름
-  artist_age    integer              // 공연자 나이
-  artist_gender varchar              // 공연자 성별
-  created_at    timestamp [not null] // 공연자 정보 생성일, 생성 시각
-  updated_at    timestamp [not null] // 공연자 정보 수정일, 수정 시각
-  deleted_at    timestamp
-}
-
-Table casts{
-  cast_id               bigint     [pk]        // 콘서트 캐스팅 정보 아이디
-  concert_detail_id     bigint     [not null]  // 콘서트 상세 정보 아이디
-  arist_id              bigint     [not null]  // 콘서트 출연자 정보 아이디
-  created_at            timestamp  [not null]  // 콘서트 캐스팅 정보 생성일, 생성 시각
-  updated_at            timestamp  [not null]  // 콘서트 캐스팅 정보 수정일, 수정 시각
-  deleted_at            timestamp
-}
-
-Ref: casts.concert_detail_id > concert_details.concert_detail_id // many-to-one
-Ref: casts.arist_id > artists.artist_id                          // many-to-one
-
-Table seat_statuses{
-  seat_status_id    integer   [pk]         // 좌석 예약 상태 아이디
-  seat_status_name  varchar   [not null]   // 좌석 예약 상태 이름 (reservable: 01, temp: 02, reserved: 03, delted: 04)
-  created_at        timestamp [not null]
-  updated_at        timestamp [not null]
-  deleted_at        timestamp
-}
-
-Table seats {
+Table seat {
   seat_id             bigint     [pk]           // 좌석 아이디
   concert_detail_id   bigint     [unique]       // 콘서트 상세 정보 아이디
   seat_number         bigint     [unique]       // 좌석 번호
-  seat_status_id      integer    [default: 01]  // 좌석 예약 상태 아이디
   price               integer    [not null]     // 콘서트  좌석 가격
+  seat_status         varchar    [default: 'reservable']   // 콘서트 좌석 예약 가능 상태
+  expired_at          timestamp                 // 좌석 예약 만료 시간
   created_at          timestamp  [not null]     // 좌석 생성일, 생성 시각
   updated_at          timestamp  [not null]     // 좌석 정보 수정일, 수정 시각
   deleted_at          timestamp
 }
 
-Ref: seats.concert_detail_id > concert_details.concert_detail_id   // many-to-one
-Ref: seats.seat_status_id > seat_statuses.seat_status_id           // many-to-one
+Ref: seat.concert_detail_id > concert_detail.concert_detail_id   // many-to-one
 
-Table members {
-  member_id    varchar    [pk]            // 회원 아이디, uuid
-  member_name  varchar                    // 회원 이름
+Table user {
+  user_id      varchar    [pk]            // 회원 아이디, uuid
+  user_name    varchar                    // 회원 이름
   age          integer                    // 나이
   gender       varchar
-  balance      integer                    // 회원 잔고
+  point        integer                    // 회원 잔고
   created_at   timestamp  [not null]      // 회원 생성일, 생성 시각
   updated_at   timestamp  [not null]      // 회원 정보 수정일, 수정 시각
   deleted_at   timestamp
 }
 
-Table token_statuses{
-  token_status_id     integer     [pk]           // 콘서트 좌석 예약 서비스 이용 회원 대기 상태 아이디
-  waiting_status_name varchar     [not null]     // 콘서트 좌석 예약 서비스 이용 회원 대기 상태 이름(01:'wait', 02:'active')
-  created_at          timestamp   [not null]
-  updated_at          timestamp   [not null]
-  deleted_at          timestamp
-}
-
-Table tokens {
+Table token {
   waiting_id             bigint     [pk]              // 대기열 아이디
-  member_id              varchar                      // 회원 아이디, uuid
-  token_status_id        integer    [default: 01]     // 상태(wait:01, active:02, expired:03)
+  user_id                varchar                      // 회원 아이디, uuid
+  token_status           varchar                      // 토큰 활성화 상태
   expired_at             timestamp                    // 이용 만료 시각
   created_at             timestamp  [not null]        // 대기열 진입일, 진입 시각
   updated_at             timestamp  [not null]        // 대기 상태 수정일, 수정 시각
   deleted_at             timestamp                    // 대기 정보 삭제 시각
 }
 
-Ref: tokens.member_id > members.member_id   // many-to-one
-Ref: tokens.token_status_id > token_statuses.token_status_id // many-to-one
+Ref: token.user_id > user.user_id   // many-to-one
 
-Table reservation_statuses{
-  reservation_status_id   integer      [pk]         // 회원의 좌석 예약 정보 상태 아이디
-  reservation_status_name varchar                   // 회원의 좌석 예약 정보 상태 이름 (temp: 01, paid: 02, cancled:03, watched:04, unwatched:05)
-  created_at              timestamp    [not null]
-  updated_at              timestamp    [not null]
-  deleted_at              timestamp
-}
 
-Table reservations {
+Table reservation {
   reservation_id        bigint       [pk]                // 콘서트 예약 아이디
   seat_id               bigint                           // 좌석 아이디
-  member_id             varchar                          // 회원 아이디, uuid
-  reservation_status_id integer      [default: 01]       // 회원의 좌석 예약 정보 상태 아이디
+  user_id               varchar                          // 회원 아이디, uuid
+  payment_id            bigint                           // 결제 아이디
+  reservation_status    varchar      [default: 'temp']   // 예약 정보 상태
   created_at            timestamp    [not null]          // 콘서트 예약 생성일, 생성 시각
   updated_at            timestamp    [not null]          // 콘서트 예약 수정일, 수정 시각
   deleted_at            timestamp
 }
 
-Ref: reservations.seat_id   > seats.seat_id      // many-to-one
-Ref: reservations.member_id > members.member_id  // many-to-one
-Ref: reservations.reservation_status_id > reservation_statuses.reservation_status_id // many-to-one
+Ref: reservation.seat_id   > seat.seat_id      // many-to-one
+Ref: reservation.user_id > user.user_id // many-to-one
 
+Table payment{
+  payment_id      bigint         [pk]     // 결제 정보 아이디
+  payment_status  varchar                 // 결제 정보 상태
+  created_at      timestamp               // 결제 정보 생성일
+  updated_at      timestamp               // 결제 정보 수정일
+  deleted_at       timestamp               // 결제 정보 삭제일
+}
 
+Table point_history{
+  point_history_id    bigint     [pk]         // 회원 잔고 내역 정보 아이디
+  payment_id          bigint                  // 결제 정보 아이디
+  user_id             bigint                  // 회원 아이디
+  type                varchar                 // 포인트 충전/차감
+  amount              bigint                  // 포인트 충전량/차감량
+  result_point        bigint                  // 최종 포인트
+  created_at          timestamp               // 회원 잔고 내역 정보 생성일
+  updated_at          timestamp               // 회원 잔고 내역 정보 수정일
+  deleted_at           timestamp               // 회원 잔고 내역 정보 삭제일
+}
+
+Ref: reservation.payment_id > payment.payment_id
+Ref: point_history.payment_id > payment.payment_id
+Ref: point_history.user_id > user.user_id
 
 
 

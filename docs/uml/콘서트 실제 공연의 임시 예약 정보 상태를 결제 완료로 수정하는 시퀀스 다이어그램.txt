@@ -6,19 +6,18 @@ sequenceDiagram
   actor Client as Client
   participant ReservationController as ReservationController
   participant ConcertReservationFacade as ConcertReservationFacade
-  participant TokenService as TokenService
-  participant MemberService as MemberService
-  participant SeatService as SeatService
-  participant ReservationService as ReservationService
-  participant TokenRepository as TokenRepository
-  participant MemberRepository as MemberRepository
-  participant SeatRepository as SeatRepository
-  participant ReservationRepository as ReservationRepository
-  participant TokenSchedueler as TokenSchedueler
+                                                                     participant TokenService as TokenService
+                                                                     participant UserService as UserService
+                                                                     participant SeatService as SeatService
+                                                                     participant ReservationService as ReservationService
+                                                                     participant TokenRepository as TokenRepository
+                                                                     participant UserRepository as UserRepository
+                                                                     participant SeatRepository as SeatRepository
+                                                                     participant ReservationRepository as ReservationRepository
 
-  Client ->>+ ReservationController:  선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 Request(wating_id, seat_id)
-  ReservationController ->>+ ConcertReservationFacade: 택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청(wating_id, seat_id)
-  ConcertReservationFacade ->>+ TokenService: 상태가 active이면서 요청에 담긴 토큰 아이디 고유하게 존재하는지 확인 요청(token)
+                                                                     Client ->>+ ReservationController:  선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 Request(wating_id, seat_id)
+                                                                     ReservationController ->>+ ConcertReservationFacade: 택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청(wating_id, seat_id)
+                                                                     ConcertReservationFacade ->>+ TokenService: 상태가 active이면서 요청에 담긴 토큰 아이디 고유하게 존재하는지 확인 요청(token)
   TokenService ->>+ TokenRepository: 상태가 active이면서 요청에 담긴 토큰 아이디와 같은 토큰 아이디 조회 요청(token)
   alt 상태가 active이면서 요청에 담긴 토큰 아이디와 같은 토큰 아이디 조회 성공
         TokenRepository -->> TokenService: token
@@ -28,14 +27,14 @@ sequenceDiagram
         alt 임시 예약한 좌석의 가격 정보 조회  성공
             SeatRepository -->>  SeatService: 선택한 실제 공연의 예약 가능 좌석 가격
             SeatService -->>  ConcertReservationFacade: 선택한 실제 공연의 예약 가능 좌석 가격
-            ConcertReservationFacade ->>+ MemberService:  회원 잔고에서, 선택한 실제 공연의 예약 가능 좌석 가격 차감 요청(member_id, price)
-            MemberService ->>+ MemberRepository: 회원 잔고 조회 요청
+            ConcertReservationFacade ->>+ UserService:  회원 잔고에서, 선택한 실제 공연의 예약 가능 좌석 가격 차감 요청(member_id, price)
+            UserService ->>+ UserRepository: 회원 잔고 조회 요청
 
             alt 회원 잔고 조회 요청 성공
-                MemberRepository -->> MemberService: 회원 잔고
-                MemberService ->> MemberService:  회원 잔고에서, 선택한 실제 공연의 예약 가능 좌석 가격 차감 가능 여부 확인
+                UserRepository -->> UserService: 회원 잔고
+                UserService ->> UserService:  회원 잔고에서, 선택한 실제 공연의 예약 가능 좌석 가격 차감 가능 여부 확인
                 alt 차감 가능
-                    MemberService ->>+  MemberRepository: 회원 잔고에서 좌석 가격 차감 요청
+                    UserService ->>+  UserRepository: 회원 잔고에서 좌석 가격 차감 요청
                     ConcertReservationFacade ->>+  SeatService: 좌석의 예약 상태를 완전 예약 상태로 수정 요청(seat_id)
                     SeatService ->>+ SeatRepository: 좌석의 예약 상태를 완전 예약 상태로 수정 요청
                     alt  좌석의 예약 상태를 완전 예약 상태로 수정 성공
@@ -43,9 +42,8 @@ sequenceDiagram
                         ConcertReservationFacade ->>+ ReservationService: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청(member_id, seat_id)
                         ReservationService ->>+ ReservationRepository: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청(member_id, seat_id)
                         alt 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청 성공
-                           ReservationService ->>+  ConcertReservationFacade: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보
-                           ConcertReservationFacade ->>+ TokenSchedueler: 해당 임시 예약 정보 상태가 결제 완료가 아니면 임시 예약 정보를 delete 상태로 바꾸는 스케줄을 중단한다.
-                           ConcertReservationFacade ->>+ ReservationController: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보
+                           ReservationService -->>  ConcertReservationFacade: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보
+                           ConcertReservationFacade -->> ReservationController: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보
                            ReservationController -->> Client : 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 성공 Response
                         else 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청 실패, rollback
                            ReservationRepository -->>  ReservationService: exception
@@ -60,13 +58,13 @@ sequenceDiagram
                         ReservationController -->> Client : 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 실패 Response
                     end
                 else 차감 불가
-                    MemberService -->> ConcertReservationFacade: exception
+                    UserService -->> ConcertReservationFacade: exception
                     ConcertReservationFacade -->> ReservationController: exception
                     ReservationController -->> Client : 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 실패 Response
                 end
             else 회원 잔고 조회 요청 실패
-                MemberRepository -->> MemberService: exception
-                MemberService -->> ConcertReservationFacade: exception
+                UserRepository -->> UserService: exception
+                UserService -->> ConcertReservationFacade: exception
                 ConcertReservationFacade -->> ReservationController: exception
                 ReservationController -->> Client : 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 실패 Response
             end
