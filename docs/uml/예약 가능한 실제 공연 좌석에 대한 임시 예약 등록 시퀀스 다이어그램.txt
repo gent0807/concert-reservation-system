@@ -12,7 +12,6 @@ sequenceDiagram
   participant TokenRepository as TokenRepository
   participant SeatRepository as SeatRepository
   participant ReservationRepository as ReservationRepository
-  participant TokenSchedueler as TokenSchedueler
 
   Client ->>+ ReservationController:  선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 등록 Request(wating_id, seat_id)
   ReservationController ->>+ ConcertReservationFacade: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 요청(wating_id, seat_id)
@@ -33,7 +32,6 @@ sequenceDiagram
                 ConcertReservationFacade ->>+ SeatService: 선택한 실제 공연 예약 가능 좌석 예약 가능 상태 예약 불가로 수정 요청(seat_id)
                 SeatService ->>+ SeatRepository: 선택한 실제 공연 예약 가능 좌석 예약 가능 상태 예약 불가로 수정 요청(seat_id)
                 alt 선택한 실제 공연 예약 가능 좌석 예약 가능 상태 예약 불가로 수정 성공
-                    ConcertReservationFacade ->>+ TokenSchedueler: 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 수정 스켈줄링 동적 생성 요청(member_id, seat_id)
                     ConcertReservationFacade -->> ReservationController : 선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보
                     ReservationController -->> Client :  선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 등록 성공 Response
                 else 선택한 실제 공연 예약 가능 좌석 예약 가능 상태 예약 불가로 수정 실패
