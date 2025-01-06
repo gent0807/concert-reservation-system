@@ -23,6 +23,7 @@ CREATE TABLE `seat` (
   `seat_number` bigint UNIQUE,
   `price` integer NOT NULL,
   `seat_status` varchar(255) DEFAULT 'reservable',
+  `expired_at` timestamp,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp

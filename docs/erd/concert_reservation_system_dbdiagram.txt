@@ -27,6 +27,7 @@ Table seat {
   seat_number         bigint     [unique]       // 좌석 번호
   price               integer    [not null]     // 콘서트  좌석 가격
   seat_status         varchar    [default: 'reservable']   // 콘서트 좌석 예약 가능 상태
+  expired_at          timestamp                 // 좌석 예약 만료 시간
   created_at          timestamp  [not null]     // 좌석 생성일, 생성 시각
   updated_at          timestamp  [not null]     // 좌석 정보 수정일, 수정 시각
   deleted_at          timestamp
