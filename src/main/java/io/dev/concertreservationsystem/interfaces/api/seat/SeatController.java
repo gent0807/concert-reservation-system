@@ -15,7 +15,7 @@ import java.util.List;
 @Tag(name="Seat API", description="SeatController")
 public class SeatController {
 
-    @GetMapping("/reservable")
+    @PostMapping("/reservable")
     @Operation(summary = "예약 가능한 콘서트 실제 공연 좌석 목록 조회", description = "조건에 맞는 예약 가능한 콘서트 실제 공연 좌석 목록 조회")
     public ResponseEntity<List<SeatResponseDTO>> getReservableSeats(@RequestBody SeatRequestDTO seatRequestDTO,
                                                                     @RequestHeader("Authorization") String tokenId) {

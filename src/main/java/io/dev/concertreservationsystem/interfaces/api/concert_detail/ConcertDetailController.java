@@ -14,7 +14,7 @@ import java.util.List;
 @Tag(name="ConcertDetail API", description="ConcertDetailController")
 public class ConcertDetailController {
 
-        @GetMapping("/reservable")
+        @PostMapping("/reservable")
         @Operation(summary = "예약가능한 콘서트 실제 공연 목록 조회", description = "조건에 맞는 예약가능한 콘서트 실제 공연 목록 조회")
         public ResponseEntity<List<ConcertDetailResponseDTO>> getReservableConcerts(@RequestBody ConcertDetailRequestDTO concertDetailRequestDTO,
                                                                                     @RequestHeader("Authorization") String tokenId) {
