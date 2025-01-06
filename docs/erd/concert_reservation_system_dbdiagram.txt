@@ -27,6 +27,7 @@ Table seat {
   seat_number         bigint     [unique]       // 좌석 번호
   price               integer    [not null]     // 콘서트  좌석 가격
   seat_status         varchar    [default: 'reservable']   // 콘서트 좌석 예약 가능 상태
+  expired_at          timestamp                 // 좌석 예약 만료 시간
   created_at          timestamp  [not null]     // 좌석 생성일, 생성 시각
   updated_at          timestamp  [not null]     // 좌석 정보 수정일, 수정 시각
   deleted_at          timestamp
@@ -77,19 +78,24 @@ Table payment{
   payment_status  varchar                 // 결제 정보 상태
   created_at      timestamp               // 결제 정보 생성일
   updated_at      timestamp               // 결제 정보 수정일
-  delted_at       timestamp               // 결제 정보 삭제일
+  deleted_at       timestamp               // 결제 정보 삭제일
 }
 
 Table point_history{
   point_history_id    bigint     [pk]         // 회원 잔고 내역 정보 아이디
   payment_id          bigint                  // 결제 정보 아이디
+  user_id             bigint                  // 회원 아이디
+  type                varchar                 // 포인트 충전/차감
+  amount              bigint                  // 포인트 충전량/차감량
+  result_point        bigint                  // 최종 포인트
   created_at          timestamp               // 회원 잔고 내역 정보 생성일
   updated_at          timestamp               // 회원 잔고 내역 정보 수정일
-  delted_at           timestamp               // 회원 잔고 내역 정보 삭제일
+  deleted_at           timestamp               // 회원 잔고 내역 정보 삭제일
 }
 
 Ref: reservation.payment_id > payment.payment_id
 Ref: point_history.payment_id > payment.payment_id
+Ref: point_history.user_id > user.user_id
 
 
 

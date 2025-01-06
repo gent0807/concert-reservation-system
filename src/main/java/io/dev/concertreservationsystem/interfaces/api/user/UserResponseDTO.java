@@ -1,7 +1,7 @@
-package io.dev.concertreservationsystem.interfaces.api.member;
+package io.dev.concertreservationsystem.interfaces.api.user;
 
 
-public record MemberResponseDTO(
+public record UserResponseDTO(
         String uuid,
         String memberName,
         Integer age,
