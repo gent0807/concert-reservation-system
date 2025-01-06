@@ -65,15 +65,19 @@ CREATE TABLE `payment` (
   `payment_status` varchar(255),
   `created_at` timestamp,
   `updated_at` timestamp,
-  `delted_at` timestamp
+  `deleted_at` timestamp
 );
 
 CREATE TABLE `point_history` (
   `point_history_id` bigint PRIMARY KEY,
   `payment_id` bigint,
+  `user_id` bigint,
+  `type` varchar(255),
+  `amount` bigint,
+  `result_point` bigint,
   `created_at` timestamp,
   `updated_at` timestamp,
-  `delted_at` timestamp
+  `deleted_at` timestamp
 );
 
 ALTER TABLE `concert_detail` ADD FOREIGN KEY (`concert_basic_id`) REFERENCES `concert_basic` (`concert_basic_id`);
@@ -89,3 +93,5 @@ ALTER TABLE `reservation` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`user_i
 ALTER TABLE `reservation` ADD FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`);
 
 ALTER TABLE `point_history` ADD FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`);
+
+ALTER TABLE `point_history` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
