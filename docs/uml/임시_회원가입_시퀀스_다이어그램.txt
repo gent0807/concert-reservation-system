@@ -4,29 +4,29 @@ config:
 ---
 sequenceDiagram
   actor Client as Client
-  participant MemberController as MemberController
-  participant MemberService as MemberService
-  participant MemberRepository as MemberRepository
-  Client ->>+ MemberController: 임시 회원가입 Request
-  MemberController ->>+ MemberService: UUID(임시 아이디/비밀번호) 생성 요청
-  MemberService ->> MemberService: makeUUID: UUID 생성
-  MemberService ->>+ MemberRepository: UUID(임시 아이디/비밀번호) 저장 요청
+  participant UserController as UserController
+  participant UserService as UserService
+  participant UserRepository as UserRepository
+  Client ->>+ UserController: 임시 회원가입 Request
+  UserController ->>+ UserService: UUID(임시 아이디/비밀번호) 생성 요청
+  UserService ->> UserService: makeUUID: UUID 생성
+  UserService ->>+ UserRepository: UUID(임시 아이디/비밀번호) 저장 요청
   alt 저장 실패, 회원가입 실패
 
-    MemberRepository -->> MemberService: exception
-    MemberService -->> MemberController: null
-    MemberController -->> Client: 회원가입 실패 메시지, null
+    UserRepository -->> UserService: exception
+    UserService -->> UserController: null
+    UserController -->> Client: 회원가입 실패 메시지, null
   else 저장 성공
-    MemberRepository -->> MemberService: 정상
-    MemberService ->>+ MemberRepository: UUID(임시 아이디/비밀번호) 조회 요청
+    UserRepository -->> UserService: 정상
+    UserService ->>+ UserRepository: UUID(임시 아이디/비밀번호) 조회 요청
     alt 회원 가입 성공
-        MemberRepository -->> MemberService: 고유한 한 개 조회
-        MemberService -->> MemberController: UUID
-        MemberController -->> Client: 회원가입 성공 메시지, UUID
+        UserRepository -->> UserService: 고유한 한 개 조회
+        UserService -->> UserController: UUID
+        UserController -->> Client: 회원가입 성공 메시지, UUID
     else 회원가입 실패
-        MemberRepository -->> MemberService: exception
-        MemberService -->> MemberController: null
-        MemberController -->> Client: 회원가입 실패 메시지, null
+        UserRepository -->> UserService: exception
+        UserService -->> UserController: null
+        UserController -->> Client: 회원가입 실패 메시지, null
     end
   end
 
