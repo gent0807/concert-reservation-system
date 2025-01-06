@@ -1,166 +1,91 @@
-CREATE TABLE `genres` (
-  `genre_id` bigint PRIMARY KEY,
-  `genre_name` varcahr,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `super_managers` (
-  `super_manager_id` bigint PRIMARY KEY,
-  `super_manager_name` varchar(255),
-  `created_at` timestamp NOT NULL,
-  `updated_at` timpestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `concert_basics` (
+CREATE TABLE `concert_basic` (
   `concert_basic_id` bigint PRIMARY KEY,
   `concert_name` varchar(255),
-  `genre_id` bigint,
-  `super_manager_id` bigint,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp
 );
 
-CREATE TABLE `concert_detail_registers` (
-  `concert_detail_register_id` bigint PRIMARY KEY,
-  `concert_detail_register_name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `concert_detail_statuses` (
-  `concert_detail_status_id` integer PRIMARY KEY,
-  `concert_detail_status_name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `concert_details` (
+CREATE TABLE `concert_detail` (
   `concert_detail_id` bigint PRIMARY KEY,
   `concert_basic_id` bigint UNIQUE,
-  `concert_detail_status_id` integer DEFAULT 1,
+  `concert_detail_status` varchar(255) DEFAULT 'reservable',
   `start_date` timestamp UNIQUE,
   `end_date` timestamp UNIQUE,
-  `concert_detail_register_id` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp
 );
 
-CREATE TABLE `artists` (
-  `artist_id` bigint PRIMARY KEY,
-  `artist_name` varchar(255) NOT NULL,
-  `artist_age` integer,
-  `artist_gender` varchar(255),
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `casts` (
-  `cast_id` bigint PRIMARY KEY,
-  `concert_detail_id` bigint NOT NULL,
-  `arist_id` bigint NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `seat_statuses` (
-  `seat_status_id` integer PRIMARY KEY,
-  `seat_status_name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `seats` (
+CREATE TABLE `seat` (
   `seat_id` bigint PRIMARY KEY,
   `concert_detail_id` bigint UNIQUE,
   `seat_number` bigint UNIQUE,
-  `seat_status_id` integer DEFAULT 1,
   `price` integer NOT NULL,
+  `seat_status` varchar(255) DEFAULT 'reservable',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp
 );
 
-CREATE TABLE `members` (
-  `member_id` varchar(255) PRIMARY KEY,
-  `member_name` varchar(255),
+CREATE TABLE `user` (
+  `user_id` varchar(255) PRIMARY KEY,
+  `user_name` varchar(255),
   `age` integer,
   `gender` varchar(255),
-  `balance` integer,
+  `point` integer,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp
 );
 
-CREATE TABLE `token_statuses` (
-  `token_status_id` integer PRIMARY KEY,
-  `waiting_status_name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `tokens` (
+CREATE TABLE `token` (
   `waiting_id` bigint PRIMARY KEY,
-  `member_id` varchar(255),
-  `token_status_id` integer DEFAULT 1,
+  `user_id` varchar(255),
+  `token_status` varchar(255),
   `expired_at` timestamp,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp
 );
 
-CREATE TABLE `reservation_statuses` (
-  `reservation_status_id` integer PRIMARY KEY,
-  `reservation_status_name` varchar(255),
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp
-);
-
-CREATE TABLE `reservations` (
+CREATE TABLE `reservation` (
   `reservation_id` bigint PRIMARY KEY,
   `seat_id` bigint,
-  `member_id` varchar(255),
-  `reservation_status_id` integer DEFAULT 1,
+  `user_id` varchar(255),
+  `payment_id` bigint,
+  `reservation_status` varchar(255) DEFAULT 'temp',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `deleted_at` timestamp
 );
 
-ALTER TABLE `concert_basics` ADD FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`);
+CREATE TABLE `payment` (
+  `payment_id` bigint PRIMARY KEY,
+  `payment_status` varchar(255),
+  `created_at` timestamp,
+  `updated_at` timestamp,
+  `delted_at` timestamp
+);
 
-ALTER TABLE `concert_basics` ADD FOREIGN KEY (`super_manager_id`) REFERENCES `super_managers` (`super_manager_id`);
+CREATE TABLE `point_history` (
+  `point_history_id` bigint PRIMARY KEY,
+  `payment_id` bigint,
+  `created_at` timestamp,
+  `updated_at` timestamp,
+  `delted_at` timestamp
+);
 
-ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_basic_id`) REFERENCES `concert_basics` (`concert_basic_id`);
+ALTER TABLE `concert_detail` ADD FOREIGN KEY (`concert_basic_id`) REFERENCES `concert_basic` (`concert_basic_id`);
 
-ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_detail_register_id`) REFERENCES `concert_detail_registers` (`concert_detail_register_id`);
+ALTER TABLE `seat` ADD FOREIGN KEY (`concert_detail_id`) REFERENCES `concert_detail` (`concert_detail_id`);
 
-ALTER TABLE `concert_details` ADD FOREIGN KEY (`concert_detail_status_id`) REFERENCES `concert_detail_statuses` (`concert_detail_status_id`);
+ALTER TABLE `token` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
-ALTER TABLE `casts` ADD FOREIGN KEY (`concert_detail_id`) REFERENCES `concert_details` (`concert_detail_id`);
+ALTER TABLE `reservation` ADD FOREIGN KEY (`seat_id`) REFERENCES `seat` (`seat_id`);
 
-ALTER TABLE `casts` ADD FOREIGN KEY (`arist_id`) REFERENCES `artists` (`artist_id`);
+ALTER TABLE `reservation` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
-ALTER TABLE `seats` ADD FOREIGN KEY (`concert_detail_id`) REFERENCES `concert_details` (`concert_detail_id`);
+ALTER TABLE `reservation` ADD FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`);
 
-ALTER TABLE `seats` ADD FOREIGN KEY (`seat_status_id`) REFERENCES `seat_statuses` (`seat_status_id`);
-
-ALTER TABLE `tokens` ADD FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`);
-
-ALTER TABLE `tokens` ADD FOREIGN KEY (`token_status_id`) REFERENCES `token_statuses` (`token_status_id`);
-
-ALTER TABLE `reservations` ADD FOREIGN KEY (`seat_id`) REFERENCES `seats` (`seat_id`);
-
-ALTER TABLE `reservations` ADD FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`);
-
-ALTER TABLE `reservations` ADD FOREIGN KEY (`reservation_status_id`) REFERENCES `reservation_statuses` (`reservation_status_id`);
+ALTER TABLE `point_history` ADD FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`);
