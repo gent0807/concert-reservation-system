@@ -17,13 +17,8 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "임시 로그인", description = "요청에 담긴 UUID를 이용하여 임시 로그인합니다.")
-<<<<<<< Updated upstream:src/main/java/io/dev/concertreservationsystem/interfaces/api/member/MemberController.java
-    public ResponseEntity<MemberResponseDTO> getMemberById(@RequestParam String id) {
-        return ResponseEntity.status(HttpStatus.OK).body(new MemberResponseDTO(id, null, null, null, null));
-=======
     public ResponseEntity<UserResponseDTO> getMemberById(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(new UserResponseDTO(id, null, null, null, null));
->>>>>>> Stashed changes:src/main/java/io/dev/concertreservationsystem/interfaces/api/user/UserController.java
     }
 
     @PostMapping("/new")
