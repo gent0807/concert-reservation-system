@@ -6,18 +6,18 @@ sequenceDiagram
   actor Client as Client
   participant ReservationController as ReservationController
   participant ConcertReservationFacade as ConcertReservationFacade
-  participant TokenService as TokenService
-  participant UserService as UserService
-  participant SeatService as SeatService
-  participant ReservationService as ReservationService
-  participant TokenRepository as TokenRepository
-  participant UserRepository as UserRepository
-  participant SeatRepository as SeatRepository
-  participant ReservationRepository as ReservationRepository
+                                                                     participant TokenService as TokenService
+                                                                     participant UserService as UserService
+                                                                     participant SeatService as SeatService
+                                                                     participant ReservationService as ReservationService
+                                                                     participant TokenRepository as TokenRepository
+                                                                     participant UserRepository as UserRepository
+                                                                     participant SeatRepository as SeatRepository
+                                                                     participant ReservationRepository as ReservationRepository
 
-  Client ->>+ ReservationController:  선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 Request(wating_id, seat_id)
-  ReservationController ->>+ ConcertReservationFacade: 택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청(wating_id, seat_id)
-  ConcertReservationFacade ->>+ TokenService: 상태가 active이면서 요청에 담긴 토큰 아이디 고유하게 존재하는지 확인 요청(token)
+                                                                     Client ->>+ ReservationController:  선택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 Request(wating_id, seat_id)
+                                                                     ReservationController ->>+ ConcertReservationFacade: 택한 실제 공연의 예약 가능 좌석에 대한 임시 예약 정보 상태 결제 완료 상태로 수정 요청(wating_id, seat_id)
+                                                                     ConcertReservationFacade ->>+ TokenService: 상태가 active이면서 요청에 담긴 토큰 아이디 고유하게 존재하는지 확인 요청(token)
   TokenService ->>+ TokenRepository: 상태가 active이면서 요청에 담긴 토큰 아이디와 같은 토큰 아이디 조회 요청(token)
   alt 상태가 active이면서 요청에 담긴 토큰 아이디와 같은 토큰 아이디 조회 성공
         TokenRepository -->> TokenService: token
