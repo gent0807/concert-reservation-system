@@ -18,22 +18,16 @@ public class ConcertAdminFacade {
        /*
             List<ConcertBasicDTOResult> concertBasicDTOResultList = concertBasicService.findAllConcertBasics();
 
-            List<ConcertAdminDTOResult> concertAdminDTOResultList = ConcertBasicDTOResult.convertToConcertAdminDTOResultList(concertBasicDTOResultList);
-
-            return concertAdminDTOResultList;
+            return ConcertBasicDTOResult.convertToConcertAdminDTOResultList(concertBasicDTOResultList);
         */
     }
 
     public void findConcertBasicsByStartDateAndEndDate(ConcertAdminDTOParam concertAdminDTOParam) {
     /*
-        // concertAdminDTOParam을 concertBasicDTOParam으로 변환
-        ConcertBasicDTOParam concertBasicDTOParam = concertAdminDTOParam.convertToConcertBasicDTOParam();
 
-        List<ConcertBasicDTOResult> concertBasicDTOResultList = concertBasicService.findConcertBasicsByStartDateAndEndDate(concertBasicDTOParam);
+        List<ConcertBasicDTOResult> concertBasicDTOResultList = concertBasicService.findConcertBasicsByStartDateAndEndDate(concertAdminDTOParam.convertToConcertBasicDTOParam());
 
-        List<ConcertAdminDTOResult> concertAdminDTOResultList = ConcertBasicDTOResult.convertToConcertAdminDTOResultList(concertBasicDTOResultList);
-
-        return concertAdminDTOResultList;
+        return ConcertBasicDTOResult.convertToConcertAdminDTOResultList(concertBasicDTOResultList);
      */
     }
 }

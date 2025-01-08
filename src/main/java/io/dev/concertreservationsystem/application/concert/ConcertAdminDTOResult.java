@@ -1,4 +1,4 @@
 package io.dev.concertreservationsystem.application.concert;
 
-public class ConcertAdminDTOResult {
+public record ConcertAdminDTOResult(){
 }

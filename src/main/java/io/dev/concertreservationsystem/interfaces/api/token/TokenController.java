@@ -24,7 +24,7 @@ public class TokenController {
 
     private final TokenAdminFacade tokenAdminFacade;
 
-    @PostMapping
+    @PostMapping("/new")
     @Operation(summary = "회원 대기열 토큰 발급/ 임시 로그인", description = "요청 헤더에 담긴 userId를 이용하여 회원 대기열 토큰을 생성해 토큰 아이디를 헤더에 담아보내줍니다.")
     public ResponseEntity<Void> publishToken(@RequestHeader("X-Custom-UserId") String userId) {
 /*

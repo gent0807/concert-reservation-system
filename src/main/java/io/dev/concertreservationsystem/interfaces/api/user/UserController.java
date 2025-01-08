@@ -24,7 +24,6 @@ public class UserController {
     @PostMapping
     @Operation(summary = "임시 회원가입", description = "UUID를 랜덤 생성하여 임시 회원가입하고, 헤더에 userId(UUID)를 담아보내줍니다.).")
     public ResponseEntity<Void> insertUser() {
-    /*
 
         // 접속 요청 발생하는 경우, UUID 랜덤 발급하고 유저 테이블에 저장하고, 새로 생성된 userId(UUID)를 담아 보내주는
         // 현재 참조된 UserAdminFacade 타입 객체의 insertUser 메소드 호출
@@ -36,9 +35,6 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
 
-    */
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
     @GetMapping(value = "/condition")

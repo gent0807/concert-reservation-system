@@ -7,4 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TokenService {
+    public TokenDTOResult publishToken(TokenDTOParam tokenDTOParam) {
+        return null;
+    }
 }

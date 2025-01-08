@@ -1,4 +1,49 @@
 package io.dev.concertreservationsystem.domain.user;
 
-public class UserDTOResult {
+import io.dev.concertreservationsystem.application.user.UserAdminDTOResult;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Builder
+public record UserDTOResult(
+        @NotNull
+        String userId,
+
+        @NotNull
+        String userName,
+
+        @Min(0)
+        Integer age,
+
+        @NotNull
+        UserGenderType gender,
+
+        @Min(0)
+        Integer point,
+
+        @NotNull
+        LocalDateTime createdAt,
+
+        @NotNull
+        LocalDateTime updatedAt,
+
+        LocalDateTime deletedAt
+) {
+    public UserAdminDTOResult convertToUserAdminDTOResult() {
+        return UserAdminDTOResult.builder()
+                .userId(this.userId)
+                .userName(this.userName)
+                .age(this.age)
+                .gender(this.gender)
+                .point(this.point)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
+                .deletedAt(this.deletedAt)
+                .build();
+    }
 }
