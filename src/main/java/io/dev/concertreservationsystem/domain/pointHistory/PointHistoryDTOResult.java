@@ -1,0 +1,4 @@
+package io.dev.concertreservationsystem.domain.pointHistory;
+
+public record PointHistoryDTOResult() {
+}

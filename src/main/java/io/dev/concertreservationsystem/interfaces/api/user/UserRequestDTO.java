@@ -4,10 +4,8 @@ package io.dev.concertreservationsystem.interfaces.api.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record UserRequestDTO(
-    @JsonProperty("memberId") String memberId,
-    @JsonProperty("memberName") String memberName,
+    @JsonProperty("userName") String userName,
     @JsonProperty("age") Integer age,
-    @JsonProperty("gender") String gender,
-    @JsonProperty("balance") Integer balance
+    @JsonProperty("gender") String gender
 ) {
 }
