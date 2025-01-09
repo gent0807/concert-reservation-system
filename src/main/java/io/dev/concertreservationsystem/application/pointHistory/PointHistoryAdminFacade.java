@@ -3,20 +3,25 @@ package io.dev.concertreservationsystem.application.pointHistory;
 import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryDTOParam;
 import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryDTOResult;
 import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryService;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreatePointHistory;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Validated
 public class PointHistoryAdminFacade {
 
     private final PointHistoryService pointHistoryService;
 
     // 1. 유저 포인트 충전 차감 내역 추가 저장, Post
-    public List<PointHistoryAdminDTOResult> insertUserPointHistory(PointHistoryAdminDTOParam pointHistoryAdminDTOParam) {
+    @Validated(CreatePointHistory.class)
+    public List<PointHistoryAdminDTOResult> insertUserPointHistory(@Valid PointHistoryAdminDTOParam pointHistoryAdminDTOParam) {
 
             // pointHistoryDTOParam에 담긴 정보를 바탕으로 유저의 포인트를 수정하고, 유저의 포인트 충전/차감 내역을 추가 저장하는,
             // 현재 참조된 PointHistoryService 타입 객체의 insertUserPointHistory 메소드 호출

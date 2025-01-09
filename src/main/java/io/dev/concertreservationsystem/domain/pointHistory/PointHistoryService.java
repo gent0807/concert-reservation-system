@@ -5,10 +5,13 @@ import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserNotFoundException;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreatePointHistory;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class PointHistoryService {
 
     private final PointHistoryRepository pointHistoryRepository;
@@ -23,7 +27,8 @@ public class PointHistoryService {
     private final SimplePointHistoryFactory simplePointHistoryFactory;
 
     @Transactional
-    public List<PointHistoryDTOResult> insertUserPointHistory(PointHistoryDTOParam pointHistoryDTOParam) {
+    @Validated(CreatePointHistory.class)
+    public List<PointHistoryDTOResult> insertUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
         User user = userRepository.findUserByUserId(pointHistoryDTOParam.userId())
                 .orElseThrow(()->{

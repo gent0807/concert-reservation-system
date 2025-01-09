@@ -2,6 +2,7 @@ package io.dev.concertreservationsystem.interfaces.api.pointHistory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dev.concertreservationsystem.application.pointHistory.PointHistoryAdminDTOParam;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.annotation.NotInvalidPointTransactionType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +29,7 @@ public record PointHistoryRequestDTO(
         @JsonProperty(value = "type", required = true, access = JsonProperty.Access.READ_ONLY)
         @NotNull
         @NotBlank
+        @NotInvalidPointTransactionType
         PointTransactionType type,
 
         @JsonProperty(value = "amount", required = true, access = JsonProperty.Access.READ_ONLY)
