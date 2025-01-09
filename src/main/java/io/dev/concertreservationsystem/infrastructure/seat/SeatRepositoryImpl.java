@@ -21,4 +21,19 @@ public class SeatRepositoryImpl implements SeatRepository {
         return seatJPARepository.findSeatsByConcertDetailIdAndSeatStatus(concertDetailId, seatStatus);
     }
 
+    @Override
+    public Seat findSeatBySeatId(Long seatId){
+        return seatJPARepository.findById(seatId).orElse(null);
+    }
+
+    @Override
+    public void save(Seat seat){
+        seatJPARepository.save(seat);
+    }
+
+    @Override
+    public List<Seat> findSeatsByConcertDetailId(Long concertDetailId){
+        return seatJPARepository.findSeatsByCon
+    }
+
 }

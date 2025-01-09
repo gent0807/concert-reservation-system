@@ -18,4 +18,14 @@ public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
     public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatusType){
         return concertDetailJPARepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatusType);
     }
+
+    @Override
+    public ConcertDetail findConcertDetailByConcertDetailId(Long concertDetailId){
+        return concertDetailJPARepository.findById(concertDetailId).orElse(null);
+    }
+
+    @Override
+    public void saveConcertDetail(ConcertDetail concertDetail){
+        concertDetailJPARepository.save(concertDetail);
+    }
 }

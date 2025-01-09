@@ -1,6 +1,7 @@
 package io.dev.concertreservationsystem.domain.seat;
 
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.SeatInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -141,5 +142,16 @@ public class Seat {
             log.debug("seatId is null or less than 1");
             throw new SeatInvalidException(ErrorCode.SEAT_ID_INVALID);
         }
+    }
+
+    public void checkReservable() {
+        if(this.seatStatus != SeatStatusType.RESERVABLE){
+            log.debug("this seat is not reservable");
+            throw new ReservationInvalidException(ErrorCode.RESERVATION_NOT_RESERVABLE_SEAT);
+        }
+    }
+
+    public void updateSeatStatus(SeatStatusType seatStatus) {
+        this.setSeatStatus(seatStatus);
     }
 }

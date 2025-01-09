@@ -2,6 +2,7 @@ package io.dev.concertreservationsystem.domain.concert_detail;
 
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ConcertDetailInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationInvalidException;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -126,7 +127,12 @@ public class ConcertDetail {
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);
         }
     }
-    
-    
 
+
+    public void checkReservable() {
+        if(this.concertDetailStatus != ConcertDetailStatusType.RESERVABLE){
+            log.debug("this concert detail is not reservable");
+            throw new ReservationInvalidException(ErrorCode.RESERVATION_NOT_RESERVABLE_CONCERT_DETAIL);
+        }
+    }
 }

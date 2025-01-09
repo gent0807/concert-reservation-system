@@ -1,8 +1,14 @@
 package io.dev.concertreservationsystem.infrastructure.reservation;
 
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 
 public interface ReservationJPARepository extends JpaRepository<Reservation,Long> {
+
+    Optional<Reservation> findReservationByUserIdAndSeatIdAndPaymentId(String userId, Long seatId, Long paymentId);
 }

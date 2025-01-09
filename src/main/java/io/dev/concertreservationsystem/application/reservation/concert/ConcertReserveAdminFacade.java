@@ -1,12 +1,11 @@
 package io.dev.concertreservationsystem.application.reservation.concert;
 
-import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOResult;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
+import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryService;
-import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOResult;
 import io.dev.concertreservationsystem.domain.reservation.ReservationService;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
@@ -63,16 +62,13 @@ public class ConcertReserveAdminFacade {
 
     // 3. 좌석 예약 주문서 발행, 좌석 임시 점유(occupied)
     @Transactional
-    public void insertReservations(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
-        /*
-                // 콘서트 실제 공연들의 예약 상태/예약 가능 여부 확인, 예약 불가(상태가 reservable 아닌 경우)이면 exception 발생
-                concertDetailService.checkReservable(ConcertReserveAdminDTOParam.convertToConcertDetailDTOParamList(concertReserveAdminDTOParamList));
+    public List<ConcertReserveAdminDTOResult> insertReservations(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
-                // 좌석들의 예약 상태/예약 가능 여부 확인, 예약 불가한(상태가 reservable 아닌 경우의) 좌석이 있을 시 exception 발생
-                seatService.checkReservableOfSeats(ConcertReserveAdminDTOParam.convertToSeatDTOParamList(concertReserveAdminDTOParamList));
+                // 콘서트 실제 공연들의 예약 상태/예약 가능 여부 확인, 예약 불가(상태가 reservable 아닌 경우)이면 exception 발생
+                concertDetailService.checkReservableOfConcertDetail(ConcertReserveAdminDTOParam.convertToReservationDTOParamList(concertReserveAdminDTOParamList));
 
                 // 미결제 상태의 결제 정보 신규 저장(주문서 발행)
-                PaymentDTOResult paymentDTOResult = paymentService.publishNewPayment(ConcertReserveAdminDTOParam.convertToPaymentDTOParamList(concertReserveAdminDTOParamList));
+                PaymentDTOResult paymentDTOResult = paymentService.publishNewPayment();
 
                 // 좌석들 임시 예약 정보 신규 등록
                 List<ReservationDTOResult> reservationDTOResultList = reservationService.insertReservations(ConcertReserveAdminDTOParam.convertToReservationDTOParamList(concertReserveAdminDTOParamList, paymentDTOResult));
@@ -81,10 +77,10 @@ public class ConcertReserveAdminFacade {
                 seatService.updateStatusOfSeats(ConcertReserveAdminDTOParam.convertToSeatDTOParamList(concertReserveAdminDTOParamList));
 
                 // 콘서트 실제 공연들의 예약 상태/예약 가능 여부 수정
-                concertDetailService.updateStatusOfConcertDetails(ConcertReserveAdminDTOParam.convertToConcertDetailDTOParamList(concertReserveAdminDTOParamList));
+                concertDetailService.updateStatusOfConcertDetails(ConcertReserveAdminDTOParam.convertToReservationDTOParamList(concertReserveAdminDTOParamList));
 
                 return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
-        */
+
     }
 
     // 4. 주문 금액 결제, 좌석 완전 예약

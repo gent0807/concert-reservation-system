@@ -23,27 +23,17 @@ public class ReservationController {
     @PostMapping
     @Operation(summary = "콘서트 실제 공연 좌석들에 대한 임시 예약 등록", description = "콘서트 실제 공연의 예약 가능한 좌석에 대한 임시 예약들을 등록합니다.")
     public ResponseEntity<List<ReservationResponseDTO>> insertReservations(@RequestBody List<ReservationRequestDTO> reservationRequestDTOList) {
-        /*
-
-            // List<ReservationRequestDTO> 타입 객체를 List<ConcertReserveAdminDTOParam> 타입 객체로 변환
-            List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList = ReservationRequestDTO.convertToConcertReserveAdminDTOParamList(reservationRequestDTOList);
 
             // concertReserveAdminDTOParamList 정보를 이용하여 콘서트 실제 공연의 좌석들에 대한 예약 정보를 등록하고,
             // 콘서트 실제 공연 좌석들의 예약 상태를 확인/수정하고, 콘서트 실제 공연 좌석들의 예약 상태를 occupied 상태로 수정하는,
             // 현재 참조된  ConcertReserveAdminFacade 타입 객체의 insertReservations 메소드 호출
-            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = concertReserveAdminFacade.insertReservations(concertReserveAdminDTOParamList);
+            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = concertReserveAdminFacade.insertReservations(ReservationRequestDTO.convertToConcertReserveAdminDTOParamList(reservationRequestDTOList));
 
             // concertReserveAdminDTOResultList를  reservationResponseDTOList로 변환
             List<ReservationResponseDTO> reservationResponseDTOList = ConcertReserveAdminDTOResult.convertToReservationResponseDTOList(concertReserveAdminDTOResultList);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(reservationResponseDTOList);
-        */
-
-        ReservationResponseDTO reservationResponse = ReservationResponseDTO.builder().build();
-
-        List<ReservationResponseDTO> reservationResponseList = List.of(reservationResponse);
 
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationResponseList);
     }
 }

@@ -1,4 +1,9 @@
 package io.dev.concertreservationsystem.domain.seat;
 
-public record SeatDTOParam() {
+import lombok.Builder;
+
+@Builder
+public record SeatDTOParam(
+        Long seatId
+) {
 }

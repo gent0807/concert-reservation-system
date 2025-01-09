@@ -37,4 +37,16 @@ public class SeatService {
                 }).stream().map(Seat::convertToSeatDTOResult).collect(Collectors.toList());
 
     }
+
+    public void updateStatusOfSeats(List<SeatDTOParam> seatDTOParamList) {
+        seatDTOParamList.stream().forEach(
+          seatDTOParam -> {
+                            Seat seat = seatRepository.findSeatBySeatId(seatDTOParam.seatId());
+
+                            seat.updateSeatStatus(SeatStatusType.OCCUPIED);
+
+                            seatRepository.save(seat);
+            }
+        );
+    }
 }
