@@ -1,5 +1,7 @@
 package io.dev.concertreservationsystem.interfaces.api.common.interceptor;
 
+import io.dev.concertreservationsystem.application.token.TokenAdminDTOParam;
+import io.dev.concertreservationsystem.application.token.TokenAdminDTOResult;
 import io.dev.concertreservationsystem.application.token.TokenAdminFacade;
 import io.dev.concertreservationsystem.domain.token.TokenStatusType;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,28 +23,18 @@ public class TokenInterceptor implements HandlerInterceptor {
             Object handler
     ) throws Exception {
         // Authorization 헤더에서 값 가져오기
-        String authorizationHeader = request.getHeader("Authorization");
+        String tokenId = request.getHeader("Authorization");
 
-        TokenStatusType tokenStatusType = tokenAdminFacade.checkTokenValidation();
+        String userId = request.getHeader("X-Custom-UserId");
 
-        if(tokenStatusType == TokenStatusType.INACTIVE){
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "아직 활성화되지 않은 토큰입니다.");
-
-            return false;
-        }
-
-        if(tokenStatusType == TokenStatusType.EXPIRED){
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "이미 만료된 토큰입니다.");
-
-            return false;
-        }
-
+        // 토큰 상태 유효성 검사(내부에서 exception 처리)
+        tokenAdminFacade.checkTokenStatusValidation(TokenAdminDTOParam.builder()
+                .tokenId(Long.parseLong(tokenId))
+                .userId(userId)
+                .build());
 
         return true;
+
+
     }
 }

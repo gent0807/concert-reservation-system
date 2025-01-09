@@ -1,9 +1,7 @@
 package io.dev.concertreservationsystem.application.token;
 
-import io.dev.concertreservationsystem.domain.token.TokenDTOParam;
 import io.dev.concertreservationsystem.domain.token.TokenDTOResult;
 import io.dev.concertreservationsystem.domain.token.TokenService;
-import io.dev.concertreservationsystem.domain.token.TokenStatusType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +22,9 @@ public class TokenAdminFacade {
 
     }
 
-    public TokenStatusType checkTokenValidation() {
-        return TokenStatusType.ACTIVE;
+    public void checkTokenStatusValidation(TokenAdminDTOParam tokenAdminDTOParam) {
+
+        tokenService.checkTokenStatusValidation(tokenAdminDTOParam.convertToTokenDTOParam());
+
     }
 }

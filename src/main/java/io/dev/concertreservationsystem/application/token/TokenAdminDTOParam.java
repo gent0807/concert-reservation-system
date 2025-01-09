@@ -1,9 +1,19 @@
 package io.dev.concertreservationsystem.application.token;
 
 import io.dev.concertreservationsystem.domain.token.TokenDTOParam;
+import lombok.Builder;
 
-public record TokenAdminDTOParam() {
+@Builder
+public record TokenAdminDTOParam(
+        Long tokenId,
+        String userId
+) {
     public TokenDTOParam convertToTokenDTOParam() {
-        return null;
+        return TokenDTOParam.builder()
+                .tokenId(tokenId)
+                .userId(userId)
+                .build();
     }
+
+
 }

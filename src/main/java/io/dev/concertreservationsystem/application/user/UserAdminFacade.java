@@ -1,20 +1,25 @@
 package io.dev.concertreservationsystem.application.user;
 
+import io.dev.concertreservationsystem.application.common.validation.interfaces.CreateUser;
 import io.dev.concertreservationsystem.domain.user.UserDTOResult;
 import io.dev.concertreservationsystem.domain.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
 @RequiredArgsConstructor
+@Validated
 public class UserAdminFacade {
     private final UserService userService;
 
     // 1. 임시 회원가입. 새로운 회원을 등록 저장, Post
-    public UserAdminDTOResult insertUser() {
+    @Validated(CreateUser.class)
+    public UserAdminDTOResult insertUser(@Valid UserAdminDTOParam userAdminDTOParam) {
 
-             // 랜덤으로 UUID를 생성하여 새로운 유저를 등록하는, 현재 참조된 UserService 타입 객체의 saveUser 메소드 호출
-             UserDTOResult userDTOResult = userService.createUser();
+             // 랜덤으로 UUID를 생성하여 새로운 유저를 등록하는, 현재 참조된 UserService 타입 객체의 createUser 메소드 호출
+             UserDTOResult userDTOResult = userService.insertUser(userAdminDTOParam.convertToUserDTOParam());
 
              // UserAdminDTOResult 타입 객체 반환
              return userDTOResult.convertToUserAdminDTOResult();
