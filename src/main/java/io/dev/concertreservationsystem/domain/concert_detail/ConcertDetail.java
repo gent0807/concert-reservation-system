@@ -28,7 +28,7 @@ public class ConcertDetail {
     private Long concertBasicId;
 
     @Column(name = "concert_detail_status", nullable = false, columnDefinition = "ENUM('RESERVABLE')")
-    private ConcertDetailStatus concertDetailStatus;
+    private ConcertDetailStatusType concertDetailStatus;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
@@ -114,7 +114,7 @@ public class ConcertDetail {
     }
 
     private void checkConcertDetailStatusValidation() {
-        if(this.concertDetailStatus == null || !Arrays.stream(ConcertDetailStatus.values()).toList().contains(this.concertDetailStatus)){  
+        if(this.concertDetailStatus == null || !Arrays.stream(ConcertDetailStatusType.values()).toList().contains(this.concertDetailStatus)){
             log.debug("concertDetailStatus is null or not valid");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_STATUS_INVALID);
         }

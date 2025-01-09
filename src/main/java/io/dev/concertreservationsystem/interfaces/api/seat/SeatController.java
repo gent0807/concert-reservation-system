@@ -23,18 +23,14 @@ public class SeatController {
     @Operation(summary = "예약 가능한 콘서트 실제 공연 좌석 목록 조회", description = "예약 가능한 콘서트 실제 공연 좌석 목록 조회")
     public ResponseEntity<List<SeatResponseDTO>> findReservableSeats(@PathVariable("concert-detail-id") Long concertDetailId) {
 
-
-        // concertDetailId를 이용하여 concertReservationDTOParam 생성
-        ConcertReserveAdminDTOParam concertReserveAdminDTOParam = ConcertReserveAdminDTOParam.builder()
-                                                                        .concertDetailId(concertDetailId)
-                                                                        .build();
-
         // concertReserveAdminDTOParam의 concertDetailId를 이용하여 해당 콘서트 실제 공연의 예약 가능한 좌석 목록을 조회하는,
         // 현재 참조된 concertReserveAdminFacade 타입 객체의 findReservableSeats 메소드 호출
-        List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = concertReserveAdminFacade.findReservableSeats(concertReserveAdminDTOParam);
-        List<SeatResponseDTO> seatResponseDTOList = ConcertReserveAdminDTOResult.convertToSeatResponseDTOList(concertReserveAdminDTOResultList);
+        List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = concertReserveAdminFacade.findReservableSeats(ConcertReserveAdminDTOParam.builder()
+                                                                                                                                        .concertDetailId(concertDetailId)
+                                                                                                                                        .build());
 
-        return ResponseEntity.ok().body(seatResponseDTOList);
+
+        return ResponseEntity.ok().body(ConcertReserveAdminDTOResult.convertToSeatResponseDTOList(concertReserveAdminDTOResultList));
 
 
 

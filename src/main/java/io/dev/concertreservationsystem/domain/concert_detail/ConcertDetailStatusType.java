@@ -1,6 +1,6 @@
 package io.dev.concertreservationsystem.domain.concert_detail;
 
-public enum ConcertDetailStatus {
+public enum ConcertDetailStatusType {
     COMPLETED,
     RESERVABLE,
     CANCELLED

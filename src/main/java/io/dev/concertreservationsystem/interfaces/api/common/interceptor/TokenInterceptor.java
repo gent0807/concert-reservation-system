@@ -17,11 +17,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     private final TokenAdminFacade tokenAdminFacade;
 
     @Override
-    public boolean preHandle(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Object handler
-    ) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // Authorization 헤더에서 값 가져오기
         String tokenId = request.getHeader("Authorization");
 

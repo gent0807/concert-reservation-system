@@ -45,7 +45,10 @@ public enum ErrorCode {
     CONCERT_DETAIL_START_TIME_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_START_TIME_INVALID", "유효하지 않은 콘서트 실제 공연 시작 시각입니다."),
     CONCERT_DETAIL_END_TIME_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_END_TIME_INVALID", "유효하지 않은 콘서트 실제 공연 종료 시각입니다."),
     CONCERT_DETAIL_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_CREATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 생성일입니다."),
-    CONCERT_DETAIL_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_UPDATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 수정일입니다.");
+    CONCERT_DETAIL_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_UPDATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 수정일입니다."),
+
+    // 좌석 관련 ErrorCode
+    RESERVABLE_SEAT_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, "RESERVABLE_SEAT_NOT_FOUND", "해당 공연의 예약 가능한 좌석이 없습니다.");
 
 
     private final HttpStatus httpStatus;	// HttpStatus

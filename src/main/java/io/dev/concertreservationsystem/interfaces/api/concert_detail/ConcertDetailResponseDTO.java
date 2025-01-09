@@ -1,6 +1,6 @@
 package io.dev.concertreservationsystem.interfaces.api.concert_detail;
 
-import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatus;
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public record ConcertDetailResponseDTO(
 
         Long concertBasicId,
 
-        ConcertDetailStatus concertDetailStatus,
+        ConcertDetailStatusType concertDetailStatus,
 
         LocalDateTime startTime,
 

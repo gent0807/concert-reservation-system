@@ -13,6 +13,7 @@ import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
 import io.dev.concertreservationsystem.domain.user.UserService;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableConcertDetail;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -47,11 +48,11 @@ public class ConcertReserveAdminFacade {
     }
 
     // 2. 콘서트 실제 공연의 예약 가능 좌석 목록 조회
-    public List<ConcertReserveAdminDTOResult> findReservableSeats(ConcertReserveAdminDTOParam concertReserveAdminDTOParam){
+    @Validated(SearchReservableSeat.class)
+    public List<ConcertReserveAdminDTOResult> findReservableSeats(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam){
 
             // 콘서트 실제 공연의 예약 가능 좌석 목록 조회
-            List<SeatDTOResult> seatDTOResultList
-                    = seatService.findReservableSeats(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
+            List<SeatDTOResult> seatDTOResultList = seatService.findReservableSeats(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
 
             List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = SeatDTOResult.convertToConcertReserveAdminDTOResultList(seatDTOResultList);
 

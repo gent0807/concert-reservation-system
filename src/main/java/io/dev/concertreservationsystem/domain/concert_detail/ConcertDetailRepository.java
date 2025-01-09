@@ -4,5 +4,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ConcertDetailRepository {
-    Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatus concertDetailStatus);
+    Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatusType);
 }

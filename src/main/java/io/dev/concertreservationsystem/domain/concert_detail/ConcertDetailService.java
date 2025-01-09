@@ -1,6 +1,5 @@
 package io.dev.concertreservationsystem.domain.concert_detail;
 
-import io.dev.concertreservationsystem.domain.concert_detail.factory.ConcertDetailFactory;
 import io.dev.concertreservationsystem.domain.concert_detail.factory.ReservableConcertDetailFactory;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ConcertDetailNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
