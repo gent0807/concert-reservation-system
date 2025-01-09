@@ -95,14 +95,14 @@ public class ConcertDetail {
     private void checkEndTimeValidation() {
         if(this.endTime.isBefore(this.startTime) || this.endTime.isBefore(LocalDateTime.now()) || this.endTime == null){
             log.debug("endTime is null or before now");
-            throw new ConcertDetailInvalidException(END_TIME_INVALID);
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_END_TIME_INVALID);
         }
     }
 
     private void checkStartTimeValidation() {
         if(this.startTime.isAfter(this.endTime) || this.startTime.isBefore(LocalDateTime.now()) || startTime == null){
             log.debug("startTime is null or after or before now");
-            throw new ConcertDetailInvalidException(ErrorCode.START_TIME_INVALID);
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_START_TIME_INVALID);
         }
     }
 

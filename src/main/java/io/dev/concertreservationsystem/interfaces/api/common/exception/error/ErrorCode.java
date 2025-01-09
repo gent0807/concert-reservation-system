@@ -40,7 +40,13 @@ public enum ErrorCode {
     // 콘서트 실제 공연 관련 ErrorCode
     CONCERT_BASIC_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_BASIC_ID_INVALID", "유효하지 않은 콘서트 기본 정보 아이디입니다."),
     RESERVABLE_CONCERT_DETAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "RESERVABLE_CONCERT_DETAIL_NOT_FOUND", "해당 콘서트의 예약 가능한 실제 공연이 없습니다."),
-    CONCERT_DETAIL_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_ID_INVALID", "유효하지 않은 콘서트 실제 공연 정보 아이디입니다.");
+    CONCERT_DETAIL_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_ID_INVALID", "유효하지 않은 콘서트 실제 공연 정보 아이디입니다."),
+    CONCERT_DETAIL_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_STATUS_INVALID", "유효하지 않은 콘서트 실제 공연 예약 상태 타입입니다."),
+    CONCERT_DETAIL_START_TIME_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_START_TIME_INVALID", "유효하지 않은 콘서트 실제 공연 시작 시각입니다."),
+    CONCERT_DETAIL_END_TIME_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_END_TIME_INVALID", "유효하지 않은 콘서트 실제 공연 종료 시각입니다."),
+    CONCERT_DETAIL_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_CREATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 생성일입니다."),
+    CONCERT_DETAIL_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_UPDATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 수정일입니다.");
+
 
     private final HttpStatus httpStatus;	// HttpStatus
     private final String code;
