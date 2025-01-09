@@ -22,7 +22,7 @@ public class SeatController {
     @GetMapping("{concert-detail-id}/reservable")
     @Operation(summary = "예약 가능한 콘서트 실제 공연 좌석 목록 조회", description = "예약 가능한 콘서트 실제 공연 좌석 목록 조회")
     public ResponseEntity<List<SeatResponseDTO>> findReservableSeats(@PathVariable("concert-detail-id") Long concertDetailId) {
-/*
+
 
         // concertDetailId를 이용하여 concertReservationDTOParam 생성
         ConcertReserveAdminDTOParam concertReserveAdminDTOParam = ConcertReserveAdminDTOParam.builder()
@@ -35,10 +35,8 @@ public class SeatController {
         List<SeatResponseDTO> seatResponseDTOList = ConcertReserveAdminDTOResult.convertToSeatResponseDTOList(concertReserveAdminDTOResultList);
 
         return ResponseEntity.ok().body(seatResponseDTOList);
-*/
 
-        List<SeatResponseDTO> seatResponses = null;
 
-        return ResponseEntity.ok().body(seatResponses);
+
     }
 }

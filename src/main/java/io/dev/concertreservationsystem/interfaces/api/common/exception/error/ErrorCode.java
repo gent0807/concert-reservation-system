@@ -35,7 +35,11 @@ public enum ErrorCode {
     POINT_HISTORY_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_ID_INVALID", "유효하지 않은 포인트 충전 차감 내역 아이디입니다."),
     POINT_HISTORY_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_CREATED_AT_INVALID", "유효하진 않은 포인트 충전 차감 내역 생성일입니다."),
     POINT_HISTORY_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_UPDATED_AT_INVALID", "유효하지 않은 포인트 충전 차감 내역 수정일입니다."),
-    POINT_HISTORY_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_SAVE_FAILED", "포인트 충전 차감 내역 저장에 실패했습니다.");
+    POINT_HISTORY_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_SAVE_FAILED", "포인트 충전 차감 내역 저장에 실패했습니다."),
+
+    // 콘서트 실제 공연 관련 ErrorCode
+    CONCERT_BASIC_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_BASIC_ID_INVALID", "유효하지 않은 콘서트 기본 정보 아이디입니다."),
+    RESERVABLE_CONCERT_DETAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "RESERVABLE_CONCERT_DETAIL_NOT_FOUND", "해당 콘서트의 예약 가능한 실제 공연이 없습니다.");
 
     private final HttpStatus httpStatus;	// HttpStatus
     private final String code;

@@ -12,14 +12,18 @@ import io.dev.concertreservationsystem.domain.reservation.ReservationService;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
 import io.dev.concertreservationsystem.domain.user.UserService;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableConcertDetail;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Validated
 public class ConcertReserveAdminFacade {
 
     private final UserService userService;
@@ -31,17 +35,14 @@ public class ConcertReserveAdminFacade {
 
 
     // 1. 예약 가능한 콘서트 실제 공연 목록 조회
-    public List<ConcertReserveAdminDTOResult> findReservableConcertDetails(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    @Validated(SearchReservableConcertDetail.class)
+    public List<ConcertReserveAdminDTOResult> findReservableConcertDetails(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
 
             // 콘서트의 예약 가능한 실제 공연 목록 조회
             List<ConcertDetailDTOResult> concertDetailDTOResultList
                     = concertDetailService.findReservableConcertDetails(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
 
-            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = ConcertDetailDTOResult.convertToConcertReserveAdminDTOResultList(concertDetailDTOResultList);
-
-            return concertReserveAdminDTOResultList;
-
-
+            return ConcertDetailDTOResult.convertToConcertReserveAdminDTOResultList(concertDetailDTOResultList);
 
     }
 
@@ -52,7 +53,7 @@ public class ConcertReserveAdminFacade {
             List<SeatDTOResult> seatDTOResultList
                     = seatService.findReservableSeats(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
 
-            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = ConcertDetailDTOResult.convertToConcertReserveAdminDTOResultList(concertDetailDTOResultList);
+            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = SeatDTOResult.convertToConcertReserveAdminDTOResultList(seatDTOResultList);
 
             return concertReserveAdminDTOResultList;
 
