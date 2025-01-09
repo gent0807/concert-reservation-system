@@ -1,6 +1,6 @@
 package io.dev.concertreservationsystem.domain.user;
 
-import io.dev.concertreservationsystem.application.common.validation.interfaces.CreateUser;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateUser;
 import io.dev.concertreservationsystem.domain.user.factory.SimpleUserFactory;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserNotFoundException;
@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
