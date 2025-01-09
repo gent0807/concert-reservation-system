@@ -1,12 +1,22 @@
 package io.dev.concertreservationsystem.domain.token;
 
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Slf4j
 public class Token {
 
     @Id
@@ -42,17 +52,14 @@ public class Token {
 
         if(this.tokenStatus == TokenStatusType.ACTIVE){
             if(this.expiresAt.isBefore(LocalDateTime.now())){
-                this.tokenStatus = TokenStatusType.EXPIRED;
-                throw new IllegalArgumentException("Token is expired");
+                log.debug("expired token");
+                throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_EXPIRED);
             }
         }
 
-        if (this.tokenStatus == TokenStatusType.EXPIRED) {
-            throw new IllegalArgumentException("Token is expired");
-        }
-
         if (this.tokenStatus == TokenStatusType.INACTIVE){
-            throw new IllegalArgumentException("Token is inactive");
+            log.debug("inactive token");
+            throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_INACTIVE);
         }
     }
 }

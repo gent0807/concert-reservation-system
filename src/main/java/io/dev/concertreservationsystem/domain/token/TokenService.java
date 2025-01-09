@@ -1,11 +1,15 @@
 package io.dev.concertreservationsystem.domain.token;
 
 
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TokenService {
 
     private final TokenRepository tokenRepository;
@@ -18,7 +22,10 @@ public class TokenService {
 
         // tokenDTOParam을 이용하여 userId와 tokenId가 일치하는 토큰이 있는지 확인
         Token token = tokenRepository.findByTokenIdAndUserId(tokenDTOParam.tokenId(), tokenDTOParam.userId())
-                                                .orElseThrow(()-> new RuntimeException("존재하지 않는 토큰입니다. 유효하지 않습니다."));
+                                                .orElseThrow(()-> {
+                                                    log.debug("not found token");
+                                                    throw new TokenInvalidException(ErrorCode.TOKEN_NOT_FOUND);
+                                                });
 
         // token 상태 검사
         token.checkStatus();
