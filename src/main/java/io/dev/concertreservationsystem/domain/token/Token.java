@@ -1,10 +1,9 @@
 package io.dev.concertreservationsystem.domain.token;
 
+import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,12 +19,14 @@ import java.time.LocalDateTime;
 public class Token {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "token_id", nullable = false)
     private Long tokenId;
 
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Column(name = "token_status", nullable = false)
+    @Column(name = "token_status", nullable = false, columnDefinition = "ENUM('INACTIVE')")
     private TokenStatusType tokenStatus;
 
     @Column(name = "expires_at", columnDefinition = "TIMESTAMP")

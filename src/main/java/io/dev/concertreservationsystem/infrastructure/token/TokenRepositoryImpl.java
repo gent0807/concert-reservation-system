@@ -16,4 +16,9 @@ public class TokenRepositoryImpl implements TokenRepository {
     public Optional<Token> findByTokenIdAndUserId(Long tokenId, String userId) {
         return tokenJPARepository.findByTokenIdAndUserId(tokenId, userId);
     }
+
+    @Override
+    public void saveToken(Token token){
+        tokenJPARepository.save(token);
+    }
 }

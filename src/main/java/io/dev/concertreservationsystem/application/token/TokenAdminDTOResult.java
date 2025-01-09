@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 public record TokenAdminDTOResult(
         Long tokenId,
+        String userId,
         TokenStatusType tokenStatus,
         LocalDateTime expiredAt
 ) {

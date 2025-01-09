@@ -25,7 +25,7 @@ public class PointHistoryController {
 
     private final PointHistoryAdminFacade pointHistoryAdminFacade;
 
-    @PostMapping
+    @PostMapping("/new")
     @Operation(summary = "유저 포인트 충전/차감 내역 추가 저장", description = "유저의 포인트 충전/차감 내역을 추가 저장합니다.")
     public ResponseEntity<PointHistoryResponseDTO> insertUserPointHistory(@RequestBody PointHistoryRequestDTO pointHistoryRequestDTO) {
 

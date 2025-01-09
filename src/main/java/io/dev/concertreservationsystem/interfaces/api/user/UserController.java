@@ -22,7 +22,7 @@ public class UserController {
 
     private final UserAdminFacade userAdminFacade;
 
-    @PostMapping
+    @PostMapping("/new")
     @Operation(summary = "임시 회원가입", description = "UUID를 랜덤 생성하여 임시 회원가입하고, 헤더에 userId(UUID)를 담아보내줍니다.).")
     public ResponseEntity<Void> insertUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
 
