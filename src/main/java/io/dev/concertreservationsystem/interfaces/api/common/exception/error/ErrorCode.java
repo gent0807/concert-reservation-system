@@ -34,8 +34,8 @@ public enum ErrorCode {
     POINT_HISTORY_RESULT_POINT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_RESULT_POINT_INVALID", "유효하지 않은 유저의 총 포인트 잔고입니다."),
     POINT_HISTORY_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_ID_INVALID", "유효하지 않은 포인트 충전 차감 내역 아이디입니다."),
     POINT_HISTORY_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_CREATED_AT_INVALID", "유효하진 않은 포인트 충전 차감 내역 생성일입니다."),
-    POINT_HISTORY_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_UPDATED_AT_INVALID", "유효하지 않은 포인트 충전 차감 내역 수정일입니다.");
-
+    POINT_HISTORY_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_UPDATED_AT_INVALID", "유효하지 않은 포인트 충전 차감 내역 수정일입니다."),
+    POINT_HISTORY_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_SAVE_FAILED", "포인트 충전 차감 내역 저장에 실패했습니다.");
 
     private final HttpStatus httpStatus;	// HttpStatus
     private final String code;

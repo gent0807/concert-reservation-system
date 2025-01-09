@@ -4,6 +4,7 @@ import io.dev.concertreservationsystem.domain.pointHistory.factory.SimplePointHi
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PointHistoryNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreatePointHistory;
 import jakarta.validation.Valid;
@@ -52,7 +53,7 @@ public class PointHistoryService {
         return pointHistoryRepository.findPointHistoriesByUserId(pointHistory.getUserId())
                                                 .orElseThrow(()->{
                                                     log.debug("point history not found");
-                                                    throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
+                                                    throw new PointHistoryNotFoundException(ErrorCode.POINT_HISTORY_SAVE_FAILED);
                                                 }).stream().map(PointHistory::convertToPointHistoryDTOResult).collect(Collectors.toList());
 
 
