@@ -33,7 +33,6 @@ public record UserDTOResult(
         @NotNull
         @NotBlank
         @Min(0)
-        @Max(500_000_000)
         Integer point,
 
         @NotNull

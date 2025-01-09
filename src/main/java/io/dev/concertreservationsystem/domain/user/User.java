@@ -46,7 +46,7 @@ public class User {
 
     public UserDTOResult convertToUserDTOResult() {
 
-         checkValidation();
+        checkValidation();
 
         return UserDTOResult.builder()
                             .userId(this.userId)
@@ -63,30 +63,37 @@ public class User {
 
     public void checkValidation() {
         if(this.userId == null || this.userId.isBlank()){
+            log.debug("userId is null or blank");
             throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
         }
 
         if(this.userName == null || this.userName.isBlank()){
+            log.debug("userName is null or blank");
             throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
         }
 
         if(this.age == null || this.age < 0){
+            log.debug("age is null or less than 0");
             throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
         }
 
         if(this.gender == null || !Arrays.stream(UserGenderType.values()).toList().contains(this.gender)){
+            log.debug("gender is null or not valid");
             throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
         }
 
         if(this.point == null || this.point < 0){
+            log.debug("point is null or less than 0");
             throw new UserInvalidException(ErrorCode.USER_POINT_INVALID);
         }
 
         if(this.createdAt == null){
+            log.debug("createdAt is null");
             throw new UserInvalidException(ErrorCode.USER_CREATED_AT_INVALID);
         }
 
         if(this.updatedAt == null){
+            log.debug("updatedAt is null");
             throw new UserInvalidException(ErrorCode.USER_UPDATED_AT_INVALID);
         }
 
