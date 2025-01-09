@@ -1,11 +1,14 @@
 package io.dev.concertreservationsystem.domain.concert_detail;
 
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ConcertDetailInvalidException;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -44,6 +47,9 @@ public class ConcertDetail {
     private LocalDateTime deletedAt;
 
     public ConcertDetailDTOResult convertToConcertDetailDTOResult() {
+
+        checkConcertDetailValidation();
+
         return ConcertDetailDTOResult.builder()
                 .concertDetailId(this.concertDetailId)
                 .concertBasicId(this.concertBasicId)
@@ -55,5 +61,72 @@ public class ConcertDetail {
                 .build();
 
     }
+
+    private void checkConcertDetailValidation() {
+        checkConcertDetailIdValidation();
+
+        checkConcertDetailStatusValidation();
+
+        checkConcertBasicIdValidation();
+
+        checkStartTimeValidation();
+
+        checkEndTimeValidation();
+
+        checkCreatedAtValidation();
+
+        checkUpdatedAtInvalid();
+    }
+
+    private void checkUpdatedAtInvalid() {
+        if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
+            log.debug("updatedAt is null or after now");
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_UPDATED_AT_INVALID);
+        }
+    }
+
+    private void checkCreatedAtValidation() {
+        if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
+            log.debug("createAt is null or after now");
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_CREATED_AT_INVALID);
+        }
+    }
+
+    private void checkEndTimeValidation() {
+        if(this.endTime.isBefore(this.startTime) || this.endTime.isBefore(LocalDateTime.now()) || this.endTime == null){
+            log.debug("endTime is null or before now");
+            throw new ConcertDetailInvalidException(END_TIME_INVALID);
+        }
+    }
+
+    private void checkStartTimeValidation() {
+        if(this.startTime.isAfter(this.endTime) || this.startTime.isBefore(LocalDateTime.now()) || startTime == null){
+            log.debug("startTime is null or after or before now");
+            throw new ConcertDetailInvalidException(ErrorCode.START_TIME_INVALID);
+        }
+    }
+
+    private void checkConcertBasicIdValidation() {
+        if (this.concertBasicId == null || this.concertBasicId < 0){
+            log.debug("concertBasicId is null or less than 0");
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_BASIC_ID_INVALID);
+        }
+    }
+
+    private void checkConcertDetailStatusValidation() {
+        if(this.concertDetailStatus == null || !Arrays.stream(ConcertDetailStatus.values()).toList().contains(this.concertDetailStatus)){  
+            log.debug("concertDetailStatus is null or not valid");
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_STATUS_INVALID);
+        }
+    }
+
+    private void checkConcertDetailIdValidation() {
+        if(this.concertDetailId == null || this.concertDetailId < 0){
+            log.debug("concertDetailId is null or less than 0");
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);
+        }
+    }
+    
+    
 
 }
