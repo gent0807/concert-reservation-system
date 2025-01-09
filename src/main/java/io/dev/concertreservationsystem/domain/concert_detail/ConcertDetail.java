@@ -78,49 +78,49 @@ public class ConcertDetail {
         checkUpdatedAtInvalid();
     }
 
-    private void checkUpdatedAtInvalid() {
+    public void checkUpdatedAtInvalid() {
         if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
             log.debug("updatedAt is null or after now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_UPDATED_AT_INVALID);
         }
     }
 
-    private void checkCreatedAtValidation() {
+    public void checkCreatedAtValidation() {
         if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
             log.debug("createAt is null or after now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_CREATED_AT_INVALID);
         }
     }
 
-    private void checkEndTimeValidation() {
+    public void checkEndTimeValidation() {
         if(this.endTime.isBefore(this.startTime) || this.endTime.isBefore(LocalDateTime.now()) || this.endTime == null){
             log.debug("endTime is null or before now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_END_TIME_INVALID);
         }
     }
 
-    private void checkStartTimeValidation() {
+    public void checkStartTimeValidation() {
         if(this.startTime.isAfter(this.endTime) || this.startTime.isBefore(LocalDateTime.now()) || startTime == null){
             log.debug("startTime is null or after or before now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_START_TIME_INVALID);
         }
     }
 
-    private void checkConcertBasicIdValidation() {
+    public void checkConcertBasicIdValidation() {
         if (this.concertBasicId == null || this.concertBasicId < 0){
             log.debug("concertBasicId is null or less than 0");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_BASIC_ID_INVALID);
         }
     }
 
-    private void checkConcertDetailStatusValidation() {
+    public void checkConcertDetailStatusValidation() {
         if(this.concertDetailStatus == null || !Arrays.stream(ConcertDetailStatusType.values()).toList().contains(this.concertDetailStatus)){
             log.debug("concertDetailStatus is null or not valid");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_STATUS_INVALID);
         }
     }
 
-    private void checkConcertDetailIdValidation() {
+    public void checkConcertDetailIdValidation() {
         if(this.concertDetailId == null || this.concertDetailId < 0){
             log.debug("concertDetailId is null or less than 0");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);

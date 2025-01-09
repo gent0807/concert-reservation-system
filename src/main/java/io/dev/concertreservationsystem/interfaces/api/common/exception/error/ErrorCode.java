@@ -48,7 +48,15 @@ public enum ErrorCode {
     CONCERT_DETAIL_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_UPDATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 수정일입니다."),
 
     // 좌석 관련 ErrorCode
-    RESERVABLE_SEAT_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, "RESERVABLE_SEAT_NOT_FOUND", "해당 공연의 예약 가능한 좌석이 없습니다.");
+    RESERVABLE_SEAT_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, "RESERVABLE_SEAT_NOT_FOUND", "해당 공연의 예약 가능한 좌석이 없습니다."),
+    SEAT_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_ID_INVALID", "유효하지 않은 좌석 아이디입니다."),
+    SEAT_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_STATUS_INVALID", "유효하지 않은 좌석 상태 타입입니다."),
+    SEAT_NUMBER_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_NUMBER_INVALID", "유효하지 않은 좌석 번호입니다."),
+    SEAT_PRICE_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_PRICE_INVALID", "유효하지 않은 좌석 가격입니다."),
+    SEAT_EXPIRED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_EXPIRED_AT_INVALID", "유효하지 않은 좌석 점유 만료 시간입니다,"),
+    SEAT_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_CREATED_AT_INVALID", "유효하지 않은 좌석 생성일입니다."),
+    SEAT_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_UPDATED_AT_INVALID", "유효하지 않은 좌석 수정일입니다.");
+
 
 
     private final HttpStatus httpStatus;	// HttpStatus

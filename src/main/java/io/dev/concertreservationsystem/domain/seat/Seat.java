@@ -1,5 +1,7 @@
 package io.dev.concertreservationsystem.domain.seat;
 
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.SeatInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,6 +9,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -46,6 +49,10 @@ public class Seat {
     private LocalDateTime deletedAt;
 
     public SeatDTOResult convertToSeatDTOResult() {
+
+        checkSeatValidation();
+
+
         return SeatDTOResult.builder()
                 .seatId(this.seatId)
                 .concertDetailId(this.concertDetailId)
@@ -57,5 +64,82 @@ public class Seat {
                 .updatedAt(this.updatedAt)
                 .build();
 
+    }
+
+    public void checkSeatValidation() {
+
+        checkSeatIdValidation();
+
+        checkConcertDetailIdValidation();
+
+        checkSeatStatusValidation();
+
+        checkSeatNumberValidation();
+
+        checkSeatPriceValidation();
+
+        checkSeatExpiredAtValidation();
+
+        checkSeatCreatedAtValidation();
+
+        checkSeatUpdatedAtValidation();
+
+    }
+
+    private void checkSeatUpdatedAtValidation() {
+        if (this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
+            log.debug("updatedAt is null or after now");
+            throw new SeatInvalidException(ErrorCode.SEAT_UPDATED_AT_INVALID);
+        }
+    }
+
+    private void checkSeatCreatedAtValidation() {
+        if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
+            log.debug("createdAt null or after now");
+            throw new SeatInvalidException(ErrorCode.SEAT_CREATED_AT_INVALID);
+        }
+    }
+
+    private void checkSeatExpiredAtValidation() {
+        if ((this.seatStatus == SeatStatusType.OCCUPIED) && (this.expiredAt == null || this.expiredAt.isBefore(LocalDateTime.now()))){
+            log.debug("invalid expiredAt");
+            throw new SeatInvalidException(ErrorCode.SEAT_EXPIRED_AT_INVALID);
+        }
+    }
+
+    public void checkSeatPriceValidation() {
+        if(this.price == null || this.price < 0){
+            log.debug("price is null or invalid");
+            throw new SeatInvalidException(ErrorCode.SEAT_PRICE_INVALID);
+        }
+    }
+
+    public void checkSeatNumberValidation() {
+        if(this.seatNumber == null || this.seatNumber < 1 || this.seatNumber > 50){
+            log.debug("seatNumber is null or less than 1 or greater than 50");
+            throw new SeatInvalidException(ErrorCode.SEAT_NUMBER_INVALID);
+
+        }
+    }
+
+    public void checkSeatStatusValidation() {
+        if(this.seatStatus == null || !Arrays.stream(SeatStatusType.values()).toList().contains(this.seatStatus)){
+            log.debug("seatStatus null or not valid");
+            throw new SeatInvalidException(ErrorCode.SEAT_STATUS_INVALID);
+        }
+    }
+
+    public void checkConcertDetailIdValidation() {
+        if(concertDetailId == null || concertDetailId < 0){
+            log.debug("concertDetailId is null or less than 0");
+            throw new SeatInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);
+        }
+    }
+
+    public void checkSeatIdValidation() {
+        if(this.seatId == null || this.seatId < 0){
+            log.debug("seatId is null or less than 1");
+            throw new SeatInvalidException(ErrorCode.SEAT_ID_INVALID);
+        }
     }
 }
