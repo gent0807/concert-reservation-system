@@ -9,6 +9,7 @@ import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryService;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOResult;
 import io.dev.concertreservationsystem.domain.reservation.ReservationService;
+import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
 import io.dev.concertreservationsystem.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class ConcertReserveAdminFacade {
 
     // 1. 예약 가능한 콘서트 실제 공연 목록 조회
     public List<ConcertReserveAdminDTOResult> findReservableConcertDetails(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
-        /*
+
             // 콘서트의 예약 가능한 실제 공연 목록 조회
             List<ConcertDetailDTOResult> concertDetailDTOResultList
                     = concertDetailService.findReservableConcertDetails(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
@@ -39,14 +40,14 @@ public class ConcertReserveAdminFacade {
             List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = ConcertDetailDTOResult.convertToConcertReserveAdminDTOResultList(concertDetailDTOResultList);
 
             return concertReserveAdminDTOResultList;
-        */
 
-        return null;
+
+
     }
 
     // 2. 콘서트 실제 공연의 예약 가능 좌석 목록 조회
     public List<ConcertReserveAdminDTOResult> findReservableSeats(ConcertReserveAdminDTOParam concertReserveAdminDTOParam){
-        /*
+
             // 콘서트 실제 공연의 예약 가능 좌석 목록 조회
             List<SeatDTOResult> seatDTOResultList
                     = seatService.findReservableSeats(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
@@ -54,8 +55,8 @@ public class ConcertReserveAdminFacade {
             List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = ConcertDetailDTOResult.convertToConcertReserveAdminDTOResultList(concertDetailDTOResultList);
 
             return concertReserveAdminDTOResultList;
-        */
-        return null;
+
+
     }
 
     // 3. 좌석 예약 주문서 발행, 좌석 임시 점유(occupied)
