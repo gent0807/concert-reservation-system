@@ -26,7 +26,15 @@ public enum ErrorCode {
     TOKEN_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "TOKEN_STATUS_INVALID", "유효하지 않은 토큰 상태 타입입니다."),
     TOKEN_EXPIRED_AT_NONE(HttpStatus.NOT_ACCEPTABLE, "TOKEN_EXPIRED_AT_NONE", "활성화된 토큰의 만료일 존재하지 않습니다."),
     TOKEN_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "TOKEN_CREATED_AT_INVALID", "유효하지 않은 토큰 생성일입니다."),
-    TOKEN_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "TOKEN_UPDATED_AT_INVALID", "유효하지 않은 토큰 수정일입니다." );
+    TOKEN_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "TOKEN_UPDATED_AT_INVALID", "유효하지 않은 토큰 수정일입니다." ),
+
+    // 포인트 충전 차감 내역 관련 ErrorCode
+    POINT_HISTORY_POINT_TRANSACTION_TYPE_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_POINT_TRANSACTION_TYPE_INVALID", "유효하지 않은 포인트 충전/차감 타입입니다."),
+    POINT_HISTORY_AMOUNT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_AMOUNT_INVALID" , "유효하지 않은 포인트 충전 차감량입니다."),
+    POINT_HISTORY_RESULT_POINT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_RESULT_POINT_INVALID", "유효하지 않은 유저의 총 포인트 잔고입니다."),
+    POINT_HISTORY_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_ID_INVALID", "유효하지 않은 포인트 충전 차감 내역 아이디입니다."),
+    POINT_HISTORY_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_CREATED_AT_INVALID", "유효하진 않은 포인트 충전 차감 내역 생성일입니다."),
+    POINT_HISTORY_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_UPDATED_AT_INVALID", "유효하지 않은 포인트 충전 차감 내역 수정일입니다.");
 
 
     private final HttpStatus httpStatus;	// HttpStatus

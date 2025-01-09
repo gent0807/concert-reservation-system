@@ -7,23 +7,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class PointHistoryAdminFacade {
 
-    // private final PointHistoryService pointHistoryService;
+    private final PointHistoryService pointHistoryService;
 
     // 1. 유저 포인트 충전 차감 내역 추가 저장, Post
-    public void insertUserPointHistory(PointHistoryAdminDTOParam pointHistoryAdminDTOParam) {
-        /*
+    public List<PointHistoryAdminDTOResult> insertUserPointHistory(PointHistoryAdminDTOParam pointHistoryAdminDTOParam) {
+
             // pointHistoryDTOParam에 담긴 정보를 바탕으로 유저의 포인트를 수정하고, 유저의 포인트 충전/차감 내역을 추가 저장하는,
             // 현재 참조된 PointHistoryService 타입 객체의 insertUserPointHistory 메소드 호출
-            PointHistoryDTOResult pointHistoryDTOResult = pointHistoryService.insertUserPointHistory( pointHistoryAdminDTOParam.convertToPointHistoryDTOParam());
+            List<PointHistoryDTOResult> pointHistoryDTOResultList = pointHistoryService.insertUserPointHistory(pointHistoryAdminDTOParam.convertToPointHistoryDTOParam());
 
-            return pointHistoryDTOResult.convertToPointHistoryDTOResult();
+            return pointHistoryDTOResultList.stream().map(PointHistoryDTOResult::convertToPointHistoryDTOResult).collect(Collectors.toList());
 
-          */
+
     }
 
     // 2. 유저의 포인트 충전/차감 내역 전체 목록 조회

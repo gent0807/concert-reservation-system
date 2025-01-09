@@ -6,7 +6,7 @@ public record UserResponseDTO(
         String userName,
         Integer age,
         String gender,
-        Integer point
+        Long point
 ){
 
 }

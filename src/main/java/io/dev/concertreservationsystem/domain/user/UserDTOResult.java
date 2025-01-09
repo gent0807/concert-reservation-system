@@ -33,7 +33,7 @@ public record UserDTOResult(
         @NotNull
         @NotBlank
         @Min(0)
-        Integer point,
+        Long point,
 
         @NotNull
         @NotBlank

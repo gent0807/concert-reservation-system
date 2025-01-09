@@ -33,8 +33,8 @@ public class User {
     @Column(name = "gender", nullable = false)
     private UserGenderType gender;
 
-    @Column(name = "point", nullable = false, columnDefinition = "INT SIGNED DEFAULT 0")
-    private Integer point;
+    @Column(name = "point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
+    private Long point;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -101,4 +101,7 @@ public class User {
 
     }
 
+    public void updatePoint(long amount) {
+        this.setPoint(this.point + amount);
+    }
 }

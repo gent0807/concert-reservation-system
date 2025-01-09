@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,24 +27,15 @@ public class PointHistoryController {
     private final PointHistoryAdminFacade pointHistoryAdminFacade;
 
     @PostMapping("/new")
-    @Operation(summary = "유저 포인트 충전/차감 내역 추가 저장", description = "유저의 포인트 충전/차감 내역을 추가 저장합니다.")
-    public ResponseEntity<PointHistoryResponseDTO> insertUserPointHistory(@RequestBody PointHistoryRequestDTO pointHistoryRequestDTO) {
-
-        /*
-            // PointHistoryRequestDTO를 PointHistoryAdminDTOParam으로 변환하기 위한 메소드 호출
-            PointHistoryAdminDTOParam pointHistoryAdminDTOParam = pointHistoryRequestDTO.convertToPointHistoryAdminDTOParam();
-
+    @Operation(summary = "유저 포인트 충전/차감 내역 추가 저장", description = "유저의 포인트 충전/차감 내역을 추가 저장하고 유저 포인트 정보를 수정합니다.")
+    public ResponseEntity<List<PointHistoryResponseDTO>> insertUserPointHistory(@RequestBody PointHistoryRequestDTO pointHistoryRequestDTO) {
             // 요청에 담긴 PointHistoryRequestDTO 타입 데이터의 userId와 일치하는 회원의 포인트를 수정하고, 포인트 충전/차감 내역을 추가 저장하는,
             // 현재 참조된 PointHistoryAdminFacade 타입 객체 pointHistoryAdminFacade의 insertUserPointHistory 메소드 호출
-            PointHistoryAdminDTOResult pointHistoryAdminDTOResult = pointHistoryService.insertUserPointHistory(pointHistoryAdminDTOParam);
+            List<PointHistoryAdminDTOResult> pointHistoryAdminDTOResultList = pointHistoryAdminFacade.insertUserPointHistory(pointHistoryRequestDTO.convertToPointHistoryAdminDTOParam());
 
-            // PointHistoryAdminDTOResult 타입 객체를 PointHistoryResponseDTO 타입 객체로 변환하는 메소드 호출
-            PointHistoryResponseDTO pointHistoryResponseDTO = pointHistoryAdminDTOResult.convertToPointHistoryResponseDTO();
+            return ResponseEntity.status(HttpStatus.CREATED).body(pointHistoryAdminDTOResultList.stream()
+                                                                    .map(PointHistoryAdminDTOResult::convertToPointHistoryResponseDTO).collect(Collectors.toList()));
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(pointHistoryResponseDTO);
-         */
-
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "{user-id}/all")
@@ -97,7 +89,5 @@ public class PointHistoryController {
 
         return ResponseEntity.ok().build();
     }
-
-
 
 }

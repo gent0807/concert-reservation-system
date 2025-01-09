@@ -1,11 +1,14 @@
 package io.dev.concertreservationsystem.interfaces.api.pointHistory;
 
+import lombok.Builder;
+
 import java.time.LocalDateTime;
 
+@Builder
 public record PointHistoryResponseDTO(
         Long pointHistoryId,
         Long paymentId,
-        Long userId,
+        String userId,
         PointTransactionType type,
         Long amount,
         Long resultPoint,

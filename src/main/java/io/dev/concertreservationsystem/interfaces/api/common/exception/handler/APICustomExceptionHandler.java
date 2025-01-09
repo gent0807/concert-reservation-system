@@ -1,10 +1,7 @@
 package io.dev.concertreservationsystem.interfaces.api.common.exception.handler;
 
 import io.dev.concertreservationsystem.domain.user.User;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenNotFoundException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserNotFoundException;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,6 +30,11 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = TokenNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleTokenNotFoundException(TokenNotFoundException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = PointHistoryInvalidException.class)
+    public ResponseEntity<ErrorResponse> handlePointHistoryInvalidException(PointHistoryInvalidException e) {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 

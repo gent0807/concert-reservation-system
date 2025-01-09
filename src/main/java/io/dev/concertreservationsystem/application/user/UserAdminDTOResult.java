@@ -23,7 +23,7 @@ public record UserAdminDTOResult(
     UserGenderType gender,
 
     @Min(0)
-    Integer point,
+    Long point,
 
     @NotNull
     LocalDateTime createdAt,
