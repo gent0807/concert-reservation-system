@@ -38,5 +38,31 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 
+    @ExceptionHandler(value = PointHistoryNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePointHistoryNotFoundException(PointHistoryNotFoundException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = SeatInvalidException.class)
+    public ResponseEntity<ErrorResponse> handleSeatInvalidException(SeatInvalidException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = PaymentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentNotFoundException(PaymentNotFoundException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = ReservationInvalidException.class)
+    public ResponseEntity<ErrorResponse> handleReservationInvalidException(ReservationInvalidException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = ReservationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleReservationNotFoundException(ReservationNotFoundException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+
 
 }

@@ -4,6 +4,7 @@ import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOPar
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableConcertDetail;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.constraints.Min;
@@ -26,8 +27,19 @@ public record ConcertReserveAdminDTOParam(
         @Min(value = 0, groups = {SearchReservableConcertDetail.class,  SearchReservableSeat.class})
         Long concertDetailId,
 
+        @NotNull(groups = CreateReservations.class)
+        @NotBlank(groups = CreateReservations.class)
+        @Min(value = 0, groups = CreateReservations.class)
         Long seatId,
+
+        @NotNull(groups = CreateReservations.class)
+        @NotBlank(groups = CreateReservations.class)
+        @Min(value = 0, groups = CreateReservations.class)
         String userId,
+
+        @NotNull(groups = CreateReservations.class)
+        @NotBlank(groups = CreateReservations.class)
+        @Min(value = 0, groups = CreateReservations.class)
         Long paymentId
 
 ){

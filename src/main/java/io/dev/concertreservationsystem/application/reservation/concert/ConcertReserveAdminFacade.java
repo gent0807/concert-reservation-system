@@ -11,6 +11,7 @@ import io.dev.concertreservationsystem.domain.reservation.ReservationService;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
 import io.dev.concertreservationsystem.domain.user.UserService;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableConcertDetail;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.Valid;
@@ -62,7 +63,8 @@ public class ConcertReserveAdminFacade {
 
     // 3. 좌석 예약 주문서 발행, 좌석 임시 점유(occupied)
     @Transactional
-    public List<ConcertReserveAdminDTOResult> insertReservations(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
+    @Validated(CreateReservations.class)
+    public List<ConcertReserveAdminDTOResult> insertReservations(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
                 // 콘서트 실제 공연들의 예약 상태/예약 가능 여부 확인, 예약 불가(상태가 reservable 아닌 경우)이면 exception 발생
                 concertDetailService.checkReservableOfConcertDetail(ConcertReserveAdminDTOParam.convertToReservationDTOParamList(concertReserveAdminDTOParamList));
