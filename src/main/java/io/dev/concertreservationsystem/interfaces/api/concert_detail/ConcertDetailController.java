@@ -24,19 +24,19 @@ public class ConcertDetailController {
         @GetMapping("{concert-id}/reservable")
         @Operation(summary = "예약가능한 콘서트 실제 공연 목록 조회", description = "예약가능한 콘서트 실제 공연 목록 조회")
         public ResponseEntity<List<ConcertDetailResponseDTO>> findReservableConcertDetails(@PathVariable("concert-id") Long concertId) {
-           /*
-                // concertId를 이용하여 concertReservationDTOParam 생성
-                ConcertReserveAdminDTOParam concertReserveAdminDTOParam = ConcertReserveAdminDTOParam.builder()
-                                                                                            .concertId(concertId);
 
-                // concertReserveAdminDTOParam의 concertId를 이용하여 해당 콘서트의 예약 가능한 날짜, 예약 가능한 실제 공연 목록을 조회하는,
-                // 현재 참조된 ConcertReserveAdminFacade 타입 객체의 findReservableConcertDetails 메소드를 호출한다.
-                List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = concertReserveAdminFacade.findReservableConcertDetails(concertReserveAdminDTOParam);
+            // concertId를 이용하여 concertReservationDTOParam 생성
+            ConcertReserveAdminDTOParam concertReserveAdminDTOParam = ConcertReserveAdminDTOParam.builder()
+                                                                                        .concertId(concertId);
 
-                List<ConcertDetailResponseDTO> concertDetailResponseDTOList = ConcertReserveAdminDTOResult.convertToConcertDetailResponseDTOList(concertReserveAdminDTOResultList);
+            // concertReserveAdminDTOParam의 concertId를 이용하여 해당 콘서트의 예약 가능한 날짜, 예약 가능한 실제 공연 목록을 조회하는,
+            // 현재 참조된 ConcertReserveAdminFacade 타입 객체의 findReservableConcertDetails 메소드를 호출한다.
+            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = concertReserveAdminFacade.findReservableConcertDetails(concertReserveAdminDTOParam);
 
-                return ResponseEntity.status(HttpStatus.OK).body(concertDetailResponseDTOList);
-            */
+            List<ConcertDetailResponseDTO> concertDetailResponseDTOList = ConcertReserveAdminDTOResult.convertToConcertDetailResponseDTOList(concertReserveAdminDTOResultList);
+
+            return ResponseEntity.status(HttpStatus.OK).body(concertDetailResponseDTOList);
+
             List<ConcertDetailResponseDTO> concertDetailResponseDTOs = null;
 
             return ResponseEntity.ok().body(concertDetailResponseDTOs);
