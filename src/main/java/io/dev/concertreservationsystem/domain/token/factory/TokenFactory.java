@@ -4,6 +4,7 @@ import io.dev.concertreservationsystem.domain.token.Token;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserGenderType;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserInvalidException;
 
 import java.util.Arrays;
@@ -26,7 +27,7 @@ public abstract class TokenFactory {
 
     public void checkUserIdValidation(String userId) {
         if(userId == null || userId.isBlank()){
-            throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
+            throw new TokenInvalidException(ErrorCode.USER_ID_INVALID);
         }
     }
 

@@ -1,6 +1,5 @@
 package io.dev.concertreservationsystem.interfaces.api.common.exception.error;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +9,6 @@ import java.util.NoSuchElementException;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TokenInvalidException extends IllegalArgumentException {
-   ErrorCode errorCode;
+public class TokenNotFoundException extends NoSuchElementException {
+    ErrorCode errorCode;
 }

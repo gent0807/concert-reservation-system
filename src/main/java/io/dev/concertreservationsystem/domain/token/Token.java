@@ -1,13 +1,14 @@
 package io.dev.concertreservationsystem.domain.token;
 
-import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -32,7 +33,8 @@ public class Token {
     @Column(name = "expires_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime expiresAt;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
@@ -42,11 +44,40 @@ public class Token {
     private LocalDateTime deletedAt;
 
     public TokenDTOResult convertToTokenDTOResult() {
+
+        checkValidation();
+
         return TokenDTOResult.builder()
                         .tokenId(this.tokenId)
                         .userId(this.userId)
                         .tokenStatus(this.tokenStatus)
                         .build();
+    }
+
+    public void checkValidation() {
+        if(this.tokenId == null || this.tokenId < 0){
+            throw new TokenInvalidException(ErrorCode.TOKEN_ID_INVALID);
+        }
+
+        if(this.userId == null || this.userId.isBlank()){
+            throw new TokenInvalidException(ErrorCode.USER_ID_INVALID);
+        }
+
+        if(this.tokenStatus == null || !Arrays.stream(TokenStatusType.values()).toList().contains(this.tokenStatus)){
+            throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_INVALID);
+        }
+
+        if(this.tokenStatus == TokenStatusType.ACTIVE && this.expiresAt == null){
+            throw new TokenInvalidException(ErrorCode.TOKEN_EXPIRED_AT_NONE);
+        }
+
+        if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
+            throw new TokenInvalidException(ErrorCode.TOKEN_CREATED_AT_INVALID);
+        }
+
+        if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
+            throw new TokenInvalidException(ErrorCode.TOKEN_UPDATED_AT_INVALID);
+        }
     }
 
     public void checkStatus() {

@@ -3,9 +3,7 @@ package io.dev.concertreservationsystem.domain.token;
 
 import io.dev.concertreservationsystem.domain.token.factory.SimpleTokenFactory;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserInvalidException;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.*;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CheckTokenStatusValid;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateToken;
 import jakarta.transaction.Transactional;
@@ -35,7 +33,7 @@ public class TokenService {
         userRepository.findUserByUserId(tokenDTOParam.userId())
                                     .orElseThrow(()->{
                                         log.debug("not found user");
-                                        throw new UserInvalidException(ErrorCode.USER_NOT_FOUND);
+                                        throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
                                     });
 
         // tokenDTOParam 이용한 Token 타입 객체 생성
@@ -48,7 +46,7 @@ public class TokenService {
         return tokenRepository.findTokensByUserIdAndTokenStatusOrderByCreatedAtDesc(tokenDTOParam.userId(), TokenStatusType.INACTIVE)
                                                                 .orElseThrow(()->{
                                                                     log.debug("not found token list");
-                                                                    throw new TokenInvalidException(ErrorCode.TOKEN_SAVE_FAILED);
+                                                                    throw new TokenNotFoundException(ErrorCode.TOKEN_SAVE_FAILED);
                                                                 }).get(0).convertToTokenDTOResult();
 
     }
@@ -60,7 +58,7 @@ public class TokenService {
         Token token = tokenRepository.findByTokenIdAndUserId(tokenDTOParam.tokenId(), tokenDTOParam.userId())
                                                 .orElseThrow(()-> {
                                                     log.debug("not found token");
-                                                    throw new TokenInvalidException(ErrorCode.TOKEN_NOT_FOUND);
+                                                    throw new TokenNotFoundException(ErrorCode.TOKEN_NOT_FOUND);
                                                 });
 
         // token 상태 검사

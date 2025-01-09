@@ -89,12 +89,12 @@ public class User {
             throw new UserInvalidException(ErrorCode.USER_POINT_INVALID);
         }
 
-        if(this.createdAt == null){
+        if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
             log.debug("createdAt is null");
             throw new UserInvalidException(ErrorCode.USER_CREATED_AT_INVALID);
         }
 
-        if(this.updatedAt == null){
+        if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
             log.debug("updatedAt is null");
             throw new UserInvalidException(ErrorCode.USER_UPDATED_AT_INVALID);
         }
