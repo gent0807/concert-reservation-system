@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.domain.reservation;
 
+import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,21 @@ public class Reservation {
                 .paymentId(paymentId)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
+                .build();
+    }
+
+    public ReservationDTOParam convertToReservationDTOParam(){
+        return ReservationDTOParam.builder()
+                .userId(userId)
+                .seatId(seatId)
+                .paymentId(paymentId)
+                .reservationId(reservationId)
+                .build();
+    }
+
+    public SeatDTOParam convertToSeatDTOParam(){
+        return SeatDTOParam.builder()
+                .seatId(seatId)
                 .build();
     }
 }

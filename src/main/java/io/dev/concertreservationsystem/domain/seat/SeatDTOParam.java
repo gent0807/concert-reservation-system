@@ -4,6 +4,8 @@ import lombok.Builder;
 
 @Builder
 public record SeatDTOParam(
-        Long seatId
+        Long seatId,
+        String userId,
+        Long paymentId
 ) {
 }

@@ -1,5 +1,9 @@
 package io.dev.concertreservationsystem.domain.user;
 
+import io.dev.concertreservationsystem.domain.payment.Payment;
+import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
+import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateUser;
 import io.dev.concertreservationsystem.domain.user.factory.SimpleUserFactory;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
@@ -21,6 +25,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PaymentRepository paymentRepository;
+
+    private final ReservationRepository reservationRepository;
+
     private final SimpleUserFactory simpleUserFactory;
 
     @Transactional
@@ -36,5 +44,19 @@ public class UserService {
                         log.debug("When: userRepository.findUserByUserId(user.getUserId()), Action: UserNotFoundException");
                         throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
                     }).convertToUserDTOResult();
+    }
+
+    public void checkUserPointBalance(UserDTOParam userDTOParam) {
+
+        reservationRepository.findReservationsByUserIdAndPaymentId(userDTOParam.userId(), userDTOParam.paymentId()).orElseThrow(()->{
+            throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
+        });
+
+        Payment payment = paymentRepository.findPaymentByPaymentId(userDTOParam.paymentId());
+
+        userRepository.findUserByUserId(userDTOParam.userId()).orElseThrow(()->{
+                log.debug("When: userRepository.findUserByUserId(userDTOParam.userId()), Action: UserNotFoundException");
+                throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
+            }).checkPrice(payment.getTotalPrice());
     }
 }

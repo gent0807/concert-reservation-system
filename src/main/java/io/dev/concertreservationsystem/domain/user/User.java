@@ -1,6 +1,7 @@
 package io.dev.concertreservationsystem.domain.user;
 
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -129,7 +130,20 @@ public class User {
         }
     }
 
-    public void updatePoint(long amount) {
+    public void chargePoint(long amount) {
         this.setPoint(this.point + amount);
     }
+
+    public void usePoint(long price) {
+        this.setPoint(this.point - price);
+    }
+
+    public void checkPrice(Integer totalPrice) {
+        if(this.point < totalPrice){
+            log.debug("point is under total price");
+            throw new PaymentInvalidException(ErrorCode.PAYMENT_OVER_USER_POINT);
+        }
+    }
+
+
 }

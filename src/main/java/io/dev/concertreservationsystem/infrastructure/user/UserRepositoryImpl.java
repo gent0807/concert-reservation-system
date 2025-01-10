@@ -25,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void updateUser(User user){
+    public void saveUser(User user){
         userJPARepository.save(user);
     }
 

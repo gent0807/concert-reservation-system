@@ -33,7 +33,8 @@ public class SeatRepositoryImpl implements SeatRepository {
 
     @Override
     public List<Seat> findSeatsByConcertDetailId(Long concertDetailId){
-        return seatJPARepository.findSeatsByCon
+        return seatJPARepository.findSeatsByConcertDetailId(concertDetailId);
     }
+
 
 }

@@ -64,10 +64,14 @@ public enum ErrorCode {
     RESERVATION_SEAT_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_SEAT_ID_INVALID", "예약 정보에 유효하지 않은 좌석 아이디가 있습니다."),
     RESERVATION_PAYMENT_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_PAYMENT_ID_INVALID", "예약 정보에 유효하지 않은 결제 아이디가 있습니다."),
     RESERVATION_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE,"RESERVATION_SAVE_FAILED", "예약 정보 저장에 실패했습니다."),
-
+    RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "RESERVATION_NOT_FOUND", "존재하지 않는 좌석 예약 정보입니다,"),
 
     // 결제 관련 ErrorCode
-    PAYMENT_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_SAVE_FAILED", "결제 정보 저장에 실패했습니다.");
+    PAYMENT_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_SAVE_FAILED", "결제 정보 저장에 실패했습니다."),
+    PAYMENT_TOTAL_PRICE_INVALID(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_TOTAL_PRICE_INVALID", "유효하지 않은 결제 가격입니다."),
+    PAYMENT_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_NOT_FOUND", "존재하지 않는 결제 정보입니다."),
+    PAYMENT_OVER_USER_POINT(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_OVER_USER_POINT", "잔고 부족입니다. 유저 포인트 충전이 필요합니다.");
+
 
 
 

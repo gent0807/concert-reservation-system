@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 public class NotPaidPaymentFactory extends PaymentFactory{
 
     @Override
-    public Payment createPayment(){
+    public Payment createPayment(Integer totalPrice){
         return Payment.builder()
                 .paymentStatus(PaymentStatusType.NOT_PAID)
+                .totalPrice(totalPrice)
                 .build();
     }
 }

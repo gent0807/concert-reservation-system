@@ -14,4 +14,5 @@ public interface SeatRepository {
     void save(Seat seat);
 
     List<Seat> findSeatsByConcertDetailId(Long concertDetailId);
+
 }

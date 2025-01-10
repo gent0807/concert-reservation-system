@@ -1,9 +1,12 @@
 package io.dev.concertreservationsystem.application.reservation.concert;
 
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
+import io.dev.concertreservationsystem.domain.payment.PaymentDTOParam;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
+import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
+import io.dev.concertreservationsystem.domain.user.UserDTOParam;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableConcertDetail;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableSeat;
@@ -67,6 +70,8 @@ public record ConcertReserveAdminDTOParam(
     public SeatDTOParam convertToSeatDTOParam() {
         return SeatDTOParam.builder()
                 .seatId(this.seatId)
+                .userId(this.userId)
+                .paymentId(this.paymentId)
                 .build();
     }
 
@@ -85,5 +90,27 @@ public record ConcertReserveAdminDTOParam(
                 .concertDetailId(this.concertDetailId)
                 .build();
 
+    }
+
+    public UserDTOParam convertToUserDTOParam() {
+        return UserDTOParam.builder()
+                .userId(this.userId)
+                .paymentId(this.paymentId)
+                .build();
+    }
+
+    public PointHistoryDTOParam convertToPointHistoryDTOParam() {
+        return PointHistoryDTOParam.builder()
+                .userId(this.userId)
+                .paymentId(this.paymentId)
+                .build();
+    }
+
+
+    public PaymentDTOParam convertToPaymentDTOParam() {
+        return PaymentDTOParam.builder()
+                .paymentId(this.paymentId)
+                .userId(this.userId)
+                .build();
     }
 }

@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 public abstract class PointHistoryFactory {
-    public final PointHistory orderPointHistory(String userId, PointTransactionType type, Long amount, Long resultPoint) {
+    public final PointHistory orderPointHistory(String userId, PointTransactionType type, Integer amount, Long resultPoint) {
 
         checkPointHistoryValidationOnBuild(userId, type, amount, resultPoint);
 
@@ -20,7 +20,7 @@ public abstract class PointHistoryFactory {
         return pointHistory;
     }
 
-    public void checkPointHistoryValidationOnBuild(String userId, PointTransactionType type, Long amount, Long resultPoint){
+    public void checkPointHistoryValidationOnBuild(String userId, PointTransactionType type, Integer amount, Long resultPoint){
 
         checkUserIdValidation(userId);
 
@@ -38,7 +38,7 @@ public abstract class PointHistoryFactory {
         }
     }
 
-    private void checkAmountValidation(Long amount) {
+    private void checkAmountValidation(Integer amount) {
         if(amount == null || amount < 0){
             throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_AMOUNT_INVALID);
         }
@@ -57,5 +57,5 @@ public abstract class PointHistoryFactory {
     }
 
 
-    protected abstract PointHistory createPointHistory(String userId, PointTransactionType type, Long amount, Long resultPoint);
+    protected abstract PointHistory createPointHistory(String userId, PointTransactionType type, Integer amount, Long resultPoint);
 }

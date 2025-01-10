@@ -25,7 +25,7 @@ public record PointHistoryAdminDTOParam(
         @NotNull
         @NotBlank
         @Min(0)
-        Long amount
+        Integer amount
 ) {
 
     public PointHistoryDTOParam convertToPointHistoryDTOParam() {

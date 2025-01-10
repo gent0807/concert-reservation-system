@@ -26,6 +26,8 @@ public record UserDTOParam(
         @NotNull(groups = CreateUser.class)
         @NotBlank(groups = CreateUser.class)
         @NotInvalidUserGenderType(groups = CreateUser.class)
-        UserGenderType gender
+        UserGenderType gender,
+
+        Long paymentId
 ){
 }

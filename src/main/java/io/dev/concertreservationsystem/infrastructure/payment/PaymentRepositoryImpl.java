@@ -23,4 +23,9 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         public Optional<List<Payment>> findPaymentsByPaymentStatusOrderByCreatedAtDesc(PaymentStatusType paymentStatusType){
                 return paymentJPARepository.findPaymentsByPaymentStatusOrderByCreatedAtDesc(paymentStatusType);
         }
+
+        @Override
+        public Payment findPaymentByPaymentId(Long paymentId){
+                return paymentJPARepository.findById(paymentId).orElse(null);
+        }
 }

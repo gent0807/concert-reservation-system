@@ -21,6 +21,8 @@ public record PointHistoryDTOParam(
         @NotNull
         @NotBlank
         @Min(0)
-        Long amount
+        Integer amount,
+
+        Long paymentId
 ) {
 }

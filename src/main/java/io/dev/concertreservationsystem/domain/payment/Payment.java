@@ -22,6 +22,9 @@ public class Payment {
     @Column(name = "user_id", nullable = false)
     private PaymentStatusType paymentStatus;
 
+    @Column(name = "total_price", nullable = false, columnDefinition = "INT UNSIGNED DEFAULT 0")
+    private Integer totalPrice;
+
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
@@ -35,6 +38,7 @@ public class Payment {
         return PaymentDTOResult.builder()
                 .paymentId(this.paymentId)
                 .paymentStatus(this.paymentStatus)
+                .totalPrice(this.totalPrice)
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)
                 .build();

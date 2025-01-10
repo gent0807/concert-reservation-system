@@ -13,7 +13,7 @@ public record PointHistoryDTOResult(
         Long paymentId,
         String userId,
         PointTransactionType type,
-        Long amount,
+        Integer amount,
         Long resultPoint,
         LocalDateTime created_at,
         LocalDateTime updated_at

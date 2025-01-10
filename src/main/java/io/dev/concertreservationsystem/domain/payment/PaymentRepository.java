@@ -7,4 +7,6 @@ public interface PaymentRepository {
     void savePayment(Payment payment);
 
     Optional<List<Payment>> findPaymentsByPaymentStatusOrderByCreatedAtDesc(PaymentStatusType paymentStatusType);
+
+    Payment findPaymentByPaymentId(Long paymentId);
 }

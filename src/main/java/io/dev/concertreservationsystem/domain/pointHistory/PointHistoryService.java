@@ -1,5 +1,7 @@
 package io.dev.concertreservationsystem.domain.pointHistory;
 
+import io.dev.concertreservationsystem.domain.payment.Payment;
+import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.pointHistory.factory.SimplePointHistoryFactory;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
@@ -7,6 +9,7 @@ import io.dev.concertreservationsystem.interfaces.api.common.exception.error.Err
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PointHistoryNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreatePointHistory;
+import io.dev.concertreservationsystem.interfaces.api.pointHistory.PointTransactionType;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +28,7 @@ public class PointHistoryService {
 
     private final PointHistoryRepository pointHistoryRepository;
     private final UserRepository userRepository;
+    private final PaymentRepository paymentRepository;
     private final SimplePointHistoryFactory simplePointHistoryFactory;
 
     @Transactional
@@ -38,13 +42,13 @@ public class PointHistoryService {
                 });
 
         // 포인트 수정
-        user.updatePoint(pointHistoryDTOParam.amount());
+        user.chargePoint(pointHistoryDTOParam.amount());
 
         // 포인트 수정한 유저 정보 저장(put)
-        userRepository.updateUser(user);
+        userRepository.saveUser(user);
 
         // PointHistory 타입 객체 생성
-        PointHistory pointHistory = simplePointHistoryFactory.createPointHistory(pointHistoryDTOParam.userId(), pointHistoryDTOParam.type(), pointHistoryDTOParam.amount(), user.getPoint());
+        PointHistory pointHistory = simplePointHistoryFactory.orderPointHistory(pointHistoryDTOParam.userId(), pointHistoryDTOParam.type(), pointHistoryDTOParam.amount(), user.getPoint());
 
         // 포인트 충전 차감 내역 저장
         pointHistoryRepository.savePointHistory(pointHistory);
@@ -56,6 +60,24 @@ public class PointHistoryService {
                                                     throw new PointHistoryNotFoundException(ErrorCode.POINT_HISTORY_SAVE_FAILED);
                                                 }).stream().map(PointHistory::convertToPointHistoryDTOResult).collect(Collectors.toList());
 
+
+    }
+
+    public void useUserPoint(PointHistoryDTOParam pointHistoryDTOParam) {
+        User user = userRepository.findUserByUserId(pointHistoryDTOParam.userId()).orElseThrow(
+                ()->{
+                    log.debug("user not found");
+                    throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
+                }
+        );
+
+        Payment payment = paymentRepository.findPaymentByPaymentId(pointHistoryDTOParam.paymentId());
+
+        user.usePoint(payment.getTotalPrice());
+
+        userRepository.saveUser(user);
+
+        pointHistoryRepository.savePointHistory(simplePointHistoryFactory.orderPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
 
     }
 }

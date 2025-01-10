@@ -34,7 +34,7 @@ public class PointHistory {
     private PointTransactionType type;
 
     @Column(name = "amount", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
-    private Long amount;
+    private Integer amount;
 
     @Column(name = "result_point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
     private Long resultPoint;

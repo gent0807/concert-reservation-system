@@ -7,6 +7,7 @@ import io.dev.concertreservationsystem.domain.reservation.ReservationDTOResult;
 import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.interfaces.api.concert_detail.ConcertDetailResponseDTO;
+import io.dev.concertreservationsystem.interfaces.api.payment.PaymentResponseDTO;
 import io.dev.concertreservationsystem.interfaces.api.reservation.ReservationResponseDTO;
 import io.dev.concertreservationsystem.interfaces.api.seat.SeatResponseDTO;
 import lombok.Builder;
@@ -72,6 +73,16 @@ public record ConcertReserveAdminDTOResult(
                 .expiredAt(this.seatDTOResult.expiredAt())
                 .createdAt(this.seatDTOResult.createdAt())
                 .updatedAt(this.seatDTOResult.updatedAt())
+                .build();
+    }
+
+    public PaymentResponseDTO convertToPaymentResponseDTO() {
+        return PaymentResponseDTO.builder()
+                .paymentId(this.paymentDTOResult.paymentId())
+                .paymentStatus(this.paymentDTOResult().paymentStatus())
+                .totalPrice(this.paymentDTOResult.totalPrice())
+                .createdAt(this.paymentDTOResult.createdAt())
+                .updatedAt(this.paymentDTOResult.updatedAt())
                 .build();
     }
 }

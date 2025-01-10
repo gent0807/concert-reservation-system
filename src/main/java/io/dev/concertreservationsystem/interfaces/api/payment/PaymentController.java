@@ -45,25 +45,24 @@ public class PaymentController {
 
     @PutMapping("{payment-id}")
     @Operation(summary = "결제 처리", description = "유저의 결제를 처리하고, 결제 정보를 수정 저장합니다.")
-    public ResponseEntity<List<PaymentResponseDTO>> updatePayment(@PathVariable("payment-id") Long paymentId)  {
-    /*
+    public ResponseEntity<PaymentResponseDTO> updatePayment(@PathVariable("payment-id") Long paymentId, @RequestHeader("X-Custom-UserId") String userId)  {
 
-            // paymentId를 이용하여 concertReserveAdminDTOParam 생성
-            ConcertReserveAdminDTOParam concertReserveAdminDTOParam = ConcertReserveAdminDTOParam.builder()
-                                                                                .paymentId(paymentId)
-                                                                                .build();
+
+
             // concertReserveAdminDTOParam을 이용하여, 결제 정보를 처리하고, 예약 정보를 변경하고, 좌석 정보를 변경하고, 콘서트 실제 공연의 정보를 변경하는
             // 현재 참조된 ConcertReserveAdminFacade 타입 객체의 payAndReserveConcertSeats 메소드 호출
-            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList =  concertReserveAdminFacade.payAndReserveConcertSeats(concertReserveAdminDTOParam);
+            ConcertReserveAdminDTOResult concertReserveAdminDTOResult =  concertReserveAdminFacade.payAndReserveConcertSeats( ConcertReserveAdminDTOParam.builder()
+                                                                                                                                                        .paymentId(paymentId)
+                                                                                                                                                        .userId(userId)
+                                                                                                                                                        .build());
 
-            // concertReserveAdminDTOResultList를 paymentResponseDTOList로 변환
-            List<PaymentResponseDTO> paymentResponseDTOList = ConcertReserveAdminDTOResult.convertToPaymentResponseDTOList(concertReserveAdminDTOResultList);
 
-            return ResponseEntity.ok().body(paymentResponseDTOList);
+            return ResponseEntity.ok().body(concertReserveAdminDTOResult.convertToPaymentResponseDTO());
 
-    */
 
-        return ResponseEntity.ok().build();
+
+
+
     }
 
 }
