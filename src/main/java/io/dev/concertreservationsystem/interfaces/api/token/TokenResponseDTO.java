@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public record TokenResponseDTO(
         Integer tokenId,
-        String memberId,
+        String userId,
         Integer tokenStatusId,
         LocalDateTime expiredAt
 ){

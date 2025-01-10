@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public record TokenRequestDTO(
         @JsonProperty("tokenId") Integer tokenId,
-        @JsonProperty("memberId") String memberId,
+        @JsonProperty("userId") String userId,
         @JsonProperty("tokenStatusId") Integer tokenStatusId,
         @JsonProperty("expiredAt")LocalDateTime expiredAt
 ) {

@@ -1,9 +1,11 @@
 package io.dev.concertreservationsystem.interfaces.api.concert_basic;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public record ConcertBasicResponseDTO(
         @JsonProperty("concertBasicId") Long concertBasicId,
         @JsonProperty("concertName") String concertName,
