@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,8 @@ public class SeatService {
 
                     seat.updateSeatStatus(seatStatus);
 
+                    seat.updateExpiredAt(LocalDateTime.now().plusMinutes(5));
+
                     seatRepository.save(seat);
                 }
         );
@@ -63,5 +66,8 @@ public class SeatService {
         }).stream().map(Reservation::convertToSeatDTOParam).collect(Collectors.toList());
 
 
+    }
+
+    public void expireSeatReservation() {
     }
 }

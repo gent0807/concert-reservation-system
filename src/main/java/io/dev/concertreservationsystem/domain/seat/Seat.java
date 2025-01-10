@@ -154,4 +154,8 @@ public class Seat {
     public void updateSeatStatus(SeatStatusType seatStatus) {
         this.setSeatStatus(seatStatus);
     }
+
+    public void updateExpiredAt(LocalDateTime expiredTime) {
+        this.setExpiredAt(expiredTime);
+    }
 }

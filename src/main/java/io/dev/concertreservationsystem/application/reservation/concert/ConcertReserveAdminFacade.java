@@ -49,16 +49,8 @@ public class ConcertReserveAdminFacade {
 
     // 2. 콘서트 실제 공연의 예약 가능 좌석 목록 조회
     @Validated(SearchReservableSeat.class)
-    public List<ConcertReserveAdminDTOResult> findReservableSeats(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam){
-
-            // 콘서트 실제 공연의 예약 가능 좌석 목록 조회
-            List<SeatDTOResult> seatDTOResultList = seatService.findReservableSeats(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
-
-            List<ConcertReserveAdminDTOResult> concertReserveAdminDTOResultList = SeatDTOResult.convertToConcertReserveAdminDTOResultList(seatDTOResultList);
-
-            return concertReserveAdminDTOResultList;
-
-
+    public List<ConcertReserveAdminDTOResult> findReservableSeats(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+        return null;
     }
 
     // 3. 좌석 예약 주문서 발행, 좌석 임시 점유(occupied)
@@ -121,6 +113,8 @@ public class ConcertReserveAdminFacade {
 
     }
 
-
-
+    // 좌석 점유 시각이 지난 좌석들 상태 occupied에서 reservable로
+    public void expireSeatReservation() {
+        seatService.expireSeatReservation();
+    }
 }
