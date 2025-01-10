@@ -1,2 +1,3 @@
 # concert-reservation-system
-콘서트 예약 관리 시스템입니다.
+![image](https://github.com/user-attachments/assets/2967b0a0-026f-4bb1-b521-60a109e609a9)
+
