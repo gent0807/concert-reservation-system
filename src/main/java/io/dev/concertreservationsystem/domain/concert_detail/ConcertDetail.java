@@ -47,6 +47,25 @@ public class ConcertDetail {
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
 
+    public ConcertDetail(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
+        this.concertBasicId = concertBasicId;
+        this.concertDetailStatus = concertDetailStatus;
+    }
+
+    public static ConcertDetail createConcertDetail(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
+        if(concertBasicId == null || concertBasicId < 0){
+            log.debug("concertBasicId is null or less than 0");
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_BASIC_ID_INVALID);
+        }
+
+        if(concertDetailStatus == null || !Arrays.stream(ConcertDetailStatusType.values()).toList().contains(concertDetailStatus)){
+            log.debug("concertDetailStatus is null or not valid");
+            throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_STATUS_INVALID);
+        }
+
+        return new ConcertDetail(concertBasicId, concertDetailStatus);
+    }
+
     public ConcertDetailDTOResult convertToConcertDetailDTOResult() {
 
         checkConcertDetailValidation();
@@ -63,7 +82,7 @@ public class ConcertDetail {
 
     }
 
-    private void checkConcertDetailValidation() {
+    public void checkConcertDetailValidation() {
         checkConcertDetailIdValidation();
 
         checkConcertDetailStatusValidation();

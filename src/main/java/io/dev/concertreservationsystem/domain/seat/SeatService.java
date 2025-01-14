@@ -1,11 +1,8 @@
 package io.dev.concertreservationsystem.domain.seat;
 
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
-import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
-import io.dev.concertreservationsystem.domain.reservation.ReservationService;
-import io.dev.concertreservationsystem.domain.seat.factory.ReservableSeatFactory;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.SeatInvalidException;
@@ -30,13 +27,11 @@ public class SeatService {
 
     private final ReservationRepository reservationRepository;
 
-    private final ReservableSeatFactory reservableSeatFactory;
-
     @Validated(SearchReservableSeat.class)
     public List<SeatDTOResult> findReservableSeats(@Valid ConcertDetailDTOParam concertDetailDTOParam) {
 
-        // Seat 타입 객체 생성
-        Seat seat = reservableSeatFactory.orderSeat(concertDetailDTOParam.concertDetailId());
+        // 도메인 모델 내 정적 팩토리 메소드로 생성
+        Seat seat = Seat.createSeat(concertDetailDTOParam.concertDetailId(), SeatStatusType.RESERVABLE);
 
         return seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(seat.getConcertDetailId(), seat.getSeatStatus())
                 .orElseThrow(()->{

@@ -6,6 +6,9 @@ import io.dev.concertreservationsystem.interfaces.api.common.exception.error.Use
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,12 +32,15 @@ public class User {
     private String userName;
 
     @Column(name = "age", nullable = false)
+    @Positive
+    @Min(0)
     private Integer age;
 
     @Column(name = "gender", nullable = false)
     private UserGenderType gender;
 
     @Column(name = "point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
+    @Size(min = 0, max = 10_000_000)
     private Long point;
 
     @CreatedDate
@@ -46,6 +52,39 @@ public class User {
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
+
+    public User(String userId, String userName, Integer age, UserGenderType gender){
+        this.userId = userId;
+        this.userName = userName;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    public static User createUser(String userId, String userName, Integer age, UserGenderType gender) {
+
+        if(userId == null || userId.isBlank()){
+            log.debug("userId is null or blank");
+            throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
+        }
+
+        if(userName == null || userName.isBlank()){
+            log.debug("userName is null or blank");
+            throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
+        }
+
+        if(age == null || age < 0){
+            log.debug("age is null or less than 0");
+            throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
+        }
+
+        if(gender == null && !Arrays.stream(UserGenderType.values()).toList().contains(gender)){
+            log.debug("gender is null or not valid");
+            throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
+        }
+
+        return new User(userId, userName, age, gender);
+    }
+
 
     public UserDTOResult convertToUserDTOResult() {
 

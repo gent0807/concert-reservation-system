@@ -3,6 +3,8 @@ package io.dev.concertreservationsystem.domain.token;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,6 +24,8 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "token_id", nullable = false)
+    @Positive
+    @Min(0)
     private Long tokenId;
 
     @Column(name = "user_id", nullable = false)
@@ -42,6 +46,21 @@ public class Token {
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
+
+    public Token(String userId, TokenStatusType tokenStatus){
+        this.userId = userId;
+        this.tokenStatus = tokenStatus;
+    }
+
+    public static Token createToken(String userId, TokenStatusType tokenStatus){
+
+        if(userId == null || userId.isBlank()){
+            log.debug("userId is null or blank");
+            throw new TokenInvalidException(ErrorCode.USER_ID_INVALID);
+        }
+
+        return new Token(userId, tokenStatus);
+    }
 
     public TokenDTOResult convertToTokenDTOResult() {
 

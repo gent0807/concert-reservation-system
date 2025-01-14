@@ -5,7 +5,6 @@ import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateUser;
-import io.dev.concertreservationsystem.domain.user.factory.SimpleUserFactory;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserNotFoundException;
 import jakarta.transaction.Transactional;
@@ -14,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,13 +26,12 @@ public class UserService {
 
     private final ReservationRepository reservationRepository;
 
-    private final SimpleUserFactory simpleUserFactory;
-
     @Transactional
     @Validated(CreateUser.class)
         public UserDTOResult insertUser(@Valid UserDTOParam userDTOParam) {
 
-            User user = simpleUserFactory.orderUser(UUID.randomUUID().toString(), userDTOParam.userName(), userDTOParam.age(), userDTOParam.gender());
+            // 도메인 모델 내 정적 팩토리 메소드로 생성
+            User user = User.createUser(userDTOParam.userId(), userDTOParam.userName(), userDTOParam.age(), userDTOParam.gender());
 
             userRepository.createUser(user);
 

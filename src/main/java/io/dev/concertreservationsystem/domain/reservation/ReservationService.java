@@ -1,11 +1,7 @@
 package io.dev.concertreservationsystem.domain.reservation;
 
-import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOParam;
-import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
-import io.dev.concertreservationsystem.domain.reservation.factory.TempReservationFactory;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,12 +15,11 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    private final TempReservationFactory tempReservationFactory;
-
     public List<ReservationDTOResult> insertReservations(List<ReservationDTOParam> reservationDTOParamList) {
 
         return  reservationDTOParamList.stream().map((reservationDTOParam)->{
-                    Reservation reservation = tempReservationFactory.orderReservation(reservationDTOParam.userId(), reservationDTOParam.seatId(), reservationDTOParam.paymentId());
+                    // 도메인 모델 내 정적 팩토리 메소드로 생성
+                    Reservation reservation = Reservation.createReservation(reservationDTOParam.userId(), reservationDTOParam.seatId(), reservationDTOParam.paymentId(), ReservationStatusType.TEMP);
 
                     reservationRepository.saveReservation(reservation);
 

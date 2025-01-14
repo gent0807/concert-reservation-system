@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -33,6 +34,26 @@ public class Payment {
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
+
+    public Payment(Integer totalPrice, PaymentStatusType paymentStatus){
+        this.totalPrice = totalPrice;
+        this.paymentStatus = paymentStatus;
+    }
+
+    public static Payment createPayment(Integer reduce, PaymentStatusType paymentStatusType) {
+
+        if(reduce == null || reduce < 0){
+            log.debug("reduce is null or less than 0");
+            throw new IllegalArgumentException("reduce is null or less than 0");
+        }
+
+        if(paymentStatusType == null || !Arrays.stream(PaymentStatusType.values()).toList().contains(paymentStatusType)) {
+            log.debug("paymentStatusType is null or invalid");
+            throw new IllegalArgumentException("paymentStatusType is null or invalid");
+        }
+
+        return new Payment(reduce, paymentStatusType);
+    }
 
     public PaymentDTOResult convertToPaymentDTOResult() {
         return PaymentDTOResult.builder()

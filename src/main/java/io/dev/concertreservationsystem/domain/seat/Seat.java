@@ -6,6 +6,9 @@ import io.dev.concertreservationsystem.interfaces.api.common.exception.error.Sea
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,15 +26,22 @@ public class Seat {
 
     @Id
     @Column(name = "seat_id")
+    @Positive
+    @Min(0)
     private Long seatId;
 
     @Column(name = "concert_detail_id", nullable = false, columnDefinition = "bigint unsigned")
+    @Positive
+    @Min(0)
     private Long concertDetailId;
 
     @Column(name = "seat_number", nullable = false, columnDefinition = "int unsigned")
+    @Size(min = 1, max = 50)
     private Integer seatNumber;
 
     @Column(name = "price", nullable = false, columnDefinition = "int unsigned default 50000")
+    @Positive
+    @Min(30000)
     private Integer price;
 
     @Column(name = "seat_status", nullable = false, columnDefinition = "varchar(20) default 'RESERVABLE'")
@@ -48,6 +58,26 @@ public class Seat {
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
+
+    public Seat(Long concertDetailId, SeatStatusType seatStatus){
+        this.concertDetailId = concertDetailId;
+        this.seatStatus = seatStatus;
+    }
+
+    public static Seat createSeat(Long concertDetailId, SeatStatusType seatStatus) {
+
+        if(concertDetailId == null || concertDetailId < 0){
+            log.debug("concertDetailId is null or less than 0");
+            throw new SeatInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);
+        }
+
+        if(seatStatus == null || !Arrays.stream(SeatStatusType.values()).toList().contains(seatStatus)){
+            log.debug("seatStatus is null or not valid");
+            throw new SeatInvalidException(ErrorCode.SEAT_STATUS_INVALID);
+        }
+
+        return new Seat(concertDetailId, seatStatus);
+    }
 
     public SeatDTOResult convertToSeatDTOResult() {
 

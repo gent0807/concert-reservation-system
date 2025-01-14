@@ -1,10 +1,9 @@
 package io.dev.concertreservationsystem.domain.concert_detail;
 
-import io.dev.concertreservationsystem.domain.concert_detail.factory.ReservableConcertDetailFactory;
+
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
-import io.dev.concertreservationsystem.domain.seat.SeatService;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ConcertDetailNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
@@ -28,13 +27,11 @@ public class ConcertDetailService {
 
     private final SeatRepository seatRepository;
 
-    private final ReservableConcertDetailFactory reservableConcertDetailFactory;
-
     @Validated(SearchReservableConcertDetail.class)
     public List<ConcertDetailDTOResult> findReservableConcertDetails(@Valid ConcertDetailDTOParam concertDetailDTOParam) {
 
-        // ConcertDetail 타입 객체 생성
-        ConcertDetail concertDetail = reservableConcertDetailFactory.orderConcertDetail(concertDetailDTOParam.concertBasicId());
+        // 도메인 모델 내 정적 팩토리 메소드로 생성
+        ConcertDetail concertDetail = ConcertDetail.createConcertDetail(concertDetailDTOParam.concertBasicId(), ConcertDetailStatusType.RESERVABLE);
 
         return concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertDetail.getConcertBasicId(), concertDetail.getConcertDetailStatus())
                                                                         .orElseThrow(()->{

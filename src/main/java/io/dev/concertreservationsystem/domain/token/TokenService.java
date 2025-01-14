@@ -1,7 +1,6 @@
 package io.dev.concertreservationsystem.domain.token;
 
 
-import io.dev.concertreservationsystem.domain.token.factory.SimpleTokenFactory;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.*;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CheckTokenStatusValid;
@@ -13,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -23,7 +20,6 @@ public class TokenService {
 
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
-    private final SimpleTokenFactory simpleTokenFactory;
 
     @Validated(CreateToken.class)
     @Transactional
@@ -36,8 +32,8 @@ public class TokenService {
                                         throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
                                     });
 
-        // tokenDTOParam 이용한 Token 타입 객체 생성
-        Token token = simpleTokenFactory.orderToken(tokenDTOParam.userId());
+        // 도메인 모델 내 정적 팩토리 메소드로 생성
+        Token token = Token.createToken(tokenDTOParam.userId(), TokenStatusType.INACTIVE);
 
         // token 저장
         tokenRepository.saveToken(token);

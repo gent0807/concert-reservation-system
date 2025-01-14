@@ -1,7 +1,6 @@
 package io.dev.concertreservationsystem.domain.payment;
 
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOParam;
-import io.dev.concertreservationsystem.domain.payment.factory.NotPaidPaymentFactory;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
@@ -23,8 +22,6 @@ public class PaymentService {
 
     private final SeatRepository seatRepository;
 
-    private final NotPaidPaymentFactory notPaidPaymentFactory;
-
     @Validated(CreateReservations.class)
     public PaymentDTOResult publishNewPayment(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
@@ -32,8 +29,8 @@ public class PaymentService {
             return seatRepository.findSeatBySeatId(concertReserveAdminDTOParam.seatId()).getPrice();
         }).toList();
 
-        // Payment 타입 객체 생성
-        Payment payment = notPaidPaymentFactory.orderPayment(priceList.stream().reduce(0, Integer::sum));
+        // 도메인 모델 내 정적 팩토리 메소드로 생성
+        Payment payment = Payment.createPayment(priceList.stream().reduce(0, Integer::sum), PaymentStatusType.NOT_PAID);
 
         paymentRepository.savePayment(payment);
 

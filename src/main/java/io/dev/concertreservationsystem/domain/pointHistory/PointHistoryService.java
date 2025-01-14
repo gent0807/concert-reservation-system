@@ -2,7 +2,6 @@ package io.dev.concertreservationsystem.domain.pointHistory;
 
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
-import io.dev.concertreservationsystem.domain.pointHistory.factory.SimplePointHistoryFactory;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
@@ -29,7 +28,6 @@ public class PointHistoryService {
     private final PointHistoryRepository pointHistoryRepository;
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
-    private final SimplePointHistoryFactory simplePointHistoryFactory;
 
     @Transactional
     @Validated(CreatePointHistory.class)
@@ -47,8 +45,8 @@ public class PointHistoryService {
         // 포인트 수정한 유저 정보 저장(put)
         userRepository.saveUser(user);
 
-        // PointHistory 타입 객체 생성
-        PointHistory pointHistory = simplePointHistoryFactory.orderPointHistory(pointHistoryDTOParam.userId(), pointHistoryDTOParam.type(), pointHistoryDTOParam.amount(), user.getPoint());
+        // 도메인 모델 내 정적 팩토리 메소드로 생성
+        PointHistory pointHistory = PointHistory.createPointHistory(pointHistoryDTOParam.userId(), pointHistoryDTOParam.type(), pointHistoryDTOParam.amount(), user.getPoint());
 
         // 포인트 충전 차감 내역 저장
         pointHistoryRepository.savePointHistory(pointHistory);
@@ -77,7 +75,7 @@ public class PointHistoryService {
 
         userRepository.saveUser(user);
 
-        pointHistoryRepository.savePointHistory(simplePointHistoryFactory.orderPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
+        pointHistoryRepository.savePointHistory(PointHistory.createPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
 
     }
 }
