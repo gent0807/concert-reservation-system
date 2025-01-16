@@ -47,7 +47,7 @@ Table user {
 }
 
 Table token {
-  waiting_id             bigint     [pk]              // 대기열 아이디
+  token_id             bigint     [pk]              // 대기열 아이디
   user_id                varchar                      // 회원 아이디, uuid
   token_status           varchar                      // 토큰 활성화 상태
   expired_at             timestamp                    // 이용 만료 시각
