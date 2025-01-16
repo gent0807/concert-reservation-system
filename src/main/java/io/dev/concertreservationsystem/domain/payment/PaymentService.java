@@ -28,7 +28,7 @@ public class PaymentService {
     public PaymentDTOResult publishNewPayment(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
         List<Integer> priceList = concertReserveAdminDTOParamList.stream().map((concertReserveAdminDTOParam)->{
-            return seatRepository.findSeatBySeatId(concertReserveAdminDTOParam.seatId()).getPrice();
+            return seatRepository.findSeatBySeatId(concertReserveAdminDTOParam.seatId()).orElseThrow().getPrice();
         }).toList();
 
         // 도메인 모델 내 정적 팩토리 메소드로 생성

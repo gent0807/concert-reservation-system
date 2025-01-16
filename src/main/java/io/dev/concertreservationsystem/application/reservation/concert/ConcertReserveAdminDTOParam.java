@@ -50,10 +50,7 @@ public record ConcertReserveAdminDTOParam(
 
 ){
 
-    public static List<SeatDTOParam> convertToSeatDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
-        return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToSeatDTOParam).collect(Collectors.toList());
-    }
 
     public static List<ReservationDTOParam> convertToReservationDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
         return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToReservationDTOParam).collect(Collectors.toList());
@@ -73,12 +70,7 @@ public record ConcertReserveAdminDTOParam(
 
 
 
-    public SeatDTOParam convertToSeatDTOParam() {
-        return SeatDTOParam.builder()
-                .userId(this.userId)
-                .paymentId(this.paymentId)
-                .build();
-    }
+
 
 
     public ReservationDTOParam convertToReservationDTOParam() {

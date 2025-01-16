@@ -48,7 +48,7 @@ public class UserService {
             throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
         });
 
-        Payment payment = paymentRepository.findPaymentByPaymentId(userDTOParam.paymentId());
+        Payment payment = paymentRepository.findPaymentByPaymentId(userDTOParam.paymentId()).orElseThrow();
 
         userRepository.findUserByUserId(userDTOParam.userId()).orElseThrow(()->{
                 log.debug("When: userRepository.findUserByUserId(userDTOParam.userId()), Action: UserNotFoundException");
