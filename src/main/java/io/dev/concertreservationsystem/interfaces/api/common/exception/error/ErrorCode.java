@@ -56,6 +56,7 @@ public enum ErrorCode {
     SEAT_EXPIRED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_EXPIRED_AT_INVALID", "유효하지 않은 좌석 점유 만료 시간입니다,"),
     SEAT_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_CREATED_AT_INVALID", "유효하지 않은 좌석 생성일입니다."),
     SEAT_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_UPDATED_AT_INVALID", "유효하지 않은 좌석 수정일입니다."),
+    SEAT_NOT_FOUND_BY_SEAT_ID(HttpStatus.NOT_FOUND, "SEATS_NOT_FOUND_BY_USER_ID_PAYMENT_ID", "좌석 아이디로 좌석 정보가 존재하지 않습니다."),
 
     // 예약 관련 ErrorCode
     RESERVATION_NOT_RESERVABLE_SEAT(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_NOT_RESERVABLE_SEAT", "예약 불가한 좌석을 포함하고 있습니다."),

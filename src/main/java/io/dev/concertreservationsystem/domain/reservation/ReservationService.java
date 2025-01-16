@@ -1,21 +1,34 @@
 package io.dev.concertreservationsystem.domain.reservation;
 
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailRepository;
+import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
+import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationNotFoundException;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    public List<ReservationDTOResult> insertReservations(List<ReservationDTOParam> reservationDTOParamList) {
+    private final SeatRepository seatRepository;
+
+    @Validated(CreateReservations.class)
+    public List<ReservationDTOResult> insertReservations(List<@Valid ReservationDTOParam> reservationDTOParamList) {
 
         return  reservationDTOParamList.stream().map((reservationDTOParam)->{
                     // 도메인 모델 내 정적 팩토리 메소드로 생성
@@ -31,7 +44,8 @@ public class ReservationService {
         }).collect(Collectors.toList());
     }
 
-    public void updateStatusOfReservations(ReservationDTOParam reservationDTOParam) {
+    @Validated(ProcessPayment.class)
+    public void updateStatusOfReservations(@Valid ReservationDTOParam reservationDTOParam) {
 
        reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
                .orElseThrow(()->{
@@ -43,10 +57,29 @@ public class ReservationService {
                });
     }
 
-    public List<ReservationDTOParam> convertToReservationDTOParamList(ReservationDTOParam reservationDTOParam) {
+    @Validated(ProcessPayment.class)
+    public List<SeatDTOParam> convertToSeatDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
+        return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId()).orElseThrow(()->{
+            throw new PaymentInvalidException(ErrorCode.PAYMENT_NOT_FOUND);
+        }).stream().map(Reservation::convertToSeatDTOParam).collect(Collectors.toList());
+    }
+
+    @Validated(ProcessPayment.class)
+    public List<ReservationDTOParam> convertToReservationDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
         return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
                 .orElseThrow(()->{
                     throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
                 }).stream().map(Reservation::convertToReservationDTOParam).collect(Collectors.toList());
+    }
+
+
+    @Validated(ProcessPayment.class)
+    public List<ConcertDetailDTOParam> convertToConcertDetailDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
+        return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
+                .orElseThrow(()->{
+                    throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
+                }).stream().map(reservation -> {
+                    return seatRepository.findConcertDetailBySeatId(reservation.getSeatId()).convertToConcertDetailDTOParam();
+                }).collect(Collectors.toList());
     }
 }

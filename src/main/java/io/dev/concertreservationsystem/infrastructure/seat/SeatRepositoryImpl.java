@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.infrastructure.seat;
 
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetail;
 import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
@@ -22,8 +23,8 @@ public class SeatRepositoryImpl implements SeatRepository {
     }
 
     @Override
-    public Seat findSeatBySeatId(Long seatId){
-        return seatJPARepository.findById(seatId).orElse(null);
+    public Optional<Seat> findSeatBySeatId(Long seatId){
+        return seatJPARepository.findById(seatId);
     }
 
     @Override
@@ -34,6 +35,11 @@ public class SeatRepositoryImpl implements SeatRepository {
     @Override
     public List<Seat> findSeatsByConcertDetailId(Long concertDetailId){
         return seatJPARepository.findSeatsByConcertDetailId(concertDetailId);
+    }
+
+    @Override
+    public ConcertDetail findConcertDetailBySeatId(Long seatId){
+        return seatJPARepository.findConcertDetailIdBySeatId(seatId);
     }
 
 

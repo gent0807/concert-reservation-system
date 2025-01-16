@@ -1,13 +1,16 @@
 package io.dev.concertreservationsystem.domain.payment;
 
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOParam;
+import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -15,6 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Validated
 public class PaymentService {
 
@@ -41,9 +45,14 @@ public class PaymentService {
 
     }
 
-    public PaymentDTOResult updateStatusOfPayment(PaymentDTOParam paymentDTOParam) {
 
-        Payment payment = paymentRepository.findPaymentByPaymentId(paymentDTOParam.paymentId());
+    @Validated(ProcessPayment.class)
+    public PaymentDTOResult updateStatusOfPayment(@Valid PaymentDTOParam paymentDTOParam) {
+
+        Payment payment = paymentRepository.findPaymentByPaymentId(paymentDTOParam.paymentId()).orElseThrow(()->{
+            log.debug("payment not found");
+            throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
+        });
 
         payment.setPaymentStatus(PaymentStatusType.PAID);
 
@@ -51,4 +60,6 @@ public class PaymentService {
 
         return payment.convertToPaymentDTOResult();
     }
+
+
 }

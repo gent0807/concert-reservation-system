@@ -15,6 +15,11 @@ public record ReservationRequestDTO(
         @JsonProperty("reservationId")
         Long reservationId,
 
+        @JsonProperty("concertDetailId")
+        @NotBlank(groups = CreateReservations.class)
+        @Min(value = 0, groups = CreateReservations.class)
+        Long concertDetailId,
+
         @JsonProperty("seatId")
         @NotBlank(groups = CreateReservations.class)
         @Min(value = 0, groups = CreateReservations.class)
@@ -24,8 +29,8 @@ public record ReservationRequestDTO(
         @NotBlank(groups = CreateReservations.class)
         String userId,
 
-        @NotBlank(groups = CreateReservations.class)
-        @Min(value = 0, groups = CreateReservations.class)
+        @NotBlank
+        @Min(value = 0)
         @JsonProperty("paymentId") Long paymentId,
 
         @JsonProperty("reservationStatus") Integer reservationStatus,

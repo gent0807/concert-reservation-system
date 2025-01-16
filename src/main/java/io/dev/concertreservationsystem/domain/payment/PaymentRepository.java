@@ -8,5 +8,5 @@ public interface PaymentRepository {
 
     Optional<List<Payment>> findPaymentsByPaymentStatusOrderByCreatedAtDesc(PaymentStatusType paymentStatusType);
 
-    Payment findPaymentByPaymentId(Long paymentId);
+    Optional<Payment> findPaymentByPaymentId(Long paymentId);
 }

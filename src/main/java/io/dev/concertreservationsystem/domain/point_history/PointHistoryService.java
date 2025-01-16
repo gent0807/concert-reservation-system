@@ -2,12 +2,15 @@ package io.dev.concertreservationsystem.domain.point_history;
 
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
+import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PointHistoryNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreatePointHistory;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
 import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransactionType;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ public class PointHistoryService {
     private final PointHistoryRepository pointHistoryRepository;
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
+    private final ReservationRepository reservationRepository;
 
     @Transactional
     @Validated(CreatePointHistory.class)
@@ -61,7 +65,10 @@ public class PointHistoryService {
 
     }
 
-    public void useUserPoint(PointHistoryDTOParam pointHistoryDTOParam) {
+    @Validated(ProcessPayment.class)
+    public void useUserPoint(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
+
+        // 유저 정보가 없으면, exception 발생
         User user = userRepository.findUserByUserId(pointHistoryDTOParam.userId()).orElseThrow(
                 ()->{
                     log.debug("user not found");
@@ -69,7 +76,22 @@ public class PointHistoryService {
                 }
         );
 
-        Payment payment = paymentRepository.findPaymentByPaymentId(pointHistoryDTOParam.paymentId());
+        // 좌석 예약 정보가 없으면 exception 발생
+        reservationRepository.findReservationsByUserIdAndPaymentId(pointHistoryDTOParam.userId(), pointHistoryDTOParam.paymentId()).orElseThrow(()->{
+            throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
+        });
+
+        // 결제 정보 아이디로 결제 정보 find
+        Payment payment = paymentRepository.findPaymentByPaymentId(pointHistoryDTOParam.paymentId()).orElseThrow(()->{
+            log.debug("payment not found");
+            throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
+        });
+
+        // 유저 포인트 잔고와 결제 금액 비교
+        userRepository.findUserByUserId(pointHistoryDTOParam.userId()).orElseThrow(()->{
+            log.debug("When: userRepository.findUserByUserId(userDTOParam.userId()), Action: UserNotFoundException");
+            throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
+        }).checkPrice(payment.getTotalPrice());
 
         user.usePoint(payment.getTotalPrice());
 

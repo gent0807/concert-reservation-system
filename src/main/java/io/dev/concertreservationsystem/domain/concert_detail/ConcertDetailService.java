@@ -2,11 +2,15 @@ package io.dev.concertreservationsystem.domain.concert_detail;
 
 
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
+import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ConcertDetailNotFoundException;
 import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.api.common.exception.error.SeatInvalidException;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableConcertDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +31,8 @@ public class ConcertDetailService {
 
     private final SeatRepository seatRepository;
 
+    private final ReservationRepository reservationRepository;
+
     @Validated(SearchReservableConcertDetail.class)
     public List<ConcertDetailDTOResult> findReservableConcertDetails(@Valid ConcertDetailDTOParam concertDetailDTOParam) {
 
@@ -43,7 +49,10 @@ public class ConcertDetailService {
     public void checkReservableOfConcertDetail(List<ReservationDTOParam> reservationDTOParamList) {
         reservationDTOParamList.stream().forEach(reservationDTOParam -> {
 
-            Seat seat = seatRepository.findSeatBySeatId(reservationDTOParam.seatId());
+            Seat seat = seatRepository.findSeatBySeatId(reservationDTOParam.seatId()).orElseThrow(()->{
+                log.debug("seat not found");
+                throw new SeatInvalidException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID);
+            });
 
             seat.checkReservable();
 
@@ -54,20 +63,21 @@ public class ConcertDetailService {
         });
     }
 
-    public void updateStatusOfConcertDetails(List<ReservationDTOParam> reservationDTOParamList) {
-        reservationDTOParamList.stream().forEach(reservationDTOParam -> {
-            Seat seat = seatRepository.findSeatBySeatId(reservationDTOParam.seatId());
 
-            ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailId(seat.getConcertDetailId());
+    @Validated({CreateReservations.class, ProcessPayment.class})
+    public void updateStatusOfConcertDetails(List<@Valid ConcertDetailDTOParam> concertDetailDTOParamList) {
+        concertDetailDTOParamList.stream().forEach(concertDetailDTOParam -> {
 
-            List<SeatStatusType> seatStatuses = seatRepository.findSeatsByConcertDetailId(concertDetail.getConcertDetailId()).stream().map(Seat::getSeatStatus).collect(Collectors.toList());
+            ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailId(concertDetailDTOParam.concertDetailId());
 
-            if(!seatStatuses.contains(SeatStatusType.RESERVABLE)){
+            concertDetail.setConcertDetailStatus(ConcertDetailStatusType.COMPLETED);
 
-                concertDetail.setConcertDetailStatus(ConcertDetailStatusType.COMPLETED);
+            concertDetailRepository.saveConcertDetail(concertDetail);
 
-                concertDetailRepository.saveConcertDetail(concertDetail);
-            }
         });
+    }
+
+    public ConcertDetail findConcertDetailsBySeatId(Long seatId) {
+        return seatRepository.findConcertDetailBySeatId(seatId);
     }
 }

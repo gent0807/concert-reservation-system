@@ -154,4 +154,10 @@ public class ConcertDetail {
             throw new ReservationInvalidException(ErrorCode.RESERVATION_NOT_RESERVABLE_CONCERT_DETAIL);
         }
     }
+
+    public ConcertDetailDTOParam convertToConcertDetailDTOParam() {
+        return ConcertDetailDTOParam.builder()
+                .concertBasicId(this.concertDetailId)
+                .build();
+    }
 }
