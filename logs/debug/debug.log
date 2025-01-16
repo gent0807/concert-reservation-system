@@ -10587,3 +10587,310 @@ Unconditional classes:
 2025-01-17 00:24:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Committing JPA transaction on EntityManager [SessionImpl(1458713124<open>)]
 2025-01-17 00:24:00 DEBUG o.h.e.t.internal.TransactionImpl - committing
 2025-01-17 00:24:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Closing JPA EntityManager [SessionImpl(1458713124<open>)] after transaction
+2025-01-17 00:24:06 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:24:06 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:24:36 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:24:36 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:25:00 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2025-01-17 00:25:00 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : t1_0
+2025-01-17 00:25:00 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(io.dev.concertreservationsystem.domain.token.Token(30))] with identifierForTableGroup [io.dev.concertreservationsystem.domain.token.Token] for NavigablePath [io.dev.concertreservationsystem.domain.token.Token] 
+2025-01-17 00:25:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@996ebb0
+2025-01-17 00:25:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus) 
+2025-01-17 00:25:00 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [io.dev.concertreservationsystem.domain.token.Token(30)]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).createdAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).deletedAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).expiresAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).updatedAt]
+ |  \-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).userId]
+
+2025-01-17 00:25:00 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (t1 : io.dev.concertreservationsystem.domain.token.Token(30)) {
+          primaryTableReference : token as t1_0
+        }
+      }
+    }
+
+2025-01-17 00:25:00 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-01-17 00:25:00 DEBUG org.hibernate.SQL - 
+    select
+        t1_0.token_id,
+        t1_0.created_at,
+        t1_0.deleted_at,
+        t1_0.expires_at,
+        t1_0.token_status,
+        t1_0.updated_at,
+        t1_0.user_id 
+    from
+        token t1_0 
+    where
+        t1_0.token_status=?
+2025-01-17 00:25:00 DEBUG org.hibernate.orm.results - Initializer list:
+	  io.dev.concertreservationsystem.domain.token.Token(30) -> EntityJoinedFetchInitializer(io.dev.concertreservationsystem.domain.token.Token(30))@750492585 (SingleTableEntityPersister(io.dev.concertreservationsystem.domain.token.Token))
+
+2025-01-17 00:25:07 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:25:07 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:25:37 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:25:37 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:26:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Creating new transaction with name [io.dev.concertreservationsystem.domain.token.TokenService.activeTokens]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-01-17 00:26:00 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2025-01-17 00:26:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Opened new EntityManager [SessionImpl(378615613<open>)] for JPA transaction
+2025-01-17 00:26:00 DEBUG o.h.e.t.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2025-01-17 00:26:00 DEBUG o.h.e.t.internal.TransactionImpl - begin
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : t1_0
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(io.dev.concertreservationsystem.domain.token.Token(30))] with identifierForTableGroup [io.dev.concertreservationsystem.domain.token.Token] for NavigablePath [io.dev.concertreservationsystem.domain.token.Token] 
+2025-01-17 00:26:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7c524ada]
+2025-01-17 00:26:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@fbc2a53
+2025-01-17 00:26:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus) 
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [io.dev.concertreservationsystem.domain.token.Token(30)]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).createdAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).deletedAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).expiresAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).updatedAt]
+ |  \-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).userId]
+
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (t1 : io.dev.concertreservationsystem.domain.token.Token(30)) {
+          primaryTableReference : token as t1_0
+        }
+      }
+    }
+
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-01-17 00:26:00 DEBUG org.hibernate.SQL - 
+    select
+        t1_0.token_id,
+        t1_0.created_at,
+        t1_0.deleted_at,
+        t1_0.expires_at,
+        t1_0.token_status,
+        t1_0.updated_at,
+        t1_0.user_id 
+    from
+        token t1_0 
+    where
+        t1_0.token_status=?
+2025-01-17 00:26:00 DEBUG org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        token AS t 
+    WHERE
+        t.token_status = ? 
+    ORDER BY
+        t.created_at DESC 
+    LIMIT
+        ?
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.results - Initializer list:
+	  io.dev.concertreservationsystem.domain.token.Token(30) -> EntityJoinedFetchInitializer(io.dev.concertreservationsystem.domain.token.Token(30))@714168975 (SingleTableEntityPersister(io.dev.concertreservationsystem.domain.token.Token))
+
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.results - Disallowing positional selections : SELECT * FROM token AS t WHERE t.token_status = :tokenStatus ORDER BY t.created_at DESC LIMIT :maxTokenActiveLimit
+2025-01-17 00:26:00 DEBUG org.hibernate.orm.results - Initializer list:
+	  io.dev.concertreservationsystem.domain.token.Token -> EntityJoinedFetchInitializer(io.dev.concertreservationsystem.domain.token.Token)@1017291812 (SingleTableEntityPersister(io.dev.concertreservationsystem.domain.token.Token))
+
+2025-01-17 00:26:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Initiating transaction commit
+2025-01-17 00:26:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Committing JPA transaction on EntityManager [SessionImpl(378615613<open>)]
+2025-01-17 00:26:00 DEBUG o.h.e.t.internal.TransactionImpl - committing
+2025-01-17 00:26:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Closing JPA EntityManager [SessionImpl(378615613<open>)] after transaction
+2025-01-17 00:26:07 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:26:07 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:26:37 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:26:37 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:27:00 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2025-01-17 00:27:00 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : t1_0
+2025-01-17 00:27:00 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(io.dev.concertreservationsystem.domain.token.Token(30))] with identifierForTableGroup [io.dev.concertreservationsystem.domain.token.Token] for NavigablePath [io.dev.concertreservationsystem.domain.token.Token] 
+2025-01-17 00:27:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@598cf38
+2025-01-17 00:27:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus) 
+2025-01-17 00:27:00 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [io.dev.concertreservationsystem.domain.token.Token(30)]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).createdAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).deletedAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).expiresAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).updatedAt]
+ |  \-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).userId]
+
+2025-01-17 00:27:00 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (t1 : io.dev.concertreservationsystem.domain.token.Token(30)) {
+          primaryTableReference : token as t1_0
+        }
+      }
+    }
+
+2025-01-17 00:27:00 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-01-17 00:27:00 DEBUG org.hibernate.SQL - 
+    select
+        t1_0.token_id,
+        t1_0.created_at,
+        t1_0.deleted_at,
+        t1_0.expires_at,
+        t1_0.token_status,
+        t1_0.updated_at,
+        t1_0.user_id 
+    from
+        token t1_0 
+    where
+        t1_0.token_status=?
+2025-01-17 00:27:00 DEBUG org.hibernate.orm.results - Initializer list:
+	  io.dev.concertreservationsystem.domain.token.Token(30) -> EntityJoinedFetchInitializer(io.dev.concertreservationsystem.domain.token.Token(30))@1448420729 (SingleTableEntityPersister(io.dev.concertreservationsystem.domain.token.Token))
+
+2025-01-17 00:27:07 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:27:07 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:27:37 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:27:37 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Creating new transaction with name [io.dev.concertreservationsystem.domain.seat.SeatService.expireSeatReservation]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Creating new transaction with name [io.dev.concertreservationsystem.domain.token.TokenService.activeTokens]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-01-17 00:28:00 DEBUG o.s.o.j.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler - Creating new EntityManager for shared EntityManager invocation
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Opened new EntityManager [SessionImpl(823477506<open>)] for JPA transaction
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Opened new EntityManager [SessionImpl(1223858976<open>)] for JPA transaction
+2025-01-17 00:28:00 DEBUG o.h.e.t.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2025-01-17 00:28:00 DEBUG o.h.e.t.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2025-01-17 00:28:00 DEBUG o.h.e.t.internal.TransactionImpl - begin
+2025-01-17 00:28:00 DEBUG o.h.e.t.internal.TransactionImpl - begin
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : t1_0
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@6860e5f7]
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@fb84a2e]
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(io.dev.concertreservationsystem.domain.token.Token(30))] with identifierForTableGroup [io.dev.concertreservationsystem.domain.token.Token] for NavigablePath [io.dev.concertreservationsystem.domain.token.Token] 
+2025-01-17 00:28:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@32501b31
+2025-01-17 00:28:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus) 
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : s1_0
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(io.dev.concertreservationsystem.domain.seat.Seat(24))] with identifierForTableGroup [io.dev.concertreservationsystem.domain.seat.Seat] for NavigablePath [io.dev.concertreservationsystem.domain.seat.Seat] 
+2025-01-17 00:28:00 DEBUG org.hibernate.SQL - 
+    SELECT
+        * 
+    FROM
+        token AS t 
+    WHERE
+        t.token_status = ? 
+    ORDER BY
+        t.created_at DESC 
+    LIMIT
+        ?
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [io.dev.concertreservationsystem.domain.token.Token(30)]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).createdAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).deletedAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).expiresAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).tokenStatus]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).updatedAt]
+ |  \-BasicFetch [io.dev.concertreservationsystem.domain.token.Token(30).userId]
+
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (t1 : io.dev.concertreservationsystem.domain.token.Token(30)) {
+          primaryTableReference : token as t1_0
+        }
+      }
+    }
+
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-01-17 00:28:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : org.hibernate.query.sqm.tree.expression.SqmJpaCriteriaParameterWrapper@2395dd19
+2025-01-17 00:28:00 DEBUG org.hibernate.SQL - 
+    select
+        t1_0.token_id,
+        t1_0.created_at,
+        t1_0.deleted_at,
+        t1_0.expires_at,
+        t1_0.token_status,
+        t1_0.updated_at,
+        t1_0.user_id 
+    from
+        token t1_0 
+    where
+        t1_0.token_status=?
+2025-01-17 00:28:00 DEBUG o.h.q.s.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(io.dev.concertreservationsystem.domain.seat.Seat(24).seatStatus) 
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+ \-EntityResultImpl [io.dev.concertreservationsystem.domain.seat.Seat(24)]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).concertDetailId]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).createdAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).deletedAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).expiredAt]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).price]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).seatNumber]
+ |  +-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).seatStatus]
+ |  \-BasicFetch [io.dev.concertreservationsystem.domain.seat.Seat(24).updatedAt]
+
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (s1 : io.dev.concertreservationsystem.domain.seat.Seat(24)) {
+          primaryTableReference : seat as s1_0
+        }
+      }
+    }
+
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-01-17 00:28:00 DEBUG org.hibernate.SQL - 
+    select
+        s1_0.seat_id,
+        s1_0.concert_detail_id,
+        s1_0.created_at,
+        s1_0.deleted_at,
+        s1_0.expired_at,
+        s1_0.price,
+        s1_0.seat_number,
+        s1_0.seat_status,
+        s1_0.updated_at 
+    from
+        seat s1_0 
+    where
+        s1_0.seat_status=?
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.results - Disallowing positional selections : SELECT * FROM token AS t WHERE t.token_status = :tokenStatus ORDER BY t.created_at DESC LIMIT :maxTokenActiveLimit
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.results - Initializer list:
+	  io.dev.concertreservationsystem.domain.token.Token -> EntityJoinedFetchInitializer(io.dev.concertreservationsystem.domain.token.Token)@1486025032 (SingleTableEntityPersister(io.dev.concertreservationsystem.domain.token.Token))
+
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.results - Initializer list:
+	  io.dev.concertreservationsystem.domain.token.Token(30) -> EntityJoinedFetchInitializer(io.dev.concertreservationsystem.domain.token.Token(30))@1393716723 (SingleTableEntityPersister(io.dev.concertreservationsystem.domain.token.Token))
+
+2025-01-17 00:28:00 DEBUG org.hibernate.orm.results - Initializer list:
+	  io.dev.concertreservationsystem.domain.seat.Seat(24) -> EntityJoinedFetchInitializer(io.dev.concertreservationsystem.domain.seat.Seat(24))@12369379 (SingleTableEntityPersister(io.dev.concertreservationsystem.domain.seat.Seat))
+
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Initiating transaction commit
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Initiating transaction commit
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Committing JPA transaction on EntityManager [SessionImpl(1223858976<open>)]
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Committing JPA transaction on EntityManager [SessionImpl(823477506<open>)]
+2025-01-17 00:28:00 DEBUG o.h.e.t.internal.TransactionImpl - committing
+2025-01-17 00:28:00 DEBUG o.h.e.t.internal.TransactionImpl - committing
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Closing JPA EntityManager [SessionImpl(823477506<open>)] after transaction
+2025-01-17 00:28:00 DEBUG o.s.orm.jpa.JpaTransactionManager - Closing JPA EntityManager [SessionImpl(1223858976<open>)] after transaction
+2025-01-17 00:28:00 DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed from ACCEPTING_TRAFFIC to REFUSING_TRAFFIC
+2025-01-17 00:28:00 DEBUG o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@530a8454, started on Fri Jan 17 00:22:05 KST 2025
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 2147482623
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 2147481599
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'webServerGracefulShutdown' completed its stop procedure
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'webServerStartStop' completed its stop procedure
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 1073741823
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'taskScheduler' completed its stop procedure
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase -2147483647
+2025-01-17 00:28:00 DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'springBootLoggingLifecycle' completed its stop procedure
+2025-01-17 00:28:00 DEBUG o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans on shutdown
+2025-01-17 00:28:00 DEBUG o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans
+2025-01-17 00:28:00 DEBUG o.s.s.c.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2025-01-17 00:28:00 DEBUG o.h.internal.SessionFactoryImpl - HHH000031: Closing
+2025-01-17 00:28:00 DEBUG o.h.type.spi.TypeConfiguration$Scope - Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@1f4fa193] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@21f421b8]
+2025-01-17 00:28:00 DEBUG o.h.s.i.AbstractServiceRegistryImpl - Implicitly destroying ServiceRegistry on de-registration of all child ServiceRegistries
+2025-01-17 00:28:00 DEBUG o.h.b.r.i.BootstrapServiceRegistryImpl - Implicitly destroying Boot-strap registry on de-registration of all child ServiceRegistries
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@4e671ef: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@173c75d9: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@6326ea8e: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@497f8131: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@365fd8a5: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7b4dd4dd: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@1ef7c947: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@6d16cca6: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@76afea8f: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@67dcfe3c: (connection evicted)
+2025-01-17 00:28:00 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
