@@ -1,8 +1,8 @@
 package io.dev.concertreservationsystem.domain.concert_detail;
 
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ConcertDetailInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ConcertDetailInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ReservationInvalidException;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

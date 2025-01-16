@@ -2,7 +2,7 @@ package io.dev.concertreservationsystem.interfaces.api.point_history;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dev.concertreservationsystem.application.point_history.PointHistoryFacadeDTOParam;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.annotation.NotInvalidPointTransactionType;
+import io.dev.concertreservationsystem.interfaces.common.validation.annotation.NotInvalidPointTransactionType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

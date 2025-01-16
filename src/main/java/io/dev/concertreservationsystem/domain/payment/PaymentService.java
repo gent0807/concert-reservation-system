@@ -1,13 +1,11 @@
 package io.dev.concertreservationsystem.domain.payment;
 
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOParam;
-import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
-import jakarta.transaction.Transactional;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +28,7 @@ public class PaymentService {
     public PaymentDTOResult publishNewPayment(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
         List<Integer> priceList = concertReserveAdminDTOParamList.stream().map((concertReserveAdminDTOParam)->{
-            return seatRepository.findSeatBySeatId(concertReserveAdminDTOParam.seatId()).getPrice();
+            return seatRepository.findSeatBySeatId(concertReserveAdminDTOParam.seatId()).orElseThrow().getPrice();
         }).toList();
 
         // 도메인 모델 내 정적 팩토리 메소드로 생성

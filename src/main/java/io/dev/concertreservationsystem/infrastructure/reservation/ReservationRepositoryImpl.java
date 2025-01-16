@@ -30,7 +30,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Optional<List<Seat>> findSeatsByUserIdAndPaymentId(String userId, Long paymentId){
-        return reservationJPARepository.findSeatsByUserIdAndPaymentId(userId, paymentId);
+    public Reservation findReservationBySeatId(Long seatId){
+        return reservationJPARepository.findReservationBySeatId(seatId);
     }
 }

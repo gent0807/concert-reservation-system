@@ -8,13 +8,15 @@ import java.util.Optional;
 
 
 public interface SeatRepository {
-    Optional<List<Seat>> findReservableSeatsByConcertDetailIdAndSeatStatusType(Long concertDetailId, SeatStatusType seatStatus);
+    public Optional<List<Seat>> findReservableSeatsByConcertDetailIdAndSeatStatusType(Long concertDetailId, SeatStatusType seatStatus);
 
-    Optional<Seat> findSeatBySeatId(Long seatId);
+    public Optional<Seat> findSeatBySeatId(Long seatId);
 
-    void save(Seat seat);
+    public void save(Seat seat);
 
-    List<Seat> findSeatsByConcertDetailId(Long concertDetailId);
+    public List<Seat> findSeatsByConcertDetailId(Long concertDetailId);
 
-    ConcertDetail findConcertDetailBySeatId(Long seatId);
+    public ConcertDetail findConcertDetailBySeatId(Long seatId);
+
+    public List<Seat> findSeatsBySeatStatus(SeatStatusType seatStatusType);
 }

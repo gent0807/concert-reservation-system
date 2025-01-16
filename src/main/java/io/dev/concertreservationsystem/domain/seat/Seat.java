@@ -1,8 +1,8 @@
 package io.dev.concertreservationsystem.domain.seat;
 
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.SeatInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ReservationInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.SeatInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -183,6 +183,7 @@ public class Seat {
 
     public void updateSeatStatus(SeatStatusType seatStatus) {
         this.setSeatStatus(seatStatus);
+        this.setUpdatedAt(LocalDateTime.now());
     }
 
     public void updateExpiredAt(LocalDateTime expiredTime) {

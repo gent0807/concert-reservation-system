@@ -26,6 +26,6 @@ public class PaymentRepositoryImpl implements PaymentRepository {
 
         @Override
         public Optional<Payment> findPaymentByPaymentId(Long paymentId){
-                return paymentJPARepository.findPaymentById(paymentId).orElse(null);
+                return paymentJPARepository.findPaymentByPaymentId(paymentId);
         }
 }

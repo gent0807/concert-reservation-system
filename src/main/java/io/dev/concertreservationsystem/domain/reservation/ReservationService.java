@@ -1,15 +1,14 @@
 package io.dev.concertreservationsystem.domain.reservation;
 
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
-import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailRepository;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentNotFoundException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ReservationNotFoundException;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ReservationNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

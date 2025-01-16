@@ -7,14 +7,13 @@ import io.dev.concertreservationsystem.domain.point_history.PointHistoryDTOParam
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import io.dev.concertreservationsystem.domain.user.UserDTOParam;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableConcertDetail;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableSeat;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableConcertDetail;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.springframework.validation.annotation.Validated;
 
@@ -51,10 +50,7 @@ public record ConcertReserveAdminDTOParam(
 
 ){
 
-    public static List<SeatDTOParam> convertToSeatDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
-        return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToSeatDTOParam).collect(Collectors.toList());
-    }
 
     public static List<ReservationDTOParam> convertToReservationDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
         return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToReservationDTOParam).collect(Collectors.toList());
@@ -74,12 +70,7 @@ public record ConcertReserveAdminDTOParam(
 
 
 
-    public SeatDTOParam convertToSeatDTOParam() {
-        return SeatDTOParam.builder()
-                .userId(this.userId)
-                .paymentId(this.paymentId)
-                .build();
-    }
+
 
 
     public ReservationDTOParam convertToReservationDTOParam() {

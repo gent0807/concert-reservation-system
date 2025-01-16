@@ -2,15 +2,20 @@ package io.dev.concertreservationsystem.domain.token;
 
 
 import io.dev.concertreservationsystem.domain.user.UserRepository;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.*;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CheckTokenStatusValid;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateToken;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.TokenNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.UserNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CheckTokenStatusValid;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateToken;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -62,10 +67,27 @@ public class TokenService {
 
     }
 
+    @Transactional
     public void activeTokens() {
+
+        List<Token> tokenList = tokenRepository.findInactiveTokensOrderByCreatedAtDescLimit10();
+
+        tokenList.stream().forEach(token->{
+            token.activeToken();
+            tokenRepository.saveToken(token);
+        });
 
     }
 
     public void expireTokens() {
+
+        List<Token> tokenList = tokenRepository.findAllActiveTokens();
+
+        tokenList.stream().forEach(token->{
+            if(token.getExpiresAt().isBefore(LocalDateTime.now())){
+                token.expireToken();
+                tokenRepository.saveToken(token);
+            }
+        });
     }
 }

@@ -16,4 +16,6 @@ public interface SeatJPARepository extends JpaRepository<Seat, Long> {
     List<Seat> findSeatsByConcertDetailId(Long concertDetailId);
 
     ConcertDetail findConcertDetailIdBySeatId(@Positive @Min(0) Long seatId);
+
+    List<Seat> findSeatsBySeatStatus(SeatStatusType seatStatus);
 }

@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.token;
 
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.TokenInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.TokenInvalidException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
@@ -112,5 +112,17 @@ public class Token {
             log.debug("inactive token");
             throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_INACTIVE);
         }
+    }
+
+    public void activeToken() {
+        this.tokenStatus = TokenStatusType.ACTIVE;
+        this.expiresAt = LocalDateTime.now().plusMinutes(6);
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void expireToken() {
+        this.tokenStatus = TokenStatusType.Expired;
+        this.expiresAt = null;
+        this.updatedAt = LocalDateTime.now();
     }
 }

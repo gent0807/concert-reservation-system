@@ -1,15 +1,20 @@
 package io.dev.concertreservationsystem.domain.seat;
 
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
+import io.dev.concertreservationsystem.domain.payment.Payment;
+import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
+import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.SeatInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.SearchReservableSeat;
+import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.SeatInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableSeat;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +34,8 @@ public class SeatService {
     private final SeatRepository seatRepository;
 
     private final ReservationRepository reservationRepository;
-    private final PaymentService paymentService;
+
+    private final PaymentRepository paymentRepository;
 
     @Validated(SearchReservableSeat.class)
     public List<SeatDTOResult> findReservableSeats(@Valid ConcertDetailDTOParam concertDetailDTOParam) {
@@ -70,12 +76,30 @@ public class SeatService {
     }
 
 
-    public List<SeatDTOParam> convertToSeatDTOParamList(SeatDTOParam seatDTOParam) {
-        return reservationRepository.findReservationsByUserIdAndPaymentId(seatDTOParam.userId(), seatDTOParam.paymentId()).orElseThrow(()->{
-            throw new PaymentInvalidException(ErrorCode.PAYMENT_NOT_FOUND);
-        }).stream().map(Reservation::convertToSeatDTOParam).collect(Collectors.toList());
-    }
-
+    @Transactional
     public void expireSeatReservation() {
+
+        List<Seat> seatList = seatRepository.findSeatsBySeatStatus(SeatStatusType.OCCUPIED);
+
+        seatList.stream().forEach(seat->{
+            if(seat.getExpiredAt().isBefore(LocalDateTime.now())){
+                seat.updateSeatStatus(SeatStatusType.RESERVABLE);
+                seat.updateExpiredAt(null);
+                seatRepository.save(seat);
+
+                Reservation reservation = reservationRepository.findReservationBySeatId(seat.getSeatId());
+
+                reservation.setReservationStatus(ReservationStatusType.CANCELLED);
+
+                reservationRepository.saveReservation(reservation);
+
+                Payment payment = paymentRepository.findPaymentByPaymentId(reservation.getPaymentId()).orElseThrow();
+
+                payment.setPaymentStatus(PaymentStatusType.CANCELLED);
+
+                paymentRepository.savePayment(payment);
+            }
+        });
+
     }
 }

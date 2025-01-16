@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.point_history;
 
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PointHistoryInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.PointHistoryInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;

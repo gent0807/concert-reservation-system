@@ -15,5 +15,6 @@ public interface ReservationJPARepository extends JpaRepository<Reservation,Long
 
     Optional<List<Reservation>> findReservationsByUserIdAndPaymentId(String userId, Long paymentId);
 
-    Optional<List<Seat>> findSeatsByUserIdAndPaymentId(String userId, Long paymentId);
+
+    Reservation findReservationBySeatId(Long seatId);
 }
