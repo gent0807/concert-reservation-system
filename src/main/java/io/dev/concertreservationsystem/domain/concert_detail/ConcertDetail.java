@@ -54,12 +54,12 @@ public class ConcertDetail {
 
     public static ConcertDetail createConcertDetail(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
         if(concertBasicId == null || concertBasicId < 0){
-            log.debug("concertBasicId is null or less than 0");
+            log.error("concertBasicId is null or less than 0");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_BASIC_ID_INVALID);
         }
 
         if(concertDetailStatus == null || !Arrays.stream(ConcertDetailStatusType.values()).toList().contains(concertDetailStatus)){
-            log.debug("concertDetailStatus is null or not valid");
+            log.error("concertDetailStatus is null or not valid");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_STATUS_INVALID);
         }
 
@@ -100,49 +100,49 @@ public class ConcertDetail {
 
     public void checkUpdatedAtInvalid() {
         if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            log.debug("updatedAt is null or after now");
+            log.error("updatedAt is null or after now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_UPDATED_AT_INVALID);
         }
     }
 
     public void checkCreatedAtValidation() {
         if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            log.debug("createAt is null or after now");
+            log.error("createAt is null or after now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_CREATED_AT_INVALID);
         }
     }
 
     public void checkEndTimeValidation() {
         if(this.endTime.isBefore(this.startTime) || this.endTime.isBefore(LocalDateTime.now()) || this.endTime == null){
-            log.debug("endTime is null or before now");
+            log.error("endTime is null or before now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_END_TIME_INVALID);
         }
     }
 
     public void checkStartTimeValidation() {
         if(this.startTime.isAfter(this.endTime) || this.startTime.isBefore(LocalDateTime.now()) || startTime == null){
-            log.debug("startTime is null or after or before now");
+            log.error("startTime is null or after or before now");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_START_TIME_INVALID);
         }
     }
 
     public void checkConcertBasicIdValidation() {
         if (this.concertBasicId == null || this.concertBasicId < 0){
-            log.debug("concertBasicId is null or less than 0");
+            log.error("concertBasicId is null or less than 0");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_BASIC_ID_INVALID);
         }
     }
 
     public void checkConcertDetailStatusValidation() {
         if(this.concertDetailStatus == null || !Arrays.stream(ConcertDetailStatusType.values()).toList().contains(this.concertDetailStatus)){
-            log.debug("concertDetailStatus is null or not valid");
+            log.error("concertDetailStatus is null or not valid");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_STATUS_INVALID);
         }
     }
 
     public void checkConcertDetailIdValidation() {
         if(this.concertDetailId == null || this.concertDetailId < 0){
-            log.debug("concertDetailId is null or less than 0");
+            log.error("concertDetailId is null or less than 0");
             throw new ConcertDetailInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);
         }
     }
@@ -150,7 +150,7 @@ public class ConcertDetail {
 
     public void checkReservable() {
         if(this.concertDetailStatus != ConcertDetailStatusType.RESERVABLE){
-            log.debug("this concert detail is not reservable");
+            log.error("this concert detail is not reservable");
             throw new ReservationInvalidException(ErrorCode.RESERVATION_NOT_RESERVABLE_CONCERT_DETAIL);
         }
     }

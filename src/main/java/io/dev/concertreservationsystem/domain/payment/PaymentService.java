@@ -37,6 +37,7 @@ public class PaymentService {
         paymentRepository.savePayment(payment);
 
         return paymentRepository.findPaymentsByPaymentStatusOrderByCreatedAtDesc(payment.getPaymentStatus()).orElseThrow(()->{
+            log.error("payment save failed");
             throw new PaymentNotFoundException(ErrorCode.PAYMENT_SAVE_FAILED);
         }).get(0).convertToPaymentDTOResult();
 
@@ -48,7 +49,7 @@ public class PaymentService {
     public PaymentDTOResult updateStatusOfPayment(@Valid PaymentDTOParam paymentDTOParam) {
 
         Payment payment = paymentRepository.findPaymentByPaymentId(paymentDTOParam.paymentId()).orElseThrow(()->{
-            log.debug("payment not found");
+            log.error("payment not found");
             throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
         });
 

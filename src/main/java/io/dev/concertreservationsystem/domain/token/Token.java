@@ -55,7 +55,7 @@ public class Token {
     public static Token createToken(String userId, TokenStatusType tokenStatus){
 
         if(userId == null || userId.isBlank()){
-            log.debug("userId is null or blank");
+            log.error("userId is null or blank");
             throw new TokenInvalidException(ErrorCode.USER_ID_INVALID);
         }
 
@@ -103,13 +103,13 @@ public class Token {
 
         if(this.tokenStatus == TokenStatusType.ACTIVE){
             if(this.expiresAt.isBefore(LocalDateTime.now())){
-                log.debug("expired token");
+                log.error("expired token");
                 throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_EXPIRED);
             }
         }
 
         if (this.tokenStatus == TokenStatusType.INACTIVE){
-            log.debug("inactive token");
+            log.error("inactive token");
             throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_INACTIVE);
         }
     }

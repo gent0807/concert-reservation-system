@@ -33,8 +33,8 @@ public class TokenFacade {
     }
 
     // 비활성화 상태인 유저 대기열 토큰들중 상위 10개 활성 상태로
-    public void activeTokens() {
-        tokenService.activeTokens();
+    public void activeTokens(long maxActiveLimit) {
+        tokenService.activeTokens(maxActiveLimit);
     }
 
     // 활성화 상태인 유저 대기열 토큰들 중 만료 시각이 지난 토큰들 만료 상태로

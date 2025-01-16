@@ -55,22 +55,22 @@ public class Reservation {
     public static Reservation createReservation(String userId, Long seatId, Long paymentId, ReservationStatusType reservationStatus){
 
         if(userId == null || userId.isBlank()){
-            log.debug("userId is null or blank");
+            log.error("userId is null or blank");
             throw new ReservationInvalidException(ErrorCode.USER_ID_INVALID);
         }
 
         if(seatId == null || seatId < 0){
-            log.debug("seatId is null or less than 0");
+            log.error("seatId is null or less than 0");
             throw new ReservationInvalidException(ErrorCode.SEAT_ID_INVALID);
         }
 
         if (paymentId == null || paymentId < 0){
-            log.debug("paymentId is less than 0");
+            log.error("paymentId is less than 0");
             throw new ReservationInvalidException(ErrorCode.RESERVATION_PAYMENT_ID_INVALID);
         }
 
         if(reservationStatus == null && !Arrays.stream(ReservationStatusType.values()).toList().contains(reservationStatus)){
-            log.debug("reservationStatus is null or invalid");
+            log.error("reservationStatus is null or invalid");
             throw new ReservationInvalidException(ErrorCode.RESERVATION_STATUS_INVALID);
         }
 

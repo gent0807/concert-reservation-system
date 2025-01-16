@@ -43,12 +43,12 @@ public class Payment {
     public static Payment createPayment(Integer reduce, PaymentStatusType paymentStatusType) {
 
         if(reduce == null || reduce < 0){
-            log.debug("reduce is null or less than 0");
+            log.error("reduce is null or less than 0");
             throw new IllegalArgumentException("reduce is null or less than 0");
         }
 
         if(paymentStatusType == null || !Arrays.stream(PaymentStatusType.values()).toList().contains(paymentStatusType)) {
-            log.debug("paymentStatusType is null or invalid");
+            log.error("paymentStatusType is null or invalid");
             throw new IllegalArgumentException("paymentStatusType is null or invalid");
         }
 

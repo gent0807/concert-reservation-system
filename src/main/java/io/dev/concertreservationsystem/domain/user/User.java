@@ -63,22 +63,22 @@ public class User {
     public static User createUser(String userId, String userName, Integer age, UserGenderType gender) {
 
         if(userId == null || userId.isBlank()){
-            log.debug("userId is null or blank");
+            log.error("userId is null or blank");
             throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
         }
 
         if(userName == null || userName.isBlank()){
-            log.debug("userName is null or blank");
+            log.error("userName is null or blank");
             throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
         }
 
         if(age == null || age < 0){
-            log.debug("age is null or less than 0");
+            log.error("age is null or less than 0");
             throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
         }
 
         if(gender == null && !Arrays.stream(UserGenderType.values()).toList().contains(gender)){
-            log.debug("gender is null or not valid");
+            log.error("gender is null or not valid");
             throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
         }
 
@@ -122,49 +122,49 @@ public class User {
 
     public void checkUserUpdatedAtValidation() {
         if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            log.debug("updatedAt is null");
+            log.error("updatedAt is null");
             throw new UserInvalidException(ErrorCode.USER_UPDATED_AT_INVALID);
         }
     }
 
     public void checkUserCreatedAtValidation() {
         if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            log.debug("createdAt is null");
+            log.error("createdAt is null");
             throw new UserInvalidException(ErrorCode.USER_CREATED_AT_INVALID);
         }
     }
 
     public void checkUserPointValidation() {
         if(this.point == null || this.point < 0){
-            log.debug("point is null or less than 0");
+            log.error("point is null or less than 0");
             throw new UserInvalidException(ErrorCode.USER_POINT_INVALID);
         }
     }
 
     public void checkUserGenderValidation() {
         if(this.gender == null || !Arrays.stream(UserGenderType.values()).toList().contains(this.gender)){
-            log.debug("gender is null or not valid");
+            log.error("gender is null or not valid");
             throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
         }
     }
 
     public void checkUserAgeValidation() {
         if(this.age == null || this.age < 0){
-            log.debug("age is null or less than 0");
+            log.error("age is null or less than 0");
             throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
         }
     }
 
     public void checkUserNameValidation() {
         if(this.userName == null || this.userName.isBlank()){
-            log.debug("userName is null or blank");
+            log.error("userName is null or blank");
             throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
         }
     }
 
     public void checkUserIdValidation() {
         if(this.userId == null || this.userId.isBlank()){
-            log.debug("userId is null or blank");
+            log.error("userId is null or blank");
             throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
         }
     }
@@ -179,7 +179,7 @@ public class User {
 
     public void checkPrice(Integer totalPrice) {
         if(this.point < totalPrice){
-            log.debug("point is under total price");
+            log.error("point is under total price");
             throw new PaymentInvalidException(ErrorCode.PAYMENT_OVER_USER_POINT);
         }
     }

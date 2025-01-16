@@ -33,7 +33,7 @@ public class TokenService {
         // tokenDTOParam에 담긴 userId로 회원가입 돼있나 확인
         userRepository.findUserByUserId(tokenDTOParam.userId())
                                     .orElseThrow(()->{
-                                        log.debug("not found user");
+                                        log.error("not found user");
                                         throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
                                     });
 
@@ -46,7 +46,7 @@ public class TokenService {
         // 현재 유저의 토큰 목록 조회 후 가장 최근 토큰 반환
         return tokenRepository.findTokensByUserIdAndTokenStatusOrderByCreatedAtDesc(tokenDTOParam.userId(), TokenStatusType.INACTIVE)
                                                                 .orElseThrow(()->{
-                                                                    log.debug("not found token list");
+                                                                    log.error("failed to save token");
                                                                     throw new TokenNotFoundException(ErrorCode.TOKEN_SAVE_FAILED);
                                                                 }).get(0).convertToTokenDTOResult();
 
@@ -58,7 +58,7 @@ public class TokenService {
         // tokenDTOParam 이용하여 userId와 tokenId가 일치하는 토큰이 있는지 확인
         Token token = tokenRepository.findByTokenIdAndUserId(tokenDTOParam.tokenId(), tokenDTOParam.userId())
                                                 .orElseThrow(()-> {
-                                                    log.debug("not found token");
+                                                    log.error("not found token");
                                                     throw new TokenNotFoundException(ErrorCode.TOKEN_NOT_FOUND);
                                                 });
 
@@ -68,9 +68,9 @@ public class TokenService {
     }
 
     @Transactional
-    public void activeTokens() {
+    public void activeTokens(long maxActiveTokenLimit) {
 
-        List<Token> tokenList = tokenRepository.findInactiveTokensOrderByCreatedAtDescLimit10();
+        List<Token> tokenList = tokenRepository.findInactiveTokensOrderByCreatedAtDescLimit(maxActiveTokenLimit);
 
         tokenList.stream().forEach(token->{
             token.activeToken();

@@ -1,6 +1,9 @@
 package io.dev.concertreservationsystem.domain.seat;
 
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetail;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailRepository;
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
@@ -11,6 +14,7 @@ import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.SeatInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.SeatNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableSeat;
@@ -45,8 +49,8 @@ public class SeatService {
 
         return seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(seat.getConcertDetailId(), seat.getSeatStatus())
                 .orElseThrow(()->{
-                    log.debug( "Reservable Seat Not Found");
-                    throw new SeatInvalidException(ErrorCode.RESERVABLE_SEAT_NOT_FOUND);
+                    log.error( "reservable seat not found");
+                    throw new SeatNotFoundException(ErrorCode.RESERVABLE_SEAT_NOT_FOUND);
                 }).stream().map(Seat::convertToSeatDTOResult).collect(Collectors.toList());
 
     }
@@ -57,12 +61,10 @@ public class SeatService {
                 seatDTOParam -> {
                     Seat seat = seatRepository.findSeatBySeatId(seatDTOParam.seatId()).orElseThrow(
                             ()->{
-                                log.debug("seats not found");
-                                throw new SeatInvalidException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID);
+                                log.error("seat not found");
+                                throw new SeatNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID);
                             }
                     );
-
-
 
                     seat.updateSeatStatus(seatStatus);
 
@@ -70,6 +72,17 @@ public class SeatService {
 
                     seatRepository.save(seat);
 
+                    ConcertDetail concertDetail = seatRepository.findConcertDetailBySeatId(seat.getSeatId());
+
+                    concertDetail.setConcertDetailStatus(ConcertDetailStatusType.COMPLETED);
+
+                    List<Seat> seatList = seatRepository.findSeatsByConcertDetailId(concertDetail.getConcertDetailId());
+
+                    seatList.stream().forEach(s->{
+                        if(s.getSeatStatus() == SeatStatusType.RESERVABLE){
+                            concertDetail.setConcertDetailStatus(ConcertDetailStatusType.RESERVABLE);
+                        }
+                    });
 
                 }
         );

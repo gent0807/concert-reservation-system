@@ -37,22 +37,10 @@ public class UserService {
 
         return userRepository.findUserByUserId(user.getUserId())
                 .orElseThrow(() -> {
-                    log.debug("When: userRepository.findUserByUserId(user.getUserId()), Action: UserNotFoundException");
+                    log.error("When: userRepository.findUserByUserId(user.getUserId()), Action: UserNotFoundException, Message: { }", ErrorCode.USER_NOT_FOUND.getMessage());
                     throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
                 }).convertToUserDTOResult();
     }
 
-    public void checkUserPointBalance(UserDTOParam userDTOParam) {
 
-        reservationRepository.findReservationsByUserIdAndPaymentId(userDTOParam.userId(), userDTOParam.paymentId()).orElseThrow(()->{
-            throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
-        });
-
-        Payment payment = paymentRepository.findPaymentByPaymentId(userDTOParam.paymentId()).orElseThrow();
-
-        userRepository.findUserByUserId(userDTOParam.userId()).orElseThrow(()->{
-                log.debug("When: userRepository.findUserByUserId(userDTOParam.userId()), Action: UserNotFoundException");
-                throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
-            }).checkPrice(payment.getTotalPrice());
-    }
 }

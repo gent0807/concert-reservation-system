@@ -2,7 +2,6 @@ package io.dev.concertreservationsystem.infrastructure.token;
 
 import io.dev.concertreservationsystem.domain.token.Token;
 import io.dev.concertreservationsystem.domain.token.TokenRepository;
-import io.dev.concertreservationsystem.domain.token.TokenService;
 import io.dev.concertreservationsystem.domain.token.TokenStatusType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -31,8 +30,8 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public List<Token> findInactiveTokensOrderByCreatedAtDescLimit10(){
-        return tokenJPARepository.findTop10ByTokenStatusOrderByCreatedAtDesc(TokenStatusType.INACTIVE);
+    public List<Token> findInactiveTokensOrderByCreatedAtDescLimit(long maxActiveTokenLimit){
+        return tokenJPARepository.findTopNTokensByTokenStatusOrderByCreatedAtDesc(TokenStatusType.INACTIVE, maxActiveTokenLimit);
     }
 
     @Override

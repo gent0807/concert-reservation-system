@@ -1,9 +1,5 @@
 package io.dev.concertreservationsystem.interfaces.common.exception.handler;
 
-<<<<<<< HEAD
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.*;
-=======
->>>>>>> develope-feature
 import io.dev.concertreservationsystem.interfaces.common.exception.error.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +44,15 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = SeatInvalidException.class)
     public ResponseEntity<ErrorResponse> handleSeatInvalidException(SeatInvalidException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+    @ExceptionHandler(value = SeatNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleSeatNotFoundException(SeatNotFoundException e) {
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = PaymentInvalidException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentInvalidException(PaymentInvalidException e) {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 

@@ -11,6 +11,7 @@ import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.C
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -37,6 +39,7 @@ public class ReservationService {
 
                     return reservationRepository.findReservationByUserIdAndSeatIdAndPaymentId(reservation.getUserId(), reservation.getSeatId(), reservation.getPaymentId())
                             .orElseThrow(()->{
+                                log.error("reservation save failed");
                                 throw new ReservationNotFoundException(ErrorCode.RESERVATION_SAVE_FAILED);
                             }).convertToReservationDTOResult();
 
@@ -48,6 +51,7 @@ public class ReservationService {
 
        reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
                .orElseThrow(()->{
+                   log.error("reservation not found");
                    throw new ReservationNotFoundException(ErrorCode.RESERVATION_NOT_FOUND);
                }).stream().map((reservation)->{
                    reservation.setReservationStatus(ReservationStatusType.CONFIRMED);
@@ -59,16 +63,9 @@ public class ReservationService {
     @Validated(ProcessPayment.class)
     public List<SeatDTOParam> convertToSeatDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
         return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId()).orElseThrow(()->{
-            throw new PaymentInvalidException(ErrorCode.PAYMENT_NOT_FOUND);
+            log.error("reservation not found");
+            throw new ReservationNotFoundException(ErrorCode.RESERVATION_NOT_FOUND);
         }).stream().map(Reservation::convertToSeatDTOParam).collect(Collectors.toList());
-    }
-
-    @Validated(ProcessPayment.class)
-    public List<ReservationDTOParam> convertToReservationDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
-        return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
-                .orElseThrow(()->{
-                    throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
-                }).stream().map(Reservation::convertToReservationDTOParam).collect(Collectors.toList());
     }
 
 
@@ -76,7 +73,8 @@ public class ReservationService {
     public List<ConcertDetailDTOParam> convertToConcertDetailDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
         return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
                 .orElseThrow(()->{
-                    throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
+                    log.error("reservation not found");
+                    throw new ReservationNotFoundException(ErrorCode.RESERVATION_NOT_FOUND);
                 }).stream().map(reservation -> {
                     return seatRepository.findConcertDetailBySeatId(reservation.getSeatId()).convertToConcertDetailDTOParam();
                 }).collect(Collectors.toList());

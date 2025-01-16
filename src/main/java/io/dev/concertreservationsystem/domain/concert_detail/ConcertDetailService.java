@@ -40,7 +40,7 @@ public class ConcertDetailService {
 
         return concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertDetail.getConcertBasicId(), concertDetail.getConcertDetailStatus())
                                                                         .orElseThrow(()->{
-                                                                            log.debug( "Reservable ConcertDetail Not Found");
+                                                                            log.error( "reservable concertDetail not found");
                                                                             throw new ConcertDetailNotFoundException(ErrorCode.RESERVABLE_CONCERT_DETAIL_NOT_FOUND);
                                                                         }).stream().map(ConcertDetail::convertToConcertDetailDTOResult).collect(Collectors.toList());
     }
@@ -49,7 +49,7 @@ public class ConcertDetailService {
         reservationDTOParamList.stream().forEach(reservationDTOParam -> {
 
             Seat seat = seatRepository.findSeatBySeatId(reservationDTOParam.seatId()).orElseThrow(()->{
-                log.debug("seat not found");
+                log.error("seat not found");
                 throw new SeatInvalidException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID);
             });
 
@@ -62,21 +62,4 @@ public class ConcertDetailService {
         });
     }
 
-
-    @Validated({CreateReservations.class, ProcessPayment.class})
-    public void updateStatusOfConcertDetails(List<@Valid ConcertDetailDTOParam> concertDetailDTOParamList) {
-        concertDetailDTOParamList.stream().forEach(concertDetailDTOParam -> {
-
-            ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailId(concertDetailDTOParam.concertDetailId());
-
-            concertDetail.setConcertDetailStatus(ConcertDetailStatusType.COMPLETED);
-
-            concertDetailRepository.saveConcertDetail(concertDetail);
-
-        });
-    }
-
-    public ConcertDetail findConcertDetailsBySeatId(Long seatId) {
-        return seatRepository.findConcertDetailBySeatId(seatId);
-    }
 }
