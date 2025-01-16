@@ -7,6 +7,7 @@ import io.dev.concertreservationsystem.domain.payment.PaymentService;
 import io.dev.concertreservationsystem.domain.point_history.PointHistoryService;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOResult;
 import io.dev.concertreservationsystem.domain.reservation.ReservationService;
+import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import io.dev.concertreservationsystem.domain.user.UserService;
@@ -39,8 +40,7 @@ public class ConcertReserveAdminFacade {
     public List<ConcertReserveAdminDTOResult> findReservableConcertDetails(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
 
             // 콘서트의 예약 가능한 실제 공연 목록 조회
-            List<ConcertDetailDTOResult> concertDetailDTOResultList
-                    = concertDetailService.findReservableConcertDetails(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
+            List<ConcertDetailDTOResult> concertDetailDTOResultList = concertDetailService.findReservableConcertDetails(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
 
             return ConcertDetailDTOResult.convertToConcertReserveAdminDTOResultList(concertDetailDTOResultList);
 
@@ -49,7 +49,9 @@ public class ConcertReserveAdminFacade {
     // 2. 콘서트 실제 공연의 예약 가능 좌석 목록 조회
     @Validated(SearchReservableSeat.class)
     public List<ConcertReserveAdminDTOResult> findReservableSeats(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
-        return null;
+        List<SeatDTOResult> seatDTOResultList = seatService.findReservableSeats(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
+
+        return SeatDTOResult.convertToConcertReserveAdminDTOResultList(seatDTOResultList);
     }
 
     // 3. 좌석 예약 주문서 발행, 좌석 임시 점유(occupied)
