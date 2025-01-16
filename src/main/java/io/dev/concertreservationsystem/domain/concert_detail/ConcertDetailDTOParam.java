@@ -10,12 +10,10 @@ import lombok.Builder;
 @Builder
 public record ConcertDetailDTOParam(
 
-        @NotNull(groups = SearchReservableConcertDetail.class)
         @NotBlank(groups = SearchReservableConcertDetail.class)
         @Min(value = 0, groups = SearchReservableConcertDetail.class)
         Long concertBasicId,
 
-        @NotNull(groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class})
         @NotBlank(groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class})
         @Min(value = 0, groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class})
         Long concertDetailId

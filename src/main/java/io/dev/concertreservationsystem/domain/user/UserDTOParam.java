@@ -11,20 +11,16 @@ import lombok.Builder;
 @Builder
 public record UserDTOParam(
 
-        @NotNull
         @NotBlank
         String userId,
 
-        @NotNull(groups = CreateUser.class)
         @NotBlank(groups = CreateUser.class)
         String userName,
 
-        @NotNull(groups = CreateUser.class)
         @NotBlank(groups = CreateUser.class)
         @Min(value = 0, groups = CreateUser.class)
         Integer age,
 
-        @NotNull(groups = CreateUser.class)
         @NotBlank(groups = CreateUser.class)
         @NotInvalidUserGenderType(groups = CreateUser.class)
         UserGenderType gender,

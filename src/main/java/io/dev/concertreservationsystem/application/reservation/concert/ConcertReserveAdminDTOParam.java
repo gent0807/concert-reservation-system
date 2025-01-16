@@ -20,27 +20,23 @@ import java.util.stream.Collectors;
 
 @Builder
 public record ConcertReserveAdminDTOParam(
-        @NotNull(groups = SearchReservableConcertDetail.class)
+
         @NotBlank(groups = SearchReservableConcertDetail.class)
         @Min(value = 0, groups = SearchReservableConcertDetail.class)
         Long concertBasicId,
 
-        @NotNull(groups = {SearchReservableConcertDetail.class,  SearchReservableSeat.class})
         @NotBlank(groups = {SearchReservableConcertDetail.class,  SearchReservableSeat.class})
         @Min(value = 0, groups = {SearchReservableConcertDetail.class,  SearchReservableSeat.class})
         Long concertDetailId,
 
-        @NotNull(groups = CreateReservations.class)
         @NotBlank(groups = CreateReservations.class)
         @Min(value = 0, groups = CreateReservations.class)
         Long seatId,
 
-        @NotNull(groups = CreateReservations.class)
         @NotBlank(groups = CreateReservations.class)
         @Min(value = 0, groups = CreateReservations.class)
         String userId,
 
-        @NotNull(groups = CreateReservations.class)
         @NotBlank(groups = CreateReservations.class)
         @Min(value = 0, groups = CreateReservations.class)
         Long paymentId

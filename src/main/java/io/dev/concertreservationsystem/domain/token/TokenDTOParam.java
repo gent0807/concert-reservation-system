@@ -9,11 +9,9 @@ import lombok.Builder;
 
 @Builder
 public record TokenDTOParam(
-        @NotNull(groups = CheckTokenStatusValid.class)
         @NotBlank(groups = CheckTokenStatusValid.class)
         Long tokenId,
 
-        @NotNull(groups = {CreateToken.class, CheckTokenStatusValid.class})
         @NotBlank(groups = {CreateUser.class, CheckTokenStatusValid.class})
         String userId
 ) {

@@ -9,16 +9,13 @@ import lombok.Builder;
 
 @Builder
 public record PointHistoryDTOParam(
-        @NotNull
         @NotBlank
         String userId,
 
-        @NotNull
         @NotBlank
         @NotInvalidPointTransactionType
         PointTransactionType type,
 
-        @NotNull
         @NotBlank
         @Min(0)
         Integer amount,

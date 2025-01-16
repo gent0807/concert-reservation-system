@@ -13,16 +13,13 @@ public record PointHistoryFacadeDTOParam(
         Long pointHistoryId,
         Long paymentId,
 
-        @NotNull
         @NotBlank
         String userId,
 
-        @NotNull
         @NotBlank
         @NotInvalidPointTransactionType
         PointTransactionType type,
 
-        @NotNull
         @NotBlank
         @Min(0)
         Integer amount
