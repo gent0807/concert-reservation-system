@@ -1,8 +1,7 @@
 package io.dev.concertreservationsystem.interfaces.api.user;
 
-import io.dev.concertreservationsystem.application.user.UserAdminDTOParam;
-import io.dev.concertreservationsystem.application.user.UserAdminDTOResult;
-import io.dev.concertreservationsystem.application.user.UserAdminFacade;
+import io.dev.concertreservationsystem.application.user.UserFacadeDTOResult;
+import io.dev.concertreservationsystem.application.user.UserFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,7 +19,7 @@ import java.util.UUID;
 @Tag(name = "유저 정보 관련 API", description = "유저 정보 관련 api입니다.")
 public class UserController {
 
-    private final UserAdminFacade userAdminFacade;
+    private final UserFacade userFacade;
 
     @PostMapping("/new")
     @Operation(summary = "임시 회원가입", description = "UUID를 랜덤 생성하여 임시 회원가입하고, 헤더에 userId(UUID)를 담아보내줍니다.).")
@@ -28,11 +27,11 @@ public class UserController {
 
         // 접속 요청 발생하는 경우, UUID 랜덤 발급하고 유저 테이블에 저장하고, 새로 생성된 userId(UUID)를 담아 보내주는
         // 현재 참조된 UserAdminFacade 타입 객체의 insertUser 메소드 호출
-        UserAdminDTOResult userAdminDTOResult = userAdminFacade.insertUser(userRequestDTO.convertToUserAdminDTOParam());
+        UserFacadeDTOResult userFacadeDTOResult = userFacade.insertUser(userRequestDTO.convertToUserFacadeDTOParam());
 
         HttpHeaders headers = new HttpHeaders();
 
-        headers.set("X-Custom-UserId", userAdminDTOResult.userId().toString());
+        headers.set("X-Custom-UserId", userFacadeDTOResult.userId().toString());
 
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
 

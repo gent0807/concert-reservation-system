@@ -1,6 +1,6 @@
 package io.dev.concertreservationsystem.domain.token;
 
-import io.dev.concertreservationsystem.application.token.TokenAdminDTOResult;
+import io.dev.concertreservationsystem.application.token.TokenFacadeDTOResult;
 import lombok.Builder;
 
 @Builder
@@ -9,7 +9,7 @@ public record TokenDTOResult(
         String userId,
         TokenStatusType tokenStatus
 ) {
-    public TokenAdminDTOResult convertToTokenAdminDTOResult() {
+    public TokenFacadeDTOResult convertToTokenFacadeDTOResult() {
         return null;
     }
 }

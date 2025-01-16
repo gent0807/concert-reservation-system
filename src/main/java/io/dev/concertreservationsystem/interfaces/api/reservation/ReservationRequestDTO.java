@@ -16,17 +16,14 @@ public record ReservationRequestDTO(
         Long reservationId,
 
         @JsonProperty("seatId")
-        @NotNull(groups = CreateReservations.class)
         @NotBlank(groups = CreateReservations.class)
         @Min(value = 0, groups = CreateReservations.class)
         Long seatId,
 
         @JsonProperty("userId")
-        @NotNull(groups = CreateReservations.class)
         @NotBlank(groups = CreateReservations.class)
         String userId,
 
-        @NotNull(groups = CreateReservations.class)
         @NotBlank(groups = CreateReservations.class)
         @Min(value = 0, groups = CreateReservations.class)
         @JsonProperty("paymentId") Long paymentId,

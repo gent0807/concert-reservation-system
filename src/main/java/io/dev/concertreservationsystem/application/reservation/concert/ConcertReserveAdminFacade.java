@@ -4,10 +4,9 @@ import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTORes
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
-import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryService;
+import io.dev.concertreservationsystem.domain.point_history.PointHistoryService;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOResult;
 import io.dev.concertreservationsystem.domain.reservation.ReservationService;
-import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import io.dev.concertreservationsystem.domain.user.UserService;

@@ -1,9 +1,6 @@
 package io.dev.concertreservationsystem.interfaces.api.concert_basic;
 
-import io.dev.concertreservationsystem.application.concert.ConcertAdminDTOParam;
-import io.dev.concertreservationsystem.application.concert.ConcertAdminDTOResult;
-import io.dev.concertreservationsystem.application.concert.ConcertAdminFacade;
-import io.dev.concertreservationsystem.domain.concert_basic.ConcertBasicService;
+import io.dev.concertreservationsystem.application.concertBasic.ConcertBasicFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +16,15 @@ import java.util.List;
 @Tag(name="콘서트 기본 정보 관련 API", description="콘서트 기본 정보 관련 api입니다.")
 public class ConcertBasicController {
 
-    private final ConcertAdminFacade concertAdminFacade;
+    private final ConcertBasicFacade concertBasicFacade;
 
     @GetMapping(value = "/all")
     @Operation(summary = "콘서트 기본 정보 전체 목록 조회", description = "콘서트 전체 목록을 조회합니다.")
     public ResponseEntity<List<ConcertBasicResponseDTO>> findAllConcertBasics() {
         /*
-                List<ConcertAdminDTOResult> concertAdminDTOResultList =  concertAdminFacade.findAllConcertBasics();
+                List<ConcertBasicFacadeDTOResult> concertAdminDTOResultList =  concertAdminFacade.findAllConcertBasics();
 
-                List<ConcertBasicResponseDTO> concertBasicResponseDTOList = ConcertAdminDTOResult.convertToConcertAdminDTOResultList(concertAdminDTOResultList);
+                List<ConcertBasicResponseDTO> concertBasicResponseDTOList = ConcertBasicFacadeDTOResult.convertToConcertAdminDTOResultList(concertAdminDTOResultList);
 
                 return ResponseEntity.ok().body(concertBasicResponseDTOList);
         */
@@ -43,15 +40,15 @@ public class ConcertBasicController {
                                                                                                 @PathVariable("end-date") LocalDateTime endDate) {
 
         /*
-                // startDate와 endDate를 이용한 ConcertAdminDTOParam 타입 객체 생성
-                ConcertAdminDTOParam concertAdminDTOParam = ConcertAdminDTOParam.builder()
+                // startDate와 endDate를 이용한 ConcertBasicFacadeDTOParam 타입 객체 생성
+                ConcertBasicFacadeDTOParam concertAdminDTOParam = ConcertBasicFacadeDTOParam.builder()
                                                                 .startDate(startDate)
                                                                 .endDate(endDate)
                                                                 .build();
 
-                List<ConcertAdminDTOResult> concertAdminDTOResultList = concertAdminFacade.findConcertBasicsByStartDateAndEndDate(concertAdminDTOParam);
+                List<ConcertBasicFacadeDTOResult> concertAdminDTOResultList = concertAdminFacade.findConcertBasicsByStartDateAndEndDate(concertAdminDTOParam);
 
-                List<ConcertBasicResponseDTO> concertBasicResponseDTOList = ConcertAdminDTOResult.convertToConcertAdminDTOResultList(concertAdminDTOResultList);
+                List<ConcertBasicResponseDTO> concertBasicResponseDTOList = ConcertBasicFacadeDTOResult.convertToConcertAdminDTOResultList(concertAdminDTOResultList);
 
                 return ResponseEntity.ok().body(List.of(concertBasicResponseDTOList));
         */

@@ -28,18 +28,18 @@ public class UserService {
 
     @Transactional
     @Validated(CreateUser.class)
-        public UserDTOResult insertUser(@Valid UserDTOParam userDTOParam) {
+    public UserDTOResult insertUser(@Valid UserDTOParam userDTOParam) {
 
-            // 도메인 모델 내 정적 팩토리 메소드로 생성
-            User user = User.createUser(userDTOParam.userId(), userDTOParam.userName(), userDTOParam.age(), userDTOParam.gender());
+        // 도메인 모델 내 정적 팩토리 메소드로 생성
+        User user = User.createUser(userDTOParam.userId(), userDTOParam.userName(), userDTOParam.age(), userDTOParam.gender());
 
-            userRepository.createUser(user);
+        userRepository.createUser(user);
 
-            return userRepository.findUserByUserId(user.getUserId())
-                    .orElseThrow(() -> {
-                        log.debug("When: userRepository.findUserByUserId(user.getUserId()), Action: UserNotFoundException");
-                        throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
-                    }).convertToUserDTOResult();
+        return userRepository.findUserByUserId(user.getUserId())
+                .orElseThrow(() -> {
+                    log.debug("When: userRepository.findUserByUserId(user.getUserId()), Action: UserNotFoundException");
+                    throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
+                }).convertToUserDTOResult();
     }
 
     public void checkUserPointBalance(UserDTOParam userDTOParam) {

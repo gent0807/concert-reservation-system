@@ -1,9 +1,7 @@
 package io.dev.concertreservationsystem.interfaces.api.common.validation.validator;
 
-import io.dev.concertreservationsystem.domain.user.UserGenderType;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.annotation.NotInvalidPointTransactionType;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.annotation.NotInvalidUserGenderType;
-import io.dev.concertreservationsystem.interfaces.api.pointHistory.PointTransactionType;
+import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransactionType;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

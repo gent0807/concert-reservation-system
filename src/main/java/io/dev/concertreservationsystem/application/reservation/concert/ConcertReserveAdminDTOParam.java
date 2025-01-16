@@ -3,7 +3,7 @@ package io.dev.concertreservationsystem.application.reservation.concert;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOParam;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
-import io.dev.concertreservationsystem.domain.pointHistory.PointHistoryDTOParam;
+import io.dev.concertreservationsystem.domain.point_history.PointHistoryDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import io.dev.concertreservationsystem.domain.user.UserDTOParam;

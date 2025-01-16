@@ -1,6 +1,5 @@
 package io.dev.concertreservationsystem.interfaces.api.reservation;
 
-import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOParam;
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOResult;
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminFacade;
 import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;

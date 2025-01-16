@@ -4,8 +4,6 @@ import io.dev.concertreservationsystem.application.reservation.concert.ConcertRe
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOResult;
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminFacade;
 import io.dev.concertreservationsystem.domain.payment.Payment;
-import io.dev.concertreservationsystem.interfaces.api.concert_basic.ConcertBasicRequestDTO;
-import io.dev.concertreservationsystem.interfaces.api.concert_basic.ConcertBasicResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
