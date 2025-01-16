@@ -42,5 +42,10 @@ public class SeatRepositoryImpl implements SeatRepository {
         return seatJPARepository.findConcertDetailIdBySeatId(seatId);
     }
 
+    @Override
+    public List<Seat> findSeatsBySeatStatus(SeatStatusType seatStatusType){
+        return seatJPARepository.findSeatsBySeatStatus(SeatStatusType.OCCUPIED);
+    }
+
 
 }

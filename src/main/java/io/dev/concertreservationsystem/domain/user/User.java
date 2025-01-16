@@ -1,8 +1,8 @@
 package io.dev.concertreservationsystem.domain.user;
 
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.PaymentInvalidException;
-import io.dev.concertreservationsystem.interfaces.api.common.exception.error.UserInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.UserInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

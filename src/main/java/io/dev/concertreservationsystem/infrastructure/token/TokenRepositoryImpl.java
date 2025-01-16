@@ -29,4 +29,14 @@ public class TokenRepositoryImpl implements TokenRepository {
     public Optional<List<Token>> findTokensByUserIdAndTokenStatusOrderByCreatedAtDesc(String userId, TokenStatusType tokenStatusType) {
         return tokenJPARepository.findTokensByUserIdAndTokenStatusOrderByCreatedAtAsc(userId, tokenStatusType);
     }
+
+    @Override
+    public List<Token> findInactiveTokensOrderByCreatedAtDescLimit10(){
+        return tokenJPARepository.findTop10ByTokenStatusOrderByCreatedAtDesc(TokenStatusType.INACTIVE);
+    }
+
+    @Override
+    public List<Token> findAllActiveTokens(){
+        return tokenJPARepository.findAllByTokenStatus(TokenStatusType.ACTIVE);
+    }
 }

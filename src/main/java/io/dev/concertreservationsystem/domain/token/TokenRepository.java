@@ -9,4 +9,8 @@ public interface TokenRepository {
     public void saveToken(Token token);
 
     public Optional<List<Token>> findTokensByUserIdAndTokenStatusOrderByCreatedAtDesc(String userId, TokenStatusType tokenStatusType);
+
+    public List<Token> findInactiveTokensOrderByCreatedAtDescLimit10();
+
+    public List<Token> findAllActiveTokens();
 }

@@ -2,7 +2,7 @@ package io.dev.concertreservationsystem.interfaces.api.reservation;
 
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOResult;
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminFacade;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

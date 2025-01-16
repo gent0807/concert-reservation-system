@@ -11,4 +11,8 @@ public interface TokenJPARepository extends JpaRepository<Token, Long> {
     Optional<Token> findByTokenIdAndUserId(Long tokenId, String userId);
 
     Optional<List<Token>> findTokensByUserIdAndTokenStatusOrderByCreatedAtAsc(String userId, TokenStatusType tokenStatus);
+
+    List<Token> findTop10ByTokenStatusOrderByCreatedAtDesc(TokenStatusType tokenStatus);
+
+    List<Token> findAllByTokenStatus(TokenStatusType tokenStatus);
 }

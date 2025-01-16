@@ -4,7 +4,7 @@ import io.dev.concertreservationsystem.application.reservation.concert.ConcertRe
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOResult;
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminFacade;
 import io.dev.concertreservationsystem.domain.payment.Payment;
-import io.dev.concertreservationsystem.interfaces.api.common.validation.interfaces.ProcessPayment;
+import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
