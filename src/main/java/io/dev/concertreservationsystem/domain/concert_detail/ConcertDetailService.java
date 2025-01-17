@@ -5,11 +5,8 @@ import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ConcertDetailNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.SeatInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableConcertDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +37,7 @@ public class ConcertDetailService {
 
         return concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertDetail.getConcertBasicId(), concertDetail.getConcertDetailStatus())
                                                                         .orElseThrow(()->{
-                                                                            log.error( "reservable concertDetail not found");
-                                                                            throw new ConcertDetailNotFoundException(ErrorCode.RESERVABLE_CONCERT_DETAIL_NOT_FOUND);
+                                                                            throw new ServiceDataNotFoundException(ErrorCode.RESERVABLE_CONCERT_DETAIL_NOT_FOUND, "CONCERT DETAIL SERVICE", "findReservableConcertDetails");
                                                                         }).stream().map(ConcertDetail::convertToConcertDetailDTOResult).collect(Collectors.toList());
     }
 
@@ -49,8 +45,7 @@ public class ConcertDetailService {
         reservationDTOParamList.stream().forEach(reservationDTOParam -> {
 
             Seat seat = seatRepository.findSeatBySeatId(reservationDTOParam.seatId()).orElseThrow(()->{
-                log.error("seat not found");
-                throw new SeatInvalidException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID);
+                throw new ServiceDataNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID, "CONCERT DETAIL SERVICE", "checkReservableOfConcertDetail");
             });
 
             seat.checkReservable();

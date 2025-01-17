@@ -72,7 +72,8 @@ public enum ErrorCode {
     PAYMENT_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_SAVE_FAILED", "결제 정보 저장에 실패했습니다."),
     PAYMENT_TOTAL_PRICE_INVALID(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_TOTAL_PRICE_INVALID", "유효하지 않은 결제 가격입니다."),
     PAYMENT_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_NOT_FOUND", "존재하지 않는 결제 정보입니다."),
-    PAYMENT_OVER_USER_POINT(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_OVER_USER_POINT", "잔고 부족입니다. 유저 포인트 충전이 필요합니다.");
+    PAYMENT_OVER_USER_POINT(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_OVER_USER_POINT", "잔고 부족입니다. 유저 포인트 충전이 필요합니다."),
+    PAYMENT_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_STATUS_INVALID", "유효하지 않은 결제 정보 상태입니다.");
 
 
 

@@ -1,12 +1,10 @@
 package io.dev.concertreservationsystem.domain.user;
 
-import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateUser;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +35,7 @@ public class UserService {
 
         return userRepository.findUserByUserId(user.getUserId())
                 .orElseThrow(() -> {
-                    log.error("When: userRepository.findUserByUserId(user.getUserId()), Action: UserNotFoundException, Message: { }", ErrorCode.USER_NOT_FOUND.getMessage());
-                    throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
+                    throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "USER SERVICE", "insertUser()");
                 }).convertToUserDTOResult();
     }
 

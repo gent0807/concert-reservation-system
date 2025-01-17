@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.NoSuchElementException;
-
 @Getter
 @Setter
 @AllArgsConstructor
-public class PaymentNotFoundException extends NoSuchElementException {
+public class DomainModelParamInvalidException extends IllegalArgumentException {
     ErrorCode errorCode;
+    String DomainName;
+    String methodName;
 }

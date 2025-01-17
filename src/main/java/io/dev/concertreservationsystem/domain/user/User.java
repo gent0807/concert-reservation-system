@@ -1,8 +1,7 @@
 package io.dev.concertreservationsystem.domain.user;
 
+import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.UserInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -63,23 +62,19 @@ public class User {
     public static User createUser(String userId, String userName, Integer age, UserGenderType gender) {
 
         if(userId == null || userId.isBlank()){
-            log.error("userId is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "USER", "createUser");
         }
 
         if(userName == null || userName.isBlank()){
-            log.error("userName is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_NAME_INVALID, "USER", "createUser");
         }
 
         if(age == null || age < 0){
-            log.error("age is null or less than 0");
-            throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_AGE_INVALID, "USER", "createUser");
         }
 
         if(gender == null && !Arrays.stream(UserGenderType.values()).toList().contains(gender)){
-            log.error("gender is null or not valid");
-            throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID, "USER", "createUser");
         }
 
         return new User(userId, userName, age, gender);
@@ -122,50 +117,43 @@ public class User {
 
     public void checkUserUpdatedAtValidation() {
         if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            log.error("updatedAt is null");
-            throw new UserInvalidException(ErrorCode.USER_UPDATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_UPDATED_AT_INVALID, "USER", "checkUserUpdatedAtValidation");
         }
     }
 
     public void checkUserCreatedAtValidation() {
         if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            log.error("createdAt is null");
-            throw new UserInvalidException(ErrorCode.USER_CREATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_CREATED_AT_INVALID, "USER", "checkUserCreatedAtValidation");
         }
     }
 
     public void checkUserPointValidation() {
         if(this.point == null || this.point < 0){
-            log.error("point is null or less than 0");
-            throw new UserInvalidException(ErrorCode.USER_POINT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_POINT_INVALID, "USER", "checkUserPointValidation");
         }
     }
 
     public void checkUserGenderValidation() {
         if(this.gender == null || !Arrays.stream(UserGenderType.values()).toList().contains(this.gender)){
-            log.error("gender is null or not valid");
-            throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID, "USER", "checkUserGenderValidation");
         }
     }
 
     public void checkUserAgeValidation() {
         if(this.age == null || this.age < 0){
-            log.error("age is null or less than 0");
-            throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_AGE_INVALID, "USER", "checkUserAgeValidation");
         }
     }
 
     public void checkUserNameValidation() {
         if(this.userName == null || this.userName.isBlank()){
-            log.error("userName is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_NAME_INVALID, "USER", "checkUserNameValidation");
         }
     }
 
     public void checkUserIdValidation() {
         if(this.userId == null || this.userId.isBlank()){
-            log.error("userId is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "USER", "checkUserIdValidation");
         }
     }
 
@@ -179,8 +167,7 @@ public class User {
 
     public void checkPrice(Integer totalPrice) {
         if(this.point < totalPrice){
-            log.error("point is under total price");
-            throw new PaymentInvalidException(ErrorCode.PAYMENT_OVER_USER_POINT);
+            throw new DomainModelParamInvalidException(ErrorCode.PAYMENT_OVER_USER_POINT, "USER", "checkPrice");
         }
     }
 
