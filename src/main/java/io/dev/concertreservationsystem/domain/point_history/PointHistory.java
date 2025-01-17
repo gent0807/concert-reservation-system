@@ -127,7 +127,6 @@ public class PointHistory {
 
     public void checkPointHistoryIdValidation() {
         if(this.pointHistoryId == null || this.pointHistoryId < 0){
-            log.error("pointHistoryId is null or less than 0");
             throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_ID_INVALID, "POINT_HISTORY", "checkPointHistoryIdValidation");
         }
     }
@@ -135,28 +134,24 @@ public class PointHistory {
 
     public void checkPointHistoryPointTransactionTypeValidation() {
         if (this.type == null){
-            log.error("type is null");
             throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_POINT_TRANSACTION_TYPE_INVALID, "POINT_HISTORY", "checkPointHistoryPointTransactionTypeValidation");
         }
     }
 
     public void checkPoinyHistoryAmountValidation() {
         if (this.amount == null || this.amount < 0){
-            log.error("amount is null or less than 0");
             throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_AMOUNT_INVALID, "POINT_HISTORY", "checkPoinyHistoryAmountValidation");
         }
     }
 
     public void checkPointHistoryResultPointValidation() {
         if (this.resultPoint == null || this.resultPoint < 0){
-            log.error("resultPoint is null or less than 0");
             throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_RESULT_POINT_INVALID, "POINT_HISTORY", "checkPointHistoryResultPointValidation");
         }
     }
 
     public void checkPointHistoryCreatedAtValidation() {
         if (this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            log.error("createdAt is null");
             throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_CREATED_AT_INVALID,"POINT_HISTORY", "checkPointHistoryCreatedAtValidation");
         }
     }
@@ -164,7 +159,6 @@ public class PointHistory {
 
     public void checkPointHistoryUpdatedAtValidation() {
         if (this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            log.error("updatedAt is null");
             throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_UPDATED_AT_INVALID, "POINT_HISTORY", "checkPointHistoryUpdatedAtValidation");
         }
     }

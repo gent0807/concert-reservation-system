@@ -4,12 +4,15 @@ import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCo
 import lombok.Builder;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
 @Builder
 public class ErrorResponse {
     private int status;
     private String name;
     private String code;
     private String message;
+    private Map<String,String> errorMap;
 
     public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode e){
         return ResponseEntity.status(e.getHttpStatus())
@@ -21,4 +24,5 @@ public class ErrorResponse {
                         .build());
 
     }
+
 }

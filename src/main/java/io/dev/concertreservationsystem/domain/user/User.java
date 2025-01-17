@@ -33,20 +33,19 @@ public class User {
     @Column(name = "age", nullable = false)
     @Positive
     @Min(0)
-    private Integer age;
+    private int age;
 
     @Column(name = "gender", nullable = false)
     private UserGenderType gender;
 
     @Column(name = "point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
-    @Size(min = 0, max = 10_000_000)
-    private Long point;
+    private long point;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
@@ -128,7 +127,7 @@ public class User {
     }
 
     public void checkUserPointValidation() {
-        if(this.point == null || this.point < 0){
+        if(this.point < 0){
             throw new DomainModelParamInvalidException(ErrorCode.USER_POINT_INVALID, "USER", "checkUserPointValidation");
         }
     }
@@ -140,7 +139,7 @@ public class User {
     }
 
     public void checkUserAgeValidation() {
-        if(this.age == null || this.age < 0){
+        if( this.age < 0){
             throw new DomainModelParamInvalidException(ErrorCode.USER_AGE_INVALID, "USER", "checkUserAgeValidation");
         }
     }
