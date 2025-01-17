@@ -9,6 +9,8 @@ import java.util.NoSuchElementException;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ReservationNotFoundException extends NoSuchElementException {
-   ErrorCode errorCode;
+public class ServiceDataNotFoundException extends NoSuchElementException {
+    ErrorCode errorCode;
+    String serviceName;
+    String methodName;
 }

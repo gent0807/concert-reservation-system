@@ -2,8 +2,8 @@ package io.dev.concertreservationsystem.domain.payment;
 
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import jakarta.validation.Valid;
@@ -37,8 +37,7 @@ public class PaymentService {
         paymentRepository.savePayment(payment);
 
         return paymentRepository.findPaymentsByPaymentStatusOrderByCreatedAtDesc(payment.getPaymentStatus()).orElseThrow(()->{
-            log.error("payment save failed");
-            throw new PaymentNotFoundException(ErrorCode.PAYMENT_SAVE_FAILED);
+            throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_SAVE_FAILED, "PAYMENT SERVICE", "publishNewPayment");
         }).get(0).convertToPaymentDTOResult();
 
 
@@ -49,8 +48,7 @@ public class PaymentService {
     public PaymentDTOResult updateStatusOfPayment(@Valid PaymentDTOParam paymentDTOParam) {
 
         Payment payment = paymentRepository.findPaymentByPaymentId(paymentDTOParam.paymentId()).orElseThrow(()->{
-            log.error("payment not found");
-            throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
+            throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_NOT_FOUND, "PAYMENT SERVICE", "updateStatusOfPayment");
         });
 
         payment.setPaymentStatus(PaymentStatusType.PAID);

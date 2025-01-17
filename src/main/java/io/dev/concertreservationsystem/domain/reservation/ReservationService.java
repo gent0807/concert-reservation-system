@@ -3,10 +3,8 @@ package io.dev.concertreservationsystem.domain.reservation;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentNotFoundException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ReservationNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import jakarta.validation.Valid;
@@ -39,8 +37,7 @@ public class ReservationService {
 
                     return reservationRepository.findReservationByUserIdAndSeatIdAndPaymentId(reservation.getUserId(), reservation.getSeatId(), reservation.getPaymentId())
                             .orElseThrow(()->{
-                                log.error("reservation save failed");
-                                throw new ReservationNotFoundException(ErrorCode.RESERVATION_SAVE_FAILED);
+                                throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_SAVE_FAILED, "RESERVATION SERVICE", "insertReservations");
                             }).convertToReservationDTOResult();
 
         }).collect(Collectors.toList());
@@ -51,8 +48,7 @@ public class ReservationService {
 
        reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
                .orElseThrow(()->{
-                   log.error("reservation not found");
-                   throw new ReservationNotFoundException(ErrorCode.RESERVATION_NOT_FOUND);
+                   throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "updateStatusOfReservations");
                }).stream().map((reservation)->{
                    reservation.setReservationStatus(ReservationStatusType.CONFIRMED);
                    reservationRepository.saveReservation(reservation);
@@ -63,8 +59,7 @@ public class ReservationService {
     @Validated(ProcessPayment.class)
     public List<SeatDTOParam> convertToSeatDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
         return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId()).orElseThrow(()->{
-            log.error("reservation not found");
-            throw new ReservationNotFoundException(ErrorCode.RESERVATION_NOT_FOUND);
+            throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "convertToSeatDTOParamList");
         }).stream().map(Reservation::convertToSeatDTOParam).collect(Collectors.toList());
     }
 
@@ -73,8 +68,7 @@ public class ReservationService {
     public List<ConcertDetailDTOParam> convertToConcertDetailDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
         return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
                 .orElseThrow(()->{
-                    log.error("reservation not found");
-                    throw new ReservationNotFoundException(ErrorCode.RESERVATION_NOT_FOUND);
+                    throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "convertToConcertDetailDTOParamList");
                 }).stream().map(reservation -> {
                     return seatRepository.findConcertDetailBySeatId(reservation.getSeatId()).convertToConcertDetailDTOParam();
                 }).collect(Collectors.toList());

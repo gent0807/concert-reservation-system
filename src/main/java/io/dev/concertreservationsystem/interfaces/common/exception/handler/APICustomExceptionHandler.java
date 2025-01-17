@@ -7,67 +7,41 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @RestControllerAdvice
 @Slf4j
 public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(value = ServiceDataNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDataNotFoundException(ServiceDataNotFoundException e) {
 
-    @ExceptionHandler(value = UserInvalidException.class)
-    public ResponseEntity<ErrorResponse> handleUserInvalidException(UserInvalidException e) {
+        String uuid = "ERROR-" + UUID.randomUUID();
+
+        log.error("UUID - [{}] | <<--------------------------------------------------------------------------",uuid);
+        log.error("UUID - [{}] | ERROR TIME : {}", uuid, LocalDateTime.now());
+        log.error("UUID - [{}] | SERVICE : {}", uuid, e.getServiceName());
+        log.error("UUID - [{}] | METHOD : {}", uuid, e.getMethodName());
+        log.error("UUID - [{}] | ERROR CODE: [{}]", uuid, e.getErrorCode().toString());
+        log.error("UUID - [{}] | -------------------------------------------------------------------------->>",uuid);
+
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 
-    @ExceptionHandler(value = UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
+    @ExceptionHandler(value = DomainModelParamInvalidException.class)
+    public ResponseEntity<ErrorResponse> handleDataParamInvalidException(DomainModelParamInvalidException e) {
 
-    @ExceptionHandler(value = TokenInvalidException.class)
-    public ResponseEntity<ErrorResponse> handleTokenInvalidException(TokenInvalidException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
+        String uuid = "ERROR-" + UUID.randomUUID().toString();
 
-    @ExceptionHandler(value = TokenNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleTokenNotFoundException(TokenNotFoundException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
+        log.error("UUID - [{}] | <<--------------------------------------------------------------------------",uuid);
+        log.error("UUID - [{}] | ERROR TIME : {}", uuid, LocalDateTime.now());
+        log.error("UUID - [{}] | DOMAIN ENTITY : {}", uuid, e.getDomainName());
+        log.error("UUID - [{}] | METHOD : {}", uuid, e.getMethodName());
+        log.error("UUID - [{}] | ERROR CODE: [{}]", uuid, e.getErrorCode().toString());
+        log.error("UUID - [{}] | -------------------------------------------------------------------------->>",uuid);
 
-    @ExceptionHandler(value = PointHistoryInvalidException.class)
-    public ResponseEntity<ErrorResponse> handlePointHistoryInvalidException(PointHistoryInvalidException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
 
-    @ExceptionHandler(value = PointHistoryNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlePointHistoryNotFoundException(PointHistoryNotFoundException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
-
-    @ExceptionHandler(value = SeatInvalidException.class)
-    public ResponseEntity<ErrorResponse> handleSeatInvalidException(SeatInvalidException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
-    @ExceptionHandler(value = SeatNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleSeatNotFoundException(SeatNotFoundException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
-
-    @ExceptionHandler(value = PaymentInvalidException.class)
-    public ResponseEntity<ErrorResponse> handlePaymentInvalidException(PaymentInvalidException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
-
-    @ExceptionHandler(value = PaymentNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlePaymentNotFoundException(PaymentNotFoundException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
-
-    @ExceptionHandler(value = ReservationInvalidException.class)
-    public ResponseEntity<ErrorResponse> handleReservationInvalidException(ReservationInvalidException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode());
-    }
-
-    @ExceptionHandler(value = ReservationNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleReservationNotFoundException(ReservationNotFoundException e) {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 

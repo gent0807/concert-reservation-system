@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.token;
 
+import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.TokenInvalidException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
@@ -56,7 +56,7 @@ public class Token {
 
         if(userId == null || userId.isBlank()){
             log.error("userId is null or blank");
-            throw new TokenInvalidException(ErrorCode.USER_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "TOKEN", "createToken");
         }
 
         return new Token(userId, tokenStatus);
@@ -75,27 +75,27 @@ public class Token {
 
     public void checkValidation() {
         if(this.tokenId == null || this.tokenId < 0){
-            throw new TokenInvalidException(ErrorCode.TOKEN_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.TOKEN_ID_INVALID, "TOKEN", "checkValidation");
         }
 
         if(this.userId == null || this.userId.isBlank()){
-            throw new TokenInvalidException(ErrorCode.USER_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "TOKEN", "checkValidation");
         }
 
         if(this.tokenStatus == null || !Arrays.stream(TokenStatusType.values()).toList().contains(this.tokenStatus)){
-            throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.TOKEN_STATUS_INVALID, "TOKEN", "checkValidation");
         }
 
         if(this.tokenStatus == TokenStatusType.ACTIVE && this.expiresAt == null){
-            throw new TokenInvalidException(ErrorCode.TOKEN_EXPIRED_AT_NONE);
+            throw new DomainModelParamInvalidException(ErrorCode.TOKEN_EXPIRED_AT_NONE, "TOKEN", "checkValidation");
         }
 
         if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            throw new TokenInvalidException(ErrorCode.TOKEN_CREATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.TOKEN_CREATED_AT_INVALID, "TOKEN", "checkValidation");
         }
 
         if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            throw new TokenInvalidException(ErrorCode.TOKEN_UPDATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.TOKEN_UPDATED_AT_INVALID, "TOKEN", "checkValidation");
         }
     }
 
@@ -104,13 +104,13 @@ public class Token {
         if(this.tokenStatus == TokenStatusType.ACTIVE){
             if(this.expiresAt.isBefore(LocalDateTime.now())){
                 log.error("expired token");
-                throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_EXPIRED);
+                throw new DomainModelParamInvalidException(ErrorCode.TOKEN_STATUS_EXPIRED, "TOKEN", "checkStatus");
             }
         }
 
         if (this.tokenStatus == TokenStatusType.INACTIVE){
             log.error("inactive token");
-            throw new TokenInvalidException(ErrorCode.TOKEN_STATUS_INACTIVE);
+            throw new DomainModelParamInvalidException(ErrorCode.TOKEN_STATUS_INACTIVE, "TOKEN", "checkStatus");
         }
     }
 

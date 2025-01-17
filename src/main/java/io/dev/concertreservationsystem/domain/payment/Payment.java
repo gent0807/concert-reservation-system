@@ -1,5 +1,7 @@
 package io.dev.concertreservationsystem.domain.payment;
 
+import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -43,13 +45,11 @@ public class Payment {
     public static Payment createPayment(Integer reduce, PaymentStatusType paymentStatusType) {
 
         if(reduce == null || reduce < 0){
-            log.error("reduce is null or less than 0");
-            throw new IllegalArgumentException("reduce is null or less than 0");
+            throw new DomainModelParamInvalidException(ErrorCode.PAYMENT_TOTAL_PRICE_INVALID, "PAYMENT", "createPayment");
         }
 
         if(paymentStatusType == null || !Arrays.stream(PaymentStatusType.values()).toList().contains(paymentStatusType)) {
-            log.error("paymentStatusType is null or invalid");
-            throw new IllegalArgumentException("paymentStatusType is null or invalid");
+            throw new DomainModelParamInvalidException(ErrorCode.PAYMENT_STATUS_INVALID, "PAYMENT", "createPayment");
         }
 
         return new Payment(reduce, paymentStatusType);
