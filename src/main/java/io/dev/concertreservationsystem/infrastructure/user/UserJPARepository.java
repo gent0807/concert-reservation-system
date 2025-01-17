@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserJPARepository extends JpaRepository<User, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT u FROM User u WHERE u.userId = :userId")
+    @Query(value = "SELECT u from User u WHERE u.userId = :userId")
     Optional<User> findUserByUserIdForUpdate(@Param("userId") String userId);
 
 
