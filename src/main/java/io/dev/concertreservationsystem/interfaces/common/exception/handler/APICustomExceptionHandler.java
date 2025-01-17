@@ -48,6 +48,7 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 
+    // @Valid 예외 처리
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException e) {
         // Collect validation errors
