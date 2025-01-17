@@ -3,11 +3,14 @@ package io.dev.concertreservationsystem.interfaces.common.exception.handler;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestControllerAdvice
@@ -32,7 +35,7 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = DomainModelParamInvalidException.class)
     public ResponseEntity<ErrorResponse> handleDataParamInvalidException(DomainModelParamInvalidException e) {
 
-        String uuid = "ERROR-" + UUID.randomUUID().toString();
+        String uuid = "ERROR-" + UUID.randomUUID();
 
         log.error("UUID - [{}] | <<--------------------------------------------------------------------------",uuid);
         log.error("UUID - [{}] | ERROR TIME : {}", uuid, LocalDateTime.now());
@@ -43,6 +46,27 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 
         return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
+
+    // @Valid 예외 처리
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException e) {
+        // Collect validation errors
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+
+        String uuid = "ERROR-" + UUID.randomUUID();
+
+        log.error("UUID - [{}] | <<--------------------------------------------------------------------------",uuid);
+        log.error("UUID - [{}] | ERROR TIME : {}", uuid, LocalDateTime.now());
+        log.error("UUID - [{}] | VALIDATION ERROR  : [{}]", uuid, errors);
+        log.error("UUID - [{}] | -------------------------------------------------------------------------->>",uuid);
+
+
+        // Return response with validation error details
+        return ResponseEntity.badRequest().body(errors);
     }
 
 

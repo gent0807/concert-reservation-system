@@ -51,13 +51,12 @@ public class ConcertDetail {
         this.concertDetailStatus = concertDetailStatus;
     }
 
-    public static ConcertDetail createConcertDetail(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
+    public static ConcertDetail createConcertDetail(Long concertBasicId, ConcertDetailStatusType concertDetailStatus)  {
         if(concertBasicId == null || concertBasicId < 0){
             throw new DomainModelParamInvalidException(ErrorCode.CONCERT_BASIC_ID_INVALID, "CONCERT_DETAIL", "createConcertDetail");
         }
 
         if(concertDetailStatus == null || !Arrays.stream(ConcertDetailStatusType.values()).toList().contains(concertDetailStatus)){
-            log.error("concertDetailStatus is null or not valid");
             throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_STATUS_INVALID, "CONCERT_DETAIL", "createConcertDetail");
         }
 
@@ -108,19 +107,19 @@ public class ConcertDetail {
         }
     }
 
-    public void checkEndTimeValidation() {
+    public void checkEndTimeValidation(){
         if(this.endTime.isBefore(this.startTime) || this.endTime.isBefore(LocalDateTime.now()) || this.endTime == null){
             throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_END_TIME_INVALID, "CONCERT_DETAIL", "checkEndTimeValidation");
         }
     }
 
-    public void checkStartTimeValidation() {
+    public void checkStartTimeValidation(){
         if(this.startTime.isAfter(this.endTime) || this.startTime.isBefore(LocalDateTime.now()) || startTime == null){
             throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_START_TIME_INVALID, "CONCERT_DETAIL", "checkStartTimeValidation");
         }
     }
 
-    public void checkConcertBasicIdValidation() {
+    public void checkConcertBasicIdValidation(){
         if (this.concertBasicId == null || this.concertBasicId < 0){
             throw new DomainModelParamInvalidException(ErrorCode.CONCERT_BASIC_ID_INVALID, "CONCERT_DETAIL", "checkConcertBasicIdValidation");
         }
