@@ -2,11 +2,13 @@ package io.dev.concertreservationsystem.domain.seat;
 
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetail;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailRepository;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
+import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
@@ -35,6 +37,8 @@ public class SeatService {
 
     private final ReservationRepository reservationRepository;
 
+    private final ConcertDetailRepository concertDetailRepository;
+
     private final PaymentRepository paymentRepository;
 
     @Validated(SearchReservableSeat.class)
@@ -51,10 +55,11 @@ public class SeatService {
     }
 
     @Validated({CreateReservations.class, ProcessPayment.class})
-    public void updateStatusOfSeats(List<@Valid SeatDTOParam> seatDTOParamList, SeatStatusType seatStatus) {
+    public void updateStatusOfConcertDetailAndSeats(List<@Valid SeatDTOParam> seatDTOParamList, SeatStatusType seatStatus) {
         seatDTOParamList.stream().forEach(
                 seatDTOParam -> {
-                    Seat seat = seatRepository.findSeatBySeatId(seatDTOParam.seatId()).orElseThrow(
+
+                    Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(
                             ()->{
                                 throw new ServiceDataNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID, "SEAT SERVICE", "updateStatusOfSeats");
                             }
@@ -66,7 +71,11 @@ public class SeatService {
 
                     seatRepository.save(seat);
 
-                    ConcertDetail concertDetail = seatRepository.findConcertDetailBySeatId(seat.getSeatId());
+                    ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailIdWithLock(seat.getConcertDetailId()).orElseThrow(
+                            ()->{
+                                throw new ServiceDataNotFoundException(ErrorCode.CONCERT_DETAIL_NOT_FOUND, "SEAT SERVICE", "updateStatusOfSeats");
+                            }
+                    );
 
                     concertDetail.setConcertDetailStatus(ConcertDetailStatusType.COMPLETED);
 
@@ -78,6 +87,8 @@ public class SeatService {
                         }
                     });
 
+                    concertDetailRepository.save(concertDetail);
+
                 }
         );
     }
@@ -86,27 +97,66 @@ public class SeatService {
     @Transactional
     public void expireSeatReservation() {
 
-        List<Seat> seatList = seatRepository.findSeatsBySeatStatus(SeatStatusType.OCCUPIED);
-
-        seatList.stream().forEach(seat->{
+        seatRepository.findSeatsBySeatStatusWithLock(SeatStatusType.OCCUPIED).orElseThrow(
+            ()->{
+                throw new ServiceDataNotFoundException(ErrorCode.OCCUPIED_SEAT_NOT_FOUND, "SEAT SERVICE", "expireSeatReservation");
+            }
+        ).stream().forEach(seat->{
             if(seat.getExpiredAt().isBefore(LocalDateTime.now())){
+
+                Reservation reservation = reservationRepository.findReservationBySeatIdAndStatusWithLock(seat.getSeatId(), ReservationStatusType.TEMP).orElseThrow(
+                        ()->{
+                            throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "SEAT SERVICE", "expireSeatReservation");
+                        }
+                );
+
+                Payment payment = paymentRepository.findPaymentByPaymentIdWithLock(reservation.getPaymentId()).orElseThrow(
+                        ()->{
+                            throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_NOT_FOUND, "SEAT SERVICE", "expireSeatReservation");
+                        }
+                );
+
                 seat.updateSeatStatus(SeatStatusType.RESERVABLE);
                 seat.updateExpiredAt(null);
                 seatRepository.save(seat);
 
-                Reservation reservation = reservationRepository.findReservationBySeatId(seat.getSeatId());
-
                 reservation.setReservationStatus(ReservationStatusType.CANCELLED);
-
                 reservationRepository.saveReservation(reservation);
 
-                Payment payment = paymentRepository.findPaymentByPaymentId(reservation.getPaymentId()).orElseThrow();
-
                 payment.setPaymentStatus(PaymentStatusType.CANCELLED);
-
                 paymentRepository.savePayment(payment);
             }
         });
 
+    }
+
+    public void checkSeatsOccupied(List<SeatDTOParam> seatDTOParams) {
+        seatDTOParams.stream().forEach(seatDTOParam -> {
+           Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(()->{
+              throw new ServiceDataNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID, "SEAT SERVICE", "checkStatusOfSeats");
+           });
+
+           seat.checkOccupied();
+        });
+    }
+
+    @Validated(CreateReservations.class)
+    public void checkReservableOfConcertDetailAndSeat(List<@Valid SeatDTOParam> seatDTOParamList) {
+        seatDTOParamList.stream().forEach(seatDTOParam -> {
+
+            Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(()->{
+                throw new ServiceDataNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID, "CONCERT DETAIL SERVICE", "checkReservableOfConcertDetail");
+            });
+
+            ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailIdWithLock(seat.getConcertDetailId())
+                    .orElseThrow(()->{
+                        throw new ServiceDataNotFoundException(ErrorCode.CONCERT_DETAIL_NOT_FOUND, "CONCERT DETAIL SERVICE", "checkReservableOfConcertDetail");
+                    });
+
+            concertDetail.checkReservable();
+
+            seat.checkReservable();
+
+        });
     }
 }

@@ -51,11 +51,6 @@ public record ConcertReserveAdminDTOParam(
 ){
 
 
-
-    public static List<ReservationDTOParam> convertToReservationDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
-        return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToReservationDTOParam).collect(Collectors.toList());
-    }
-
     @Validated(CreateReservations.class)
     public static List<ReservationDTOParam> convertToReservationDTOParamList(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList, PaymentDTOResult paymentDTOResult) {
         return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToReservationDTOParam)
@@ -68,25 +63,11 @@ public record ConcertReserveAdminDTOParam(
                                         }).collect(Collectors.toList());
     }
 
-
-
-
-
-
-    public ReservationDTOParam convertToReservationDTOParam() {
-        return ReservationDTOParam.builder()
-                .userId(this.userId)
-                .paymentId(this.paymentId)
-                .build();
+    @Validated(CreateReservations.class)
+    public static List<SeatDTOParam> convertToSeatDTOParamList(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
+        return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToSeatDTOParam).collect(Collectors.toList());
     }
 
-    public ConcertDetailDTOParam convertToConcertDetailDTOParam() {
-        return ConcertDetailDTOParam.builder()
-                .concertBasicId(this.concertBasicId)
-                .concertDetailId(this.concertDetailId)
-                .build();
-
-    }
 
     public UserDTOParam convertToUserDTOParam() {
         return UserDTOParam.builder()
@@ -102,6 +83,21 @@ public record ConcertReserveAdminDTOParam(
                 .build();
     }
 
+    public ConcertDetailDTOParam convertToConcertDetailDTOParam() {
+        return ConcertDetailDTOParam.builder()
+                .concertBasicId(this.concertBasicId)
+                .concertDetailId(this.concertDetailId)
+                .build();
+
+    }
+
+    private SeatDTOParam convertToSeatDTOParam() {
+        return SeatDTOParam.builder()
+                .seatId(this.seatId)
+                .build();
+    }
+
+
 
     public PaymentDTOParam convertToPaymentDTOParam() {
         return PaymentDTOParam.builder()
@@ -109,4 +105,13 @@ public record ConcertReserveAdminDTOParam(
                 .paymentId(this.paymentId)
                 .build();
     }
+
+
+    public ReservationDTOParam convertToReservationDTOParam() {
+        return ReservationDTOParam.builder()
+                .userId(this.userId)
+                .paymentId(this.paymentId)
+                .build();
+    }
+
 }

@@ -2,7 +2,6 @@ package io.dev.concertreservationsystem.infrastructure.seat;
 
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetail;
 import io.dev.concertreservationsystem.domain.seat.Seat;
-import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +22,8 @@ public class SeatRepositoryImpl implements SeatRepository {
     }
 
     @Override
-    public Optional<Seat> findSeatBySeatId(Long seatId){
-        return seatJPARepository.findById(seatId);
+    public Optional<Seat> findSeatBySeatIdWithLock(Long seatId){
+        return seatJPARepository.findSeatBySeatIdForUpdate(seatId);
     }
 
     @Override
@@ -38,13 +37,8 @@ public class SeatRepositoryImpl implements SeatRepository {
     }
 
     @Override
-    public ConcertDetail findConcertDetailBySeatId(Long seatId){
-        return seatJPARepository.findConcertDetailIdBySeatId(seatId);
-    }
-
-    @Override
-    public List<Seat> findSeatsBySeatStatus(SeatStatusType seatStatusType){
-        return seatJPARepository.findSeatsBySeatStatus(SeatStatusType.OCCUPIED);
+    public Optional<List<Seat>> findSeatsBySeatStatusWithLock(SeatStatusType seatStatusType){
+        return seatJPARepository.findSeatsBySeatStatusForUpdate(SeatStatusType.OCCUPIED);
     }
 
 

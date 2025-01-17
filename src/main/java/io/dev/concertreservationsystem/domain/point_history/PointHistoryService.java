@@ -30,8 +30,9 @@ public class PointHistoryService {
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
 
-    @Transactional
+
     @Validated(CreatePointHistory.class)
+    @Transactional
     public List<PointHistoryDTOResult> insertChargeUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
         // 유저 포인트 동시 충전에 대한 동시성 제어 위해 데이터베에스 테이블 특정 유저 row 비관적 lock: 각 트랜잭션마다 적용
@@ -71,12 +72,12 @@ public class PointHistoryService {
         );
 
         // 좌석 예약 정보가 없으면 exception 발생
-        reservationRepository.findReservationsByUserIdAndPaymentId(pointHistoryDTOParam.userId(), pointHistoryDTOParam.paymentId()).orElseThrow(()->{
+        reservationRepository.findReservationsByUserIdAndPaymentIdWithLock(pointHistoryDTOParam.userId(), pointHistoryDTOParam.paymentId()).orElseThrow(()->{
             throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
         });
 
         // 결제 정보 아이디로 결제 정보 find
-        Payment payment = paymentRepository.findPaymentByPaymentId(pointHistoryDTOParam.paymentId()).orElseThrow(()->{
+        Payment payment = paymentRepository.findPaymentByPaymentIdWithLock(pointHistoryDTOParam.paymentId()).orElseThrow(()->{
             throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
         });
 

@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface ConcertDetailRepository {
     Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatusType);
 
-    ConcertDetail findConcertDetailByConcertDetailId(Long concertDetailId);
+    Optional<ConcertDetail> findConcertDetailByConcertDetailIdWithLock(Long concertDetailId);
 
-    void saveConcertDetail(ConcertDetail concertDetail);
+    ConcertDetail save(ConcertDetail concertDetail);
 }
