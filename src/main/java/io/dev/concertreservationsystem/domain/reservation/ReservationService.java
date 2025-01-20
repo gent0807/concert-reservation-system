@@ -44,33 +44,32 @@ public class ReservationService {
     }
 
     @Validated(ProcessPayment.class)
-    public void updateStatusOfReservations(@Valid ReservationDTOParam reservationDTOParam) {
+    public void updateStatusOfReservations(@Valid ReservationDTOParam reservationDTOParam, ReservationStatusType reservationStatusType) {
 
-       reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
+       reservationRepository.findReservationsByUserIdAndPaymentIdWithLock(reservationDTOParam.userId(), reservationDTOParam.paymentId())
                .orElseThrow(()->{
                    throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "updateStatusOfReservations");
-               }).stream().map((reservation)->{
-                   reservation.setReservationStatus(ReservationStatusType.CONFIRMED);
+               }).stream().forEach((reservation)->{
+                   reservation.setReservationStatus(reservationStatusType);
                    reservationRepository.saveReservation(reservation);
-                   return reservation;
                });
     }
 
     @Validated(ProcessPayment.class)
-    public List<SeatDTOParam> convertToSeatDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
-        return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId()).orElseThrow(()->{
+    public List<SeatDTOParam> convertReservationDTOParamToSeatDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
+        return reservationRepository.findReservationsByUserIdAndPaymentIdWithLock(reservationDTOParam.userId(), reservationDTOParam.paymentId()).orElseThrow(()->{
             throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "convertToSeatDTOParamList");
         }).stream().map(Reservation::convertToSeatDTOParam).collect(Collectors.toList());
     }
 
 
-    @Validated(ProcessPayment.class)
-    public List<ConcertDetailDTOParam> convertToConcertDetailDTOParamList(@Valid ReservationDTOParam reservationDTOParam) {
-        return reservationRepository.findReservationsByUserIdAndPaymentId(reservationDTOParam.userId(), reservationDTOParam.paymentId())
-                .orElseThrow(()->{
-                    throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "convertToConcertDetailDTOParamList");
-                }).stream().map(reservation -> {
-                    return seatRepository.findConcertDetailBySeatId(reservation.getSeatId()).convertToConcertDetailDTOParam();
-                }).collect(Collectors.toList());
+    public void checkReservationsTemp(ReservationDTOParam reservationDTOParam) {
+        List<Reservation> reservationList = reservationRepository.findReservationsByUserIdAndPaymentIdWithLock(reservationDTOParam.userId(), reservationDTOParam.paymentId()).orElseThrow(()->{
+            throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "checkReservationsTemp");
+        });
+
+        reservationList.stream().forEach(reservation->{
+           reservation.checkTemp();
+        });
     }
 }

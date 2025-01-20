@@ -27,12 +27,12 @@ public class PaymentService {
     @Validated(CreateReservations.class)
     public PaymentDTOResult publishNewPayment(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
-        List<Integer> priceList = concertReserveAdminDTOParamList.stream().map((concertReserveAdminDTOParam)->{
-            return seatRepository.findSeatBySeatId(concertReserveAdminDTOParam.seatId()).orElseThrow().getPrice();
+        List<Integer> priceList = concertReserveAdminDTOParamList.stream().map(concertReserveAdminDTOParam->{
+            return seatRepository.findSeatBySeatIdWithLock(concertReserveAdminDTOParam.seatId()).orElseThrow().getPrice();
         }).toList();
 
         // 도메인 모델 내 정적 팩토리 메소드로 생성
-        Payment payment = Payment.createPayment(priceList.stream().reduce(0, Integer::sum), PaymentStatusType.NOT_PAID);
+        Payment payment = Payment.createPayment(priceList.stream().reduce(0, Integer::sum), PaymentStatusType.PUBLISHED);
 
         paymentRepository.savePayment(payment);
 
@@ -40,18 +40,17 @@ public class PaymentService {
             throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_SAVE_FAILED, "PAYMENT SERVICE", "publishNewPayment");
         }).get(0).convertToPaymentDTOResult();
 
-
     }
 
 
     @Validated(ProcessPayment.class)
-    public PaymentDTOResult updateStatusOfPayment(@Valid PaymentDTOParam paymentDTOParam) {
+    public PaymentDTOResult updateStatusOfPayment(@Valid PaymentDTOParam paymentDTOParam, PaymentStatusType paymentStatusType) {
 
-        Payment payment = paymentRepository.findPaymentByPaymentId(paymentDTOParam.paymentId()).orElseThrow(()->{
+        Payment payment = paymentRepository.findPaymentByPaymentIdWithLock(paymentDTOParam.paymentId()).orElseThrow(()->{
             throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_NOT_FOUND, "PAYMENT SERVICE", "updateStatusOfPayment");
         });
 
-        payment.setPaymentStatus(PaymentStatusType.PAID);
+        payment.setPaymentStatus(paymentStatusType);
 
         paymentRepository.savePayment(payment);
 
@@ -59,4 +58,12 @@ public class PaymentService {
     }
 
 
+    public void checkPaymentPublished(PaymentDTOParam paymentDTOParam) {
+        Payment payment = paymentRepository.findPaymentByPaymentIdWithLock(paymentDTOParam.paymentId()).orElseThrow(()->{
+            throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_NOT_FOUND, "PAYMENT SERVICE", "checkPaymentNotPaid");
+        });
+
+        payment.checkPublished();
+
+    }
 }

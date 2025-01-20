@@ -102,4 +102,10 @@ public class Reservation {
                 .seatId(seatId)
                 .build();
     }
+
+    public void checkTemp() {
+        if(this.reservationStatus != ReservationStatusType.TEMP){
+            throw new DomainModelParamInvalidException(ErrorCode.RESERVATION_STATUS_NOT_TEMP, "RESERVATION", "checkTemp");
+        }
+    }
 }

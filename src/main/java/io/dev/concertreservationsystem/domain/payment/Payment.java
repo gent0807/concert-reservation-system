@@ -64,4 +64,10 @@ public class Payment {
                 .updatedAt(this.updatedAt)
                 .build();
     }
+
+    public void checkPublished() {
+        if(this.paymentStatus != PaymentStatusType.PUBLISHED){
+            throw new DomainModelParamInvalidException(ErrorCode.PAYMENT_STATUS_NOT_PUBLISH, "PAYMENT", "checkNotPaid");
+        }
+    }
 }

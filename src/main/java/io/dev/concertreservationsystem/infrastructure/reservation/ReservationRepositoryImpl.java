@@ -2,7 +2,7 @@ package io.dev.concertreservationsystem.infrastructure.reservation;
 
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
-import io.dev.concertreservationsystem.domain.seat.Seat;
+import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -25,12 +25,12 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Optional<List<Reservation>> findReservationsByUserIdAndPaymentId(String userId, Long paymentId){
-        return reservationJPARepository.findReservationsByUserIdAndPaymentId(userId, paymentId);
+    public Optional<List<Reservation>> findReservationsByUserIdAndPaymentIdWithLock(String userId, Long paymentId){
+        return reservationJPARepository.findReservationsByUserIdAndPaymentIdForUpdate(userId, paymentId);
     }
 
     @Override
-    public Reservation findReservationBySeatId(Long seatId){
-        return reservationJPARepository.findReservationBySeatId(seatId);
+    public Optional<Reservation> findReservationBySeatIdAndStatusWithLock(Long seatId, ReservationStatusType reservationStatusType){
+        return reservationJPARepository.findReservationBySeatIdAndReservationStatusForUpdate(seatId, reservationStatusType);
     }
 }

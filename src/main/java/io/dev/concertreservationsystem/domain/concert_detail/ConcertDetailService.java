@@ -41,20 +41,5 @@ public class ConcertDetailService {
                                                                         }).stream().map(ConcertDetail::convertToConcertDetailDTOResult).collect(Collectors.toList());
     }
 
-    public void checkReservableOfConcertDetail(List<ReservationDTOParam> reservationDTOParamList) {
-        reservationDTOParamList.stream().forEach(reservationDTOParam -> {
-
-            Seat seat = seatRepository.findSeatBySeatId(reservationDTOParam.seatId()).orElseThrow(()->{
-                throw new ServiceDataNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID, "CONCERT DETAIL SERVICE", "checkReservableOfConcertDetail");
-            });
-
-            seat.checkReservable();
-
-            ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailId(seat.getConcertDetailId());
-
-            concertDetail.checkReservable();
-
-        });
-    }
 
 }

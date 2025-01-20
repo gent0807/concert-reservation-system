@@ -46,9 +46,10 @@ public enum ErrorCode {
     CONCERT_DETAIL_END_TIME_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_END_TIME_INVALID", "유효하지 않은 콘서트 실제 공연 종료 시각입니다."),
     CONCERT_DETAIL_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_CREATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 생성일입니다."),
     CONCERT_DETAIL_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_DETAIL_UPDATED_AT_INVALID", "유효하지 않은 콘서트 실제 공연 수정일입니다."),
+    CONCERT_DETAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "CONCERT_DETAIL_NOT_FOUND", "존재하지 않는 콘서트 실제 공연 정보입니다."),
 
     // 좌석 관련 ErrorCode
-    RESERVABLE_SEAT_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, "RESERVABLE_SEAT_NOT_FOUND", "해당 공연의 예약 가능한 좌석이 없습니다."),
+    RESERVABLE_SEAT_NOT_FOUND(HttpStatus.NOT_FOUND, "RESERVABLE_SEAT_NOT_FOUND", "해당 공연의 예약 가능한 좌석이 없습니다."),
     SEAT_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_ID_INVALID", "유효하지 않은 좌석 아이디입니다."),
     SEAT_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_STATUS_INVALID", "유효하지 않은 좌석 상태 타입입니다."),
     SEAT_NUMBER_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_NUMBER_INVALID", "유효하지 않은 좌석 번호입니다."),
@@ -57,9 +58,10 @@ public enum ErrorCode {
     SEAT_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_CREATED_AT_INVALID", "유효하지 않은 좌석 생성일입니다."),
     SEAT_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "SEAT_UPDATED_AT_INVALID", "유효하지 않은 좌석 수정일입니다."),
     SEAT_NOT_FOUND_BY_SEAT_ID(HttpStatus.NOT_FOUND, "SEATS_NOT_FOUND_BY_USER_ID_PAYMENT_ID", "좌석 아이디로 좌석 정보가 존재하지 않습니다."),
+    OCCUPIED_SEAT_NOT_FOUND(HttpStatus.NOT_FOUND, "OCCUPIED_SEAT_NOT_FOUND", "임시 점유 상태의 좌석이 존재하지 않습니다." ),
 
     // 예약 관련 ErrorCode
-    RESERVATION_NOT_RESERVABLE_SEAT(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_NOT_RESERVABLE_SEAT", "예약 불가한 좌석을 포함하고 있습니다."),
+    RESERVATION_NOT_RESERVABLE_SEAT(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_NOT_RESERVABLE_SEAT", "예약 불가한 좌석을 포함하고 있습니다. 좌석 예약이 불가합니다."),
     RESERVATION_NOT_RESERVABLE_CONCERT_DETAIL(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_NOT_RESERVABLE_CONCERT_DETAIL", "예약 불가한 콘서트 실제 공연을 포함하고 있습니다."),
     RESERVATION_USER_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_USER_ID_INVALID", "예약 정보에 유효하지 않은 유저 아이디가 있습니다."),
     RESERVATION_SEAT_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_SEAT_ID_INVALID", "예약 정보에 유효하지 않은 좌석 아이디가 있습니다."),
@@ -67,14 +69,15 @@ public enum ErrorCode {
     RESERVATION_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE,"RESERVATION_SAVE_FAILED", "예약 정보 저장에 실패했습니다."),
     RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "RESERVATION_NOT_FOUND", "존재하지 않는 좌석 예약 정보입니다,"),
     RESERVATION_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_STATUS_INVALID", "유효하지 않은 좌석 예약 상태입니다."),
-
+    RESERVATION_STATUS_NOT_TEMP(HttpStatus.NOT_ACCEPTABLE, "RESERVATION_STATUS_NOT_TEMP", "임시 상태가 아닌 좌석 예약 정보가 있습니다. 좌석 예약 완료가 불가합니다."),
     // 결제 관련 ErrorCode
     PAYMENT_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_SAVE_FAILED", "결제 정보 저장에 실패했습니다."),
     PAYMENT_TOTAL_PRICE_INVALID(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_TOTAL_PRICE_INVALID", "유효하지 않은 결제 가격입니다."),
     PAYMENT_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_NOT_FOUND", "존재하지 않는 결제 정보입니다."),
     PAYMENT_OVER_USER_POINT(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_OVER_USER_POINT", "잔고 부족입니다. 유저 포인트 충전이 필요합니다."),
-    PAYMENT_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_STATUS_INVALID", "유효하지 않은 결제 정보 상태입니다.");
-
+    PAYMENT_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_STATUS_INVALID", "유효하지 않은 결제 정보 상태입니다."),
+    PAYMENT_NOT_OCCUPIED_SEAT(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_NOT_OCCUPIED_SEAT", "점유 상태가 아닌 좌석이 있습니다. 좌석 예약에 대한 금액 결제가 불가합니다."),
+    PAYMENT_STATUS_NOT_PUBLISH(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_STATUS_NOT_PUBLISH", "미결제 상태가 아닌 결제 정보입니다. 결제가 불가합니다.");
 
 
 

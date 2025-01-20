@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.payment;
 
 public enum PaymentStatusType {
-    NOT_PAID,
+    PUBLISHED,
     PAID,
     CANCELLED
 }

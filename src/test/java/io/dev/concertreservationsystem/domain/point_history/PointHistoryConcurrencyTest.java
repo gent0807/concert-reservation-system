@@ -57,12 +57,6 @@ public class PointHistoryConcurrencyTest {
         // 각 쓰레드에서 충전할 포인트
         int chargePointPerThread = 100;
 
-        // 콜백 함수 정의, 리스트에 저장
-        List<Callable<Void>> tasks = new ArrayList<>();
-
-        // 포인트 충전 성공 개수 계산
-        List<Boolean> successList = new ArrayList<>();
-
         // 포인트 충전 DTO 생성
         PointHistoryDTOParam pointHistoryDTOParam = PointHistoryDTOParam.builder()
                 .userId(TEST_USER_ID)
@@ -70,11 +64,18 @@ public class PointHistoryConcurrencyTest {
                 .amount(chargePointPerThread)
                 .build();
 
+        // 콜백 함수 정의 리스트
+        List<Callable<Void>> tasks = new ArrayList<>();
+
+        // 포인트 충전 성공 개수 계산
+        List<Boolean> successList = new ArrayList<>();
+
+
+
         for(int i = 0; i < threadCount; i++){
             tasks.add(()->{
 
                 // 서비스에서 포인트 충전
-
                 pointHistoryService.insertChargeUserPointHistory(pointHistoryDTOParam);
 
                 successList.add(true);
