@@ -2,10 +2,13 @@ package io.dev.concertreservationsystem.interfaces.common.exception.handler;
 
 import io.dev.concertreservationsystem.interfaces.common.exception.error.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
@@ -49,8 +52,8 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // @Valid 예외 처리
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException e) {
+    @Override
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         // Collect validation errors
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getFieldErrors().forEach(error ->
@@ -66,7 +69,9 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 
         // Return response with validation error details
-        return ResponseEntity.badRequest().body(errors);
+        return ResponseEntity.badRequest().body(ErrorResponse.builder()
+                                                        .errorMap(errors)
+                                                        .build());
     }
 
 

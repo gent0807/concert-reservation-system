@@ -23,11 +23,11 @@ public class PointHistoryController {
     private final PointHistoryFacade pointHistoryFacade;
 
     @PostMapping("/new")
-    @Operation(summary = "유저 포인트 충전/차감 내역 추가 저장", description = "유저의 포인트 충전/차감 내역을 추가 저장하고 유저 포인트 정보를 수정합니다.")
-    public ResponseEntity<List<PointHistoryResponseDTO>> insertUserPointHistory(@Valid @RequestBody PointHistoryRequestDTO pointHistoryRequestDTO) {
-            // 요청에 담긴 PointHistoryRequestDTO 타입 데이터의 userId와 일치하는 회원의 포인트를 수정하고, 포인트 충전/차감 내역을 추가 저장하는,
-            // 현재 참조된 PointHistoryFacade 타입 객체 pointHistoryAdminFacade의 insertUserPointHistory 메소드 호출
-            List<PointHistoryFacadeDTOResult> pointHistoryFacadeDTOResultList = pointHistoryFacade.insertUserPointHistory(pointHistoryRequestDTO.convertToPointHistoryFacadeDTOParam());
+    @Operation(summary = "유저 포인트 충전 내역 저장", description = "유저의 포인트 충전 내역을 저장하고 유저 포인트 정보를 수정합니다.")
+    public ResponseEntity<List<PointHistoryResponseDTO>> insertChargeUserPointHistory(@Valid @RequestBody PointHistoryRequestDTO pointHistoryRequestDTO) {
+            // 요청에 담긴 PointHistoryRequestDTO 타입 데이터의 userId와 일치하는 회원의 포인트를 수정하고, 포인트 충전 내역을 저장하는,
+            // 현재 참조된 PointHistoryFacade 타입 객체 pointHistoryAdminFacade의 insertChargeUserPointHistory 메소드 호출
+            List<PointHistoryFacadeDTOResult> pointHistoryFacadeDTOResultList = pointHistoryFacade.insertChargeUserPointHistory(pointHistoryRequestDTO.convertToPointHistoryFacadeDTOParam());
 
             return ResponseEntity.status(HttpStatus.CREATED).body(pointHistoryFacadeDTOResultList.stream()
                                                                     .map(PointHistoryFacadeDTOResult::convertToPointHistoryResponseDTO).collect(Collectors.toList()));

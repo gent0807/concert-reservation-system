@@ -32,9 +32,10 @@ public class PointHistoryService {
 
     @Transactional
     @Validated(CreatePointHistory.class)
-    public List<PointHistoryDTOResult> insertUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
+    public List<PointHistoryDTOResult> insertChargeUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
-        User user = userRepository.findUserByUserId(pointHistoryDTOParam.userId())
+        // 유저 포인트 동시 충전에 대한 동시성 제어 위해 데이터베에스 테이블 특정 유저 row 비관적 lock: 각 트랜잭션마다 적용
+        User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId())
                 .orElseThrow(()->{
                     throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "POINT_HISTORY SERVICE", "insertUserPointHistory");
                 });
@@ -57,14 +58,13 @@ public class PointHistoryService {
                                                     throw new ServiceDataNotFoundException(ErrorCode.POINT_HISTORY_SAVE_FAILED, "POINT_HISTORY SERVICE", "insertUserPointHistory");
                                                 }).stream().map(PointHistory::convertToPointHistoryDTOResult).collect(Collectors.toList());
 
-
     }
 
     @Validated(ProcessPayment.class)
     public void useUserPoint(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
         // 유저 정보가 없으면, exception 발생
-        User user = userRepository.findUserByUserId(pointHistoryDTOParam.userId()).orElseThrow(
+        User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId()).orElseThrow(
                 ()->{
                     throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
                 }
@@ -81,7 +81,7 @@ public class PointHistoryService {
         });
 
         // 유저 포인트 잔고와 결제 금액 비교
-        userRepository.findUserByUserId(pointHistoryDTOParam.userId()).orElseThrow(()->{
+        userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId()).orElseThrow(()->{
             throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
         }).checkPrice(payment.getTotalPrice());
 
