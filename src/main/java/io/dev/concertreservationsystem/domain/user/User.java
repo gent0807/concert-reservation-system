@@ -1,8 +1,7 @@
 package io.dev.concertreservationsystem.domain.user;
 
+import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.UserInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -34,20 +33,19 @@ public class User {
     @Column(name = "age", nullable = false)
     @Positive
     @Min(0)
-    private Integer age;
+    private int age;
 
     @Column(name = "gender", nullable = false)
     private UserGenderType gender;
 
     @Column(name = "point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
-    @Size(min = 0, max = 10_000_000)
-    private Long point;
+    private long point;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
@@ -63,23 +61,19 @@ public class User {
     public static User createUser(String userId, String userName, Integer age, UserGenderType gender) {
 
         if(userId == null || userId.isBlank()){
-            log.debug("userId is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "USER", "createUser");
         }
 
         if(userName == null || userName.isBlank()){
-            log.debug("userName is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_NAME_INVALID, "USER", "createUser");
         }
 
         if(age == null || age < 0){
-            log.debug("age is null or less than 0");
-            throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_AGE_INVALID, "USER", "createUser");
         }
 
         if(gender == null && !Arrays.stream(UserGenderType.values()).toList().contains(gender)){
-            log.debug("gender is null or not valid");
-            throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID, "USER", "createUser");
         }
 
         return new User(userId, userName, age, gender);
@@ -122,50 +116,43 @@ public class User {
 
     public void checkUserUpdatedAtValidation() {
         if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            log.debug("updatedAt is null");
-            throw new UserInvalidException(ErrorCode.USER_UPDATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_UPDATED_AT_INVALID, "USER", "checkUserUpdatedAtValidation");
         }
     }
 
     public void checkUserCreatedAtValidation() {
         if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            log.debug("createdAt is null");
-            throw new UserInvalidException(ErrorCode.USER_CREATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_CREATED_AT_INVALID, "USER", "checkUserCreatedAtValidation");
         }
     }
 
     public void checkUserPointValidation() {
-        if(this.point == null || this.point < 0){
-            log.debug("point is null or less than 0");
-            throw new UserInvalidException(ErrorCode.USER_POINT_INVALID);
+        if(this.point < 0){
+            throw new DomainModelParamInvalidException(ErrorCode.USER_POINT_INVALID, "USER", "checkUserPointValidation");
         }
     }
 
     public void checkUserGenderValidation() {
         if(this.gender == null || !Arrays.stream(UserGenderType.values()).toList().contains(this.gender)){
-            log.debug("gender is null or not valid");
-            throw new UserInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_GENDER_TYPE_INVALID, "USER", "checkUserGenderValidation");
         }
     }
 
     public void checkUserAgeValidation() {
-        if(this.age == null || this.age < 0){
-            log.debug("age is null or less than 0");
-            throw new UserInvalidException(ErrorCode.USER_AGE_INVALID);
+        if( this.age < 0){
+            throw new DomainModelParamInvalidException(ErrorCode.USER_AGE_INVALID, "USER", "checkUserAgeValidation");
         }
     }
 
     public void checkUserNameValidation() {
         if(this.userName == null || this.userName.isBlank()){
-            log.debug("userName is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_NAME_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_NAME_INVALID, "USER", "checkUserNameValidation");
         }
     }
 
     public void checkUserIdValidation() {
         if(this.userId == null || this.userId.isBlank()){
-            log.debug("userId is null or blank");
-            throw new UserInvalidException(ErrorCode.USER_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "USER", "checkUserIdValidation");
         }
     }
 
@@ -179,8 +166,7 @@ public class User {
 
     public void checkPrice(Integer totalPrice) {
         if(this.point < totalPrice){
-            log.debug("point is under total price");
-            throw new PaymentInvalidException(ErrorCode.PAYMENT_OVER_USER_POINT);
+            throw new DomainModelParamInvalidException(ErrorCode.PAYMENT_OVER_USER_POINT, "USER", "checkPrice");
         }
     }
 

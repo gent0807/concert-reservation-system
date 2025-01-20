@@ -15,8 +15,8 @@ public record ConcertDetailDTOParam(
         @Min(value = 0, groups = SearchReservableConcertDetail.class)
         Long concertBasicId,
 
-        @NotBlank(groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class, CreateReservations.class, ProcessPayment.class})
-        @Min(value = 0, groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class, CreateReservations.class, ProcessPayment.class })
+        @NotBlank(groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class})
+        @Min(value = 0, groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class })
         Long concertDetailId
 ) {
 }

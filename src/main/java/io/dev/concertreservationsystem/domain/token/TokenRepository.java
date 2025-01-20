@@ -10,7 +10,7 @@ public interface TokenRepository {
 
     public Optional<List<Token>> findTokensByUserIdAndTokenStatusOrderByCreatedAtDesc(String userId, TokenStatusType tokenStatusType);
 
-    public List<Token> findInactiveTokensOrderByCreatedAtDescLimit10();
+    public List<Token> findInactiveTokensOrderByCreatedAtDescLimit(long maxActiveTokenLimit);
 
     public List<Token> findAllActiveTokens();
 }

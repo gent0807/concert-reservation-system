@@ -1,8 +1,7 @@
 package io.dev.concertreservationsystem.domain.seat;
 
+import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ReservationInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.SeatInvalidException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -67,13 +66,13 @@ public class Seat {
     public static Seat createSeat(Long concertDetailId, SeatStatusType seatStatus) {
 
         if(concertDetailId == null || concertDetailId < 0){
-            log.debug("concertDetailId is null or less than 0");
-            throw new SeatInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);
+            log.error("concertDetailId is null or less than 0");
+            throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID, "SEAT", "createSeat");
         }
 
         if(seatStatus == null || !Arrays.stream(SeatStatusType.values()).toList().contains(seatStatus)){
-            log.debug("seatStatus is null or not valid");
-            throw new SeatInvalidException(ErrorCode.SEAT_STATUS_INVALID);
+            log.error("seatStatus is null or not valid");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_STATUS_INVALID, "SEAT", "createSeat");
         }
 
         return new Seat(concertDetailId, seatStatus);
@@ -119,65 +118,65 @@ public class Seat {
 
     private void checkSeatUpdatedAtValidation() {
         if (this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            log.debug("updatedAt is null or after now");
-            throw new SeatInvalidException(ErrorCode.SEAT_UPDATED_AT_INVALID);
+            log.error("updatedAt is null or after now");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_UPDATED_AT_INVALID, "SEAT", "checkSeatUpdatedAtValidation");
         }
     }
 
     private void checkSeatCreatedAtValidation() {
         if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            log.debug("createdAt null or after now");
-            throw new SeatInvalidException(ErrorCode.SEAT_CREATED_AT_INVALID);
+            log.error("createdAt null or after now");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_CREATED_AT_INVALID, "SEAT", "checkSeatCreatedAtValidation");
         }
     }
 
     private void checkSeatExpiredAtValidation() {
         if ((this.seatStatus == SeatStatusType.OCCUPIED) && (this.expiredAt == null || this.expiredAt.isBefore(LocalDateTime.now()))){
-            log.debug("invalid expiredAt");
-            throw new SeatInvalidException(ErrorCode.SEAT_EXPIRED_AT_INVALID);
+            log.error("invalid expiredAt");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_EXPIRED_AT_INVALID, "SEAT", "checkSeatExpiredAtValidation");
         }
     }
 
     public void checkSeatPriceValidation() {
         if(this.price == null || this.price < 0){
-            log.debug("price is null or invalid");
-            throw new SeatInvalidException(ErrorCode.SEAT_PRICE_INVALID);
+            log.error("price is null or invalid");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_PRICE_INVALID, "SEAT", "checkSeatPriceValidation");
         }
     }
 
     public void checkSeatNumberValidation() {
         if(this.seatNumber == null || this.seatNumber < 1 || this.seatNumber > 50){
-            log.debug("seatNumber is null or less than 1 or greater than 50");
-            throw new SeatInvalidException(ErrorCode.SEAT_NUMBER_INVALID);
+            log.error("seatNumber is null or less than 1 or greater than 50");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_NUMBER_INVALID, "SEAT", "checkSeatNumberValidation");
 
         }
     }
 
     public void checkSeatStatusValidation() {
         if(this.seatStatus == null || !Arrays.stream(SeatStatusType.values()).toList().contains(this.seatStatus)){
-            log.debug("seatStatus null or not valid");
-            throw new SeatInvalidException(ErrorCode.SEAT_STATUS_INVALID);
+            log.error("seatStatus null or not valid");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_STATUS_INVALID, "SEAT", "checkSeatStatusValidation");
         }
     }
 
     public void checkConcertDetailIdValidation() {
         if(concertDetailId == null || concertDetailId < 0){
-            log.debug("concertDetailId is null or less than 0");
-            throw new SeatInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID);
+            log.error("concertDetailId is null or less than 0");
+            throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_ID_INVALID, "SEAT", "checkConcertDetailIdValidation");
         }
     }
 
     public void checkSeatIdValidation() {
         if(this.seatId == null || this.seatId < 0){
-            log.debug("seatId is null or less than 1");
-            throw new SeatInvalidException(ErrorCode.SEAT_ID_INVALID);
+            log.error("seatId is null or less than 1");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_ID_INVALID, "SEAT", "checkSeatIdValidation");
         }
     }
 
     public void checkReservable() {
         if(this.seatStatus != SeatStatusType.RESERVABLE){
-            log.debug("this seat is not reservable");
-            throw new ReservationInvalidException(ErrorCode.RESERVATION_NOT_RESERVABLE_SEAT);
+            log.error("this seat is not reservable");
+            throw new DomainModelParamInvalidException(ErrorCode.RESERVATION_NOT_RESERVABLE_SEAT, "SEAT", "checkReservable");
         }
     }
 

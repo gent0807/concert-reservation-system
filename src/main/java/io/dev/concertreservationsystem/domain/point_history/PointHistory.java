@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.point_history;
 
+import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PointHistoryInvalidException;
 import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransactionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -71,23 +71,23 @@ public class PointHistory {
     public static PointHistory createPointHistory(String userId, PointTransactionType type, Integer amount, Long resultPoint){
 
         if(userId == null || userId.isBlank()){
-            log.debug("userId is null or blank");
-            throw new PointHistoryInvalidException(ErrorCode.USER_ID_INVALID);
+            log.error("userId is null or blank");
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "POINT_HISTORY", "createPointHistory");
         }
 
         if(type == null && !Arrays.stream(PointTransactionType.values()).toList().contains(type)){
-            log.debug("type is null or invalid");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_POINT_TRANSACTION_TYPE_INVALID);
+            log.error("type is null or invalid");
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_POINT_TRANSACTION_TYPE_INVALID, "POINT_HISTORY", "createPointHistory");
         }
 
         if(amount == null || amount < 0){
-            log.debug("amount is null or less than 0");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_AMOUNT_INVALID);
+            log.error("amount is null or less than 0");
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_AMOUNT_INVALID, "POINT_HISTORY", "createPointHistory");
         }
 
         if(resultPoint == null || resultPoint < 0){
-            log.debug("resultPoint is null or less than 0");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_RESULT_POINT_INVALID);
+            log.error("resultPoint is null or less than 0");
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_RESULT_POINT_INVALID, "POINT_HISTORY", "createPointHistory");
         }
 
         return new PointHistory(userId, type, amount, resultPoint);
@@ -127,45 +127,39 @@ public class PointHistory {
 
     public void checkPointHistoryIdValidation() {
         if(this.pointHistoryId == null || this.pointHistoryId < 0){
-            log.debug("pointHistoryId is null or less than 0");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_ID_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_ID_INVALID, "POINT_HISTORY", "checkPointHistoryIdValidation");
         }
     }
 
 
     public void checkPointHistoryPointTransactionTypeValidation() {
         if (this.type == null){
-            log.debug("type is null");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_POINT_TRANSACTION_TYPE_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_POINT_TRANSACTION_TYPE_INVALID, "POINT_HISTORY", "checkPointHistoryPointTransactionTypeValidation");
         }
     }
 
     public void checkPoinyHistoryAmountValidation() {
         if (this.amount == null || this.amount < 0){
-            log.debug("amount is null or less than 0");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_AMOUNT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_AMOUNT_INVALID, "POINT_HISTORY", "checkPoinyHistoryAmountValidation");
         }
     }
 
     public void checkPointHistoryResultPointValidation() {
         if (this.resultPoint == null || this.resultPoint < 0){
-            log.debug("resultPoint is null or less than 0");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_RESULT_POINT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_RESULT_POINT_INVALID, "POINT_HISTORY", "checkPointHistoryResultPointValidation");
         }
     }
 
     public void checkPointHistoryCreatedAtValidation() {
         if (this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            log.debug("createdAt is null");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_CREATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_CREATED_AT_INVALID,"POINT_HISTORY", "checkPointHistoryCreatedAtValidation");
         }
     }
 
 
     public void checkPointHistoryUpdatedAtValidation() {
         if (this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            log.debug("updatedAt is null");
-            throw new PointHistoryInvalidException(ErrorCode.POINT_HISTORY_UPDATED_AT_INVALID);
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_UPDATED_AT_INVALID, "POINT_HISTORY", "checkPointHistoryUpdatedAtValidation");
         }
     }
 }

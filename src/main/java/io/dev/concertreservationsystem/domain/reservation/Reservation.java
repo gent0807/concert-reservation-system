@@ -1,8 +1,8 @@
 package io.dev.concertreservationsystem.domain.reservation;
 
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ReservationInvalidException;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -55,23 +55,23 @@ public class Reservation {
     public static Reservation createReservation(String userId, Long seatId, Long paymentId, ReservationStatusType reservationStatus){
 
         if(userId == null || userId.isBlank()){
-            log.debug("userId is null or blank");
-            throw new ReservationInvalidException(ErrorCode.USER_ID_INVALID);
+            log.error("userId is null or blank");
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "RESERVATION", "createReservation");
         }
 
         if(seatId == null || seatId < 0){
-            log.debug("seatId is null or less than 0");
-            throw new ReservationInvalidException(ErrorCode.SEAT_ID_INVALID);
+            log.error("seatId is null or less than 0");
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_ID_INVALID, "RESERVATION", "createReservation");
         }
 
         if (paymentId == null || paymentId < 0){
-            log.debug("paymentId is less than 0");
-            throw new ReservationInvalidException(ErrorCode.RESERVATION_PAYMENT_ID_INVALID);
+            log.error("paymentId is less than 0");
+            throw new DomainModelParamInvalidException(ErrorCode.RESERVATION_PAYMENT_ID_INVALID, "RESERVATION", "createReservation");
         }
 
         if(reservationStatus == null && !Arrays.stream(ReservationStatusType.values()).toList().contains(reservationStatus)){
-            log.debug("reservationStatus is null or invalid");
-            throw new ReservationInvalidException(ErrorCode.RESERVATION_STATUS_INVALID);
+            log.error("reservationStatus is null or invalid");
+            throw new DomainModelParamInvalidException(ErrorCode.RESERVATION_STATUS_INVALID, "RESERVATION", "createReservation");
         }
 
         return new Reservation(userId, seatId, paymentId, reservationStatus);

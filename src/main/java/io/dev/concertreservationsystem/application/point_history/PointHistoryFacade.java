@@ -18,13 +18,13 @@ public class PointHistoryFacade {
 
     private final PointHistoryService pointHistoryService;
 
-    // 1. 유저 포인트 충전 차감 내역 추가 저장, Post
+    // 1. 유저 포인트 충전 내역 저장, Post
     @Validated(CreatePointHistory.class)
-    public List<PointHistoryFacadeDTOResult> insertUserPointHistory(@Valid PointHistoryFacadeDTOParam pointHistoryFacadeDTOParam) {
+    public List<PointHistoryFacadeDTOResult> insertChargeUserPointHistory(@Valid PointHistoryFacadeDTOParam pointHistoryFacadeDTOParam) {
 
-            // pointHistoryDTOParam에 담긴 정보를 바탕으로 유저의 포인트를 수정하고, 유저의 포인트 충전/차감 내역을 추가 저장하는,
+            // pointHistoryDTOParam에 담긴 정보를 바탕으로 유저의 포인트를 수정하고, 유저의 포인트 충전 내역을 저장하는,
             // 현재 참조된 PointHistoryService 타입 객체의 insertUserPointHistory 메소드 호출
-            List<PointHistoryDTOResult> pointHistoryDTOResultList = pointHistoryService.insertUserPointHistory(pointHistoryFacadeDTOParam.convertToPointHistoryDTOParam());
+            List<PointHistoryDTOResult> pointHistoryDTOResultList = pointHistoryService.insertChargeUserPointHistory(pointHistoryFacadeDTOParam.convertToPointHistoryDTOParam());
 
             return pointHistoryDTOResultList.stream().map(PointHistoryDTOResult::convertToPointHistoryFacadeDTOResult).collect(Collectors.toList());
 

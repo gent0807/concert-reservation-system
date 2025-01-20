@@ -19,14 +19,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUserByUserId(String userId) {
-        return userJPARepository.findUserByUserId(userId);
+    public Optional<User> findUserByUserIdWithLock(String userId) {
+        return userJPARepository.findUserByUserIdForUpdate(userId);
 
     }
 
     @Override
-    public void saveUser(User user){
-        userJPARepository.save(user);
+    public Optional<User> findUserByUserId(String userId){
+        return userJPARepository.findUserByUserId(userId);
+    }
+
+    @Override
+    public User saveUser(User user){
+        return userJPARepository.save(user);
     }
 
 }

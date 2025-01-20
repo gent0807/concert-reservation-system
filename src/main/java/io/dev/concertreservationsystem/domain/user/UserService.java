@@ -1,12 +1,10 @@
 package io.dev.concertreservationsystem.domain.user;
 
-import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.PaymentNotFoundException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateUser;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,22 +35,9 @@ public class UserService {
 
         return userRepository.findUserByUserId(user.getUserId())
                 .orElseThrow(() -> {
-                    log.debug("When: userRepository.findUserByUserId(user.getUserId()), Action: UserNotFoundException");
-                    throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
+                    throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "USER SERVICE", "insertUser()");
                 }).convertToUserDTOResult();
     }
 
-    public void checkUserPointBalance(UserDTOParam userDTOParam) {
 
-        reservationRepository.findReservationsByUserIdAndPaymentId(userDTOParam.userId(), userDTOParam.paymentId()).orElseThrow(()->{
-            throw new PaymentNotFoundException(ErrorCode.PAYMENT_NOT_FOUND);
-        });
-
-        Payment payment = paymentRepository.findPaymentByPaymentId(userDTOParam.paymentId()).orElseThrow();
-
-        userRepository.findUserByUserId(userDTOParam.userId()).orElseThrow(()->{
-                log.debug("When: userRepository.findUserByUserId(userDTOParam.userId()), Action: UserNotFoundException");
-                throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
-            }).checkPrice(payment.getTotalPrice());
-    }
 }

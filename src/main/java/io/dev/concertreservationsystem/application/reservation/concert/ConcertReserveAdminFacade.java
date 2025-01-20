@@ -2,11 +2,13 @@ package io.dev.concertreservationsystem.application.reservation.concert;
 
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOResult;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;
+import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
 import io.dev.concertreservationsystem.domain.point_history.PointHistoryService;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOResult;
 import io.dev.concertreservationsystem.domain.reservation.ReservationService;
+import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOResult;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
@@ -75,11 +77,6 @@ public class ConcertReserveAdminFacade {
             seatService.updateStatusOfSeats(reservationDTOResultList.stream().map(reservationDTOResult -> {
                 return SeatDTOParam.builder().seatId(reservationDTOResult.seatId()).build();}).collect(Collectors.toList()), SeatStatusType.OCCUPIED);
 
-            // 콘서트 실제 공연들의 예약 상태/예약 가능 여부 수정
-            concertDetailService.updateStatusOfConcertDetails(reservationDTOResultList.stream().map(reservationDTOResult -> {
-                return concertDetailService.findConcertDetailsBySeatId(reservationDTOResult.seatId()).convertToConcertDetailDTOParam();
-            }).collect(Collectors.toList()));
-
             return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
 
     }
@@ -99,9 +96,6 @@ public class ConcertReserveAdminFacade {
 
             // 콘서트 실제 공연 좌석들 예약 상태를 reserved 상태로 변경
             seatService.updateStatusOfSeats(reservationService.convertToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()), SeatStatusType.RESERVED);
-
-            // 콘서트 실제 공연들 예약 상태 변경
-            concertDetailService.updateStatusOfConcertDetails(reservationService.convertToConcertDetailDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()));
 
             return paymentDTOResult.convertToConcertReserveAdminDTOResult();
 
