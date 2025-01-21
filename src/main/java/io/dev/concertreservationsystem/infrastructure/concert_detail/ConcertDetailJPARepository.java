@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ConcertDetailJPARepository extends JpaRepository<ConcertDetail, Long> {
-    Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatusType);
+
+    Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(@Param("concertBasicId") Long concertBasicId, @Param("concertDetailStatusType") ConcertDetailStatusType concertDetailStatus);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT cd from ConcertDetail cd WHERE cd.concertDetailId = :concertDetailId")

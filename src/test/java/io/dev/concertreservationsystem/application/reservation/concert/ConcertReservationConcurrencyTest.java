@@ -34,27 +34,17 @@ public class ConcertReservationConcurrencyTest {
     @Autowired
     ConcertDetailRepository concertDetailRepository;
 
-    @Autowired
-    ReservationRepository reservationRepository;
-
-    @Autowired
-    PaymentRepository paymentRepository;
-
     private static final long TEST_CONCERT_BASIC_ID = 1L;
-
-    private static final long TEST_CONCERT_DETAIL_ID = 1L;
-
-    private static final long TEST_SEAT_ID = 1L;
 
     private static final String TEST_USER_ID = UUID.randomUUID().toString();
 
+    private long TEST_SEAT_ID;
 
     @BeforeEach
     void setUp(){
 
         // ConcertDetail 저장
         ConcertDetail concertDetail = ConcertDetail.builder()
-                .concertDetailId(TEST_CONCERT_DETAIL_ID)
                 .concertBasicId(TEST_CONCERT_BASIC_ID)
                 .concertDetailStatus(ConcertDetailStatusType.RESERVABLE)
                 .startTime(LocalDateTime.of(2025, 10, 1, 10, 0))
@@ -63,9 +53,10 @@ public class ConcertReservationConcurrencyTest {
 
         concertDetailRepository.save(concertDetail);
 
+        long TEST_CONCERT_DETAIL_ID = concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(TEST_CONCERT_BASIC_ID, ConcertDetailStatusType.RESERVABLE).orElseThrow().getFirst().getConcertDetailId();
+
         // Seat 저장
         Seat seat = Seat.builder()
-                        .seatId(TEST_SEAT_ID)
                         .concertDetailId(TEST_CONCERT_DETAIL_ID)
                         .seatStatus(SeatStatusType.RESERVABLE)
                         .seatNumber(1)
@@ -73,10 +64,11 @@ public class ConcertReservationConcurrencyTest {
                         .build();
 
         seatRepository.save(seat);
+
+        TEST_SEAT_ID = seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(TEST_CONCERT_DETAIL_ID, SeatStatusType.RESERVABLE).orElseThrow().getFirst().getSeatId();
     }
 
     @Test
-    @Transactional
     public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_DomainModelParamInvalidException() throws InterruptedException {
 
         // 쓰레드 설정

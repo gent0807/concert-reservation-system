@@ -15,8 +15,8 @@ public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
     private final ConcertDetailJPARepository concertDetailJPARepository;
 
     @Override
-    public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatusType){
-        return concertDetailJPARepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatusType);
+    public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
+        return concertDetailJPARepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatus);
     }
 
     @Override

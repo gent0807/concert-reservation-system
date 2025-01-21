@@ -1,50 +1,90 @@
-2025-01-18 07:37:27 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-01-18 07:37:27 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 10572 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
-2025-01-18 07:37:27 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 90 ms. Found 0 JDBC repository interfaces.
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-01-18 07:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-01-18 07:37:29 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 312 ms. Found 8 JPA repository interfaces.
-2025-01-18 07:37:29 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
-2025-01-18 07:37:29 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
-2025-01-18 07:37:29 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
-2025-01-18 07:37:29 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
-2025-01-18 07:37:30 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
-2025-01-18 07:37:30 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
-2025-01-18 07:37:30 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+2025-01-20 10:37:26 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 10:37:26 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 31580 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 10:37:26 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 122 ms. Found 0 JDBC repository interfaces.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 10:37:28 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 396 ms. Found 8 JPA repository interfaces.
+2025-01-20 10:37:28 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 10:37:28 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 10:37:29 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 10:37:29 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 10:37:29 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 10:37:29 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 10:37:29 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
   Server Version: 23.0.5
   API Version: 1.42
   Operating System: Docker Desktop
   Total Memory: 7642 MB
-2025-01-18 07:37:30 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
-2025-01-18 07:37:30 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
-2025-01-18 07:37:31 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: f720c471a4620490eccf67586d17d710e2083052401a21f8339af636fdf24c44
-2025-01-18 07:37:32 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT1.7055076S
-2025-01-18 07:37:32 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
-2025-01-18 07:37:32 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
-2025-01-18 07:37:32 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
-2025-01-18 07:37:32 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
-2025-01-18 07:37:32 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 6802844bf15245b887a378d5630c8bdb114d3f6e6029ea041a6f19fe36f6b161
-2025-01-18 07:37:33 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:54557/hhplus using query 'SELECT 1'
-2025-01-18 07:37:44 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.8821242S
-2025-01-18 07:37:44 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:54557/hhplus)
-2025-01-18 07:37:44 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2025-01-18 07:37:45 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-01-18 07:37:45 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-01-18 07:37:45 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-01-18 07:37:45 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1b08d26f
-2025-01-18 07:37:45 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-01-18 07:37:45 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-01-20 10:37:30 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 10:37:30 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 10:37:30 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: acc7d4ffbd792f05dd179a9be46c8c49611f2be1bf8a9d862f804408c8dcc051
+2025-01-20 10:37:32 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT2.5904847S
+2025-01-20 10:37:32 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 10:37:32 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 10:37:32 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 10:37:32 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 10:37:33 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 228a2fcb1f7db4aaf54b4a96d214d35ea8d27559ab66ea82c7c476699dc2a02d
+2025-01-20 10:37:33 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:60735/hhplus using query 'SELECT 1'
+2025-01-20 10:37:49 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT16.3814918S
+2025-01-20 10:37:49 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:60735/hhplus)
+2025-01-20 10:39:01 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 10:39:01 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 33952 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 10:39:01 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 118 ms. Found 0 JDBC repository interfaces.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 10:39:03 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 307 ms. Found 8 JPA repository interfaces.
+2025-01-20 10:39:04 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 10:39:04 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 10:39:04 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 10:39:04 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 10:39:05 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 10:39:05 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 10:39:05 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 10:39:05 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 10:39:05 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 10:39:05 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 2864c08925149b1333ee97d89b2d0bc659b3e48f56562612a28bc9febc2ad216
+2025-01-20 10:39:06 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT1.3194112S
+2025-01-20 10:39:06 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 10:39:06 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 10:39:06 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 10:39:06 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 10:39:06 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: c3df6f284bd1fb90553d2c58fa31cf8f8ad136a837e88f4fb61b73ddb9afcbe4
+2025-01-20 10:39:07 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:60902/hhplus using query 'SELECT 1'
+2025-01-20 10:39:21 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT14.9629788S
+2025-01-20 10:39:21 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:60902/hhplus)
+2025-01-20 10:39:22 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 10:39:22 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 10:39:23 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 10:39:23 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 10:39:23 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@752fecbf
+2025-01-20 10:39:23 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 10:39:23 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0
@@ -52,60 +92,60 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-01-18 07:37:47 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-01-18 07:37:47 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-01-18 07:37:48 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-01-18 07:37:50 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 23.202 seconds (process running for 24.952)
-2025-01-18 07:37:51 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-01-18 07:37:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-01-18 07:37:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-01-18 07:39:48 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-01-18 07:39:48 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 27244 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
-2025-01-18 07:39:48 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 83 ms. Found 0 JDBC repository interfaces.
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-01-18 07:39:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-01-18 07:39:50 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 277 ms. Found 8 JPA repository interfaces.
-2025-01-18 07:39:50 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
-2025-01-18 07:39:50 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
-2025-01-18 07:39:50 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
-2025-01-18 07:39:50 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
-2025-01-18 07:39:51 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
-2025-01-18 07:39:51 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
-2025-01-18 07:39:51 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+2025-01-20 10:39:25 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 10:39:26 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:39:26 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 10:39:29 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 27.966 seconds (process running for 29.925)
+2025-01-20 10:39:31 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:39:31 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 10:39:31 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 10:45:31 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 10:45:31 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 21228 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 10:45:31 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 10:45:32 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:45:32 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 88 ms. Found 0 JDBC repository interfaces.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 10:45:33 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 282 ms. Found 8 JPA repository interfaces.
+2025-01-20 10:45:33 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 10:45:33 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 10:45:33 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 10:45:33 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 10:45:34 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 10:45:34 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 10:45:34 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
   Server Version: 23.0.5
   API Version: 1.42
   Operating System: Docker Desktop
   Total Memory: 7642 MB
-2025-01-18 07:39:51 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
-2025-01-18 07:39:51 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
-2025-01-18 07:39:51 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 284995838d5335dfce806d3e3399a4068c20c532aa88136c6375910dde3d4c38
-2025-01-18 07:39:52 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT1.0582609S
-2025-01-18 07:39:52 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
-2025-01-18 07:39:52 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
-2025-01-18 07:39:52 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
-2025-01-18 07:39:52 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
-2025-01-18 07:39:52 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 90a3c59839f84a6922fbea2b3c91b5104cbcd72983f5f8b397e0866d9a5b9d36
-2025-01-18 07:39:53 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:54744/hhplus using query 'SELECT 1'
-2025-01-18 07:40:04 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.6016021S
-2025-01-18 07:40:04 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:54744/hhplus)
-2025-01-18 07:40:04 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2025-01-18 07:40:04 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-01-18 07:40:05 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-01-18 07:40:05 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-01-18 07:40:05 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2e2c9e24
-2025-01-18 07:40:05 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-01-18 07:40:05 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-01-20 10:45:34 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 10:45:34 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 10:45:34 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 2823a26e2f00d45b52858044d4d38e47c95c35154ceee75138fb25e9e92cb65d
+2025-01-20 10:45:35 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT1.01487S
+2025-01-20 10:45:35 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 10:45:35 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 10:45:35 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 10:45:35 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 10:45:35 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 63b01c75676846e5411a42c767788f79cb2366841100e661e73bf141b9bfc125
+2025-01-20 10:45:35 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:61201/hhplus using query 'SELECT 1'
+2025-01-20 10:45:46 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.5878271S
+2025-01-20 10:45:46 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:61201/hhplus)
+2025-01-20 10:45:47 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 10:45:47 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 10:45:48 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 10:45:48 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 10:45:48 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@66e62e19
+2025-01-20 10:45:48 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 10:45:48 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0
@@ -113,10 +153,559 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-01-18 07:40:07 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-01-18 07:40:07 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-01-18 07:40:07 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-01-18 07:40:09 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 21.706 seconds (process running for 23.399)
-2025-01-18 07:40:11 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-01-18 07:40:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-01-18 07:40:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 10:45:50 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 10:45:50 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:45:51 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 10:45:53 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 22.572 seconds (process running for 24.323)
+2025-01-20 10:45:55 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:45:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 10:45:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 10:49:18 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 10:49:18 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 24092 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 10:49:18 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 0 JDBC repository interfaces.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 10:49:20 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 254 ms. Found 8 JPA repository interfaces.
+2025-01-20 10:49:20 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 10:49:20 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 10:49:20 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 10:49:21 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 10:49:21 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 10:49:21 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 10:49:21 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 10:49:21 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 10:49:21 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 10:49:21 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 1d2633012ec5fb68cb43bc2ac1706d87221c01b90d1d7d932d6bf53ac6fb0b0a
+2025-01-20 10:49:22 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.9055522S
+2025-01-20 10:49:22 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 10:49:22 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 10:49:22 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 10:49:22 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 10:49:22 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 256959a55a74d69146e7b118f6291d4a09e3fd6b75c842249661fe5e514c3c7a
+2025-01-20 10:49:23 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:61331/hhplus using query 'SELECT 1'
+2025-01-20 10:49:33 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.5106161S
+2025-01-20 10:49:33 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:61331/hhplus)
+2025-01-20 10:49:34 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 10:49:34 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 10:49:35 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 10:49:35 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 10:49:35 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@c770b57
+2025-01-20 10:49:35 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 10:49:35 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 10:49:37 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 10:49:37 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:49:37 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 10:49:40 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 21.525 seconds (process running for 23.057)
+2025-01-20 10:49:41 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:49:41 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 10:49:41 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 10:50:55 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 10:50:55 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 49956 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 10:50:55 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:50:56 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 89 ms. Found 0 JDBC repository interfaces.
+2025-01-20 10:50:57 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:50:57 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 10:50:57 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 257 ms. Found 8 JPA repository interfaces.
+2025-01-20 10:50:57 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 10:50:57 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 10:50:57 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 10:50:57 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 10:50:58 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 10:50:58 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 10:50:58 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 10:50:58 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 10:50:58 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 10:50:58 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 499facce25268baf981a3037cfea983204d89f6da0d60928ab223163f8aaf059
+2025-01-20 10:50:59 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.965104S
+2025-01-20 10:50:59 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 10:50:59 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 10:50:59 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 10:50:59 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 10:50:59 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 79e9e2642fe5dca61d700f5945eaf607faaaa7bc5b0ab7ce0914a1114eaf5133
+2025-01-20 10:50:59 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:61444/hhplus using query 'SELECT 1'
+2025-01-20 10:51:10 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.0527213S
+2025-01-20 10:51:10 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:61444/hhplus)
+2025-01-20 10:51:11 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 10:51:11 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 10:51:11 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 10:51:11 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 10:51:11 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7568134c
+2025-01-20 10:51:11 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 10:51:11 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 10:51:13 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 10:51:13 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:51:14 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 10:51:16 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 21.198 seconds (process running for 22.784)
+2025-01-20 10:51:18 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:51:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 10:51:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 10:58:36 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 10:58:36 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 19204 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 10:58:36 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 90 ms. Found 0 JDBC repository interfaces.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 10:58:38 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 266 ms. Found 8 JPA repository interfaces.
+2025-01-20 10:58:38 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 10:58:38 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 10:58:38 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 10:58:39 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 10:58:39 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 10:58:39 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 10:58:39 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 10:58:39 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 10:58:39 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 10:58:39 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: c83bb4e4d075144f13060b200415874e80e64a22f28963b953f182a2810a33f4
+2025-01-20 10:58:40 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT1.0249331S
+2025-01-20 10:58:40 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 10:58:40 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 10:58:40 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 10:58:40 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 10:58:40 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: d5261a022242ea58ce36fe8b41a6d8ac992096c3734b0f0b0111a5aa04e2bd94
+2025-01-20 10:58:41 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:61687/hhplus using query 'SELECT 1'
+2025-01-20 10:58:51 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.1976351S
+2025-01-20 10:58:51 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:61687/hhplus)
+2025-01-20 10:58:52 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 10:58:52 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 10:58:53 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 10:58:53 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 10:58:53 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@260fffec
+2025-01-20 10:58:53 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 10:58:53 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 10:58:54 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 10:58:55 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:58:55 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 10:58:57 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 21.535 seconds (process running for 23.275)
+2025-01-20 10:58:59 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 10:58:59 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 10:58:59 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 11:06:33 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 11:06:33 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 31804 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 11:06:33 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 78 ms. Found 0 JDBC repository interfaces.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 11:06:35 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 222 ms. Found 8 JPA repository interfaces.
+2025-01-20 11:06:35 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 11:06:35 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 11:06:35 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 11:06:35 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 11:06:36 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 11:06:36 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 11:06:36 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 11:06:36 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 11:06:36 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 11:06:36 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 13f550d491b59863acb1acbd76de28c6fa7f03c56ac8559b61da3bafe4858acd
+2025-01-20 11:06:37 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.93929S
+2025-01-20 11:06:37 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 11:06:37 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 11:06:37 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 11:06:37 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 11:06:37 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 5516d8971a1c7f4c1a39156bd7ed46043191bd16e16cf45acce4d6a5a41870d0
+2025-01-20 11:06:37 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:61947/hhplus using query 'SELECT 1'
+2025-01-20 11:06:47 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT10.437436S
+2025-01-20 11:06:47 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:61947/hhplus)
+2025-01-20 11:06:48 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 11:06:48 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 11:06:48 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 11:06:48 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 11:06:49 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5f346355
+2025-01-20 11:06:49 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 11:06:49 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 11:06:50 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 11:06:50 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:06:51 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 11:06:53 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 19.623 seconds (process running for 21.098)
+2025-01-20 11:06:54 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:06:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 11:06:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 11:08:41 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 11:08:41 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 42264 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 11:08:41 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 89 ms. Found 0 JDBC repository interfaces.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 11:08:42 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 221 ms. Found 8 JPA repository interfaces.
+2025-01-20 11:08:43 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 11:08:43 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 11:08:43 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 11:08:43 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 11:08:43 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 11:08:43 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 11:08:43 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 11:08:43 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 11:08:43 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 11:08:44 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 2193eec6179dce3c514a227d145596bb69441e984412543ee67a098459cecac1
+2025-01-20 11:08:44 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.9693126S
+2025-01-20 11:08:44 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 11:08:44 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 11:08:44 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 11:08:44 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 11:08:44 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: b3ddd4e3e6b7bd0c71bf1e3316063e3d55b3dfcc89b56b4ceeabd7b81701e73a
+2025-01-20 11:08:45 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:62067/hhplus using query 'SELECT 1'
+2025-01-20 11:08:55 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT10.4703243S
+2025-01-20 11:08:55 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:62067/hhplus)
+2025-01-20 11:08:55 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 11:08:55 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 11:08:56 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 11:08:56 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 11:08:56 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@20ad64c
+2025-01-20 11:08:56 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 11:08:56 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 11:08:58 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 11:08:58 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:08:58 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 11:09:00 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 19.504 seconds (process running for 21.01)
+2025-01-20 11:09:02 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:09:02 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 11:09:02 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 11:13:23 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 11:13:23 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 24184 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 11:13:23 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 0 JDBC repository interfaces.
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:13:24 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 11:13:25 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 236 ms. Found 8 JPA repository interfaces.
+2025-01-20 11:13:25 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 11:13:25 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 11:13:25 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 11:13:25 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 11:13:25 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 11:13:25 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 11:13:25 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 11:13:25 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 11:13:26 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 11:13:26 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: ab283bcde3a2d199ae5d9ce846eb5d046c9aa62bbb70da3f9a15b2f9c6c7bd3e
+2025-01-20 11:13:26 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.8628367S
+2025-01-20 11:13:26 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 11:13:26 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 11:13:26 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 11:13:26 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 11:13:26 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 7c4fce8b424eda77368735d1996f795276240ce0a2ecb84ecaa284b894423b85
+2025-01-20 11:13:27 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:62218/hhplus using query 'SELECT 1'
+2025-01-20 11:13:37 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT10.423337S
+2025-01-20 11:13:37 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:62218/hhplus)
+2025-01-20 11:13:38 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 11:13:38 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 11:13:38 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 11:13:38 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 11:13:38 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@66e62e19
+2025-01-20 11:13:38 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 11:13:39 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 11:13:40 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 11:13:40 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:13:41 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 11:13:43 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 20.138 seconds (process running for 21.63)
+2025-01-20 11:13:44 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:13:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 11:13:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 11:17:46 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 11:17:46 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 27976 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 11:17:46 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 11:17:47 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:17:47 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 0 JDBC repository interfaces.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 11:17:48 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 222 ms. Found 8 JPA repository interfaces.
+2025-01-20 11:17:48 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 11:17:48 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 11:17:48 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 11:17:48 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 11:17:49 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 11:17:49 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 11:17:49 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 11:17:49 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 11:17:49 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 11:17:49 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: df81c819b6a25b17423eaeff0ce9f712da4cc3890ad825b8f30a3a1e714ce319
+2025-01-20 11:17:50 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.9989242S
+2025-01-20 11:17:50 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 11:17:50 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 11:17:50 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 11:17:50 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 11:17:50 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 9173c2e4f0c8ff918e3f2308c18df276e7d875f0ef314335e00aea55a81cee7f
+2025-01-20 11:17:50 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:62373/hhplus using query 'SELECT 1'
+2025-01-20 11:18:01 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.2087989S
+2025-01-20 11:18:01 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:62373/hhplus)
+2025-01-20 11:18:02 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 11:18:02 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 11:18:02 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 11:18:02 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 11:18:02 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3da6950f
+2025-01-20 11:18:02 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 11:18:02 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 11:18:04 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 11:18:04 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:18:04 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 11:18:07 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 20.977 seconds (process running for 22.518)
+2025-01-20 11:18:08 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:18:08 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 11:18:08 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 11:20:32 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 11:20:32 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 18264 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 11:20:32 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 0 JDBC repository interfaces.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 11:20:34 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 223 ms. Found 8 JPA repository interfaces.
+2025-01-20 11:20:34 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 11:20:34 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 11:20:34 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 11:20:34 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 11:20:35 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 11:20:35 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 11:20:35 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 11:20:35 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 11:20:35 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 11:20:35 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: f4248ec246f820d8f68a91c68081dce96b87969bf75b867e7c96ba5d513f9853
+2025-01-20 11:20:36 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.9317188S
+2025-01-20 11:20:36 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 11:20:36 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 11:20:36 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 11:20:36 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 11:20:36 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: 37e56f8467f6e626130dd577b54564c1dd3a530d125ed44a1deda6e1b5a26b29
+2025-01-20 11:20:36 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:62489/hhplus using query 'SELECT 1'
+2025-01-20 11:20:47 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.2715973S
+2025-01-20 11:20:47 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:62489/hhplus)
+2025-01-20 11:20:48 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 11:20:48 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 11:20:48 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 11:20:48 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 11:20:48 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@423d662a
+2025-01-20 11:20:48 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 11:20:48 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 11:20:50 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 11:20:50 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:20:51 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 11:20:53 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 20.916 seconds (process running for 22.426)
+2025-01-20 11:20:55 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:20:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 11:20:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-01-20 11:22:40 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-20 11:22:40 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Starting ConcertReservationConcurrencyTest using Java 21.0.5 with PID 20512 (started by tlsdb in C:\Users\tlsdb\Dev\InteliJDev\concert-reservation-system)
+2025-01-20 11:22:40 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - No active profile set, falling back to 1 default profile: "default"
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 75 ms. Found 0 JDBC repository interfaces.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-20 11:22:41 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 229 ms. Found 8 JPA repository interfaces.
+2025-01-20 11:22:41 [Test worker] INFO  o.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+2025-01-20 11:22:41 [Test worker] INFO  o.t.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-01-20 11:22:41 [Test worker] INFO  o.testcontainers.DockerClientFactory - Testcontainers version: 1.20.4
+2025-01-20 11:22:42 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-01-20 11:22:42 [Test worker] INFO  o.t.d.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-01-20 11:22:42 [Test worker] INFO  o.testcontainers.DockerClientFactory - Docker host IP address is localhost
+2025-01-20 11:22:42 [Test worker] INFO  o.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 23.0.5
+  API Version: 1.42
+  Operating System: Docker Desktop
+  Total Memory: 7642 MB
+2025-01-20 11:22:42 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Creating container for image: testcontainers/ryuk:0.11.0
+2025-01-20 11:22:42 [Test worker] INFO  o.t.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-01-20 11:22:42 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 is starting: 5149cc2b0362fce3c9aa3916de1807ee6975333383320c506dfa6900c0bbffc6
+2025-01-20 11:22:43 [Test worker] INFO  tc.testcontainers/ryuk:0.11.0 - Container testcontainers/ryuk:0.11.0 started in PT0.9047125S
+2025-01-20 11:22:43 [Test worker] INFO  o.t.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-01-20 11:22:43 [Test worker] INFO  o.testcontainers.DockerClientFactory - Checking the system...
+2025-01-20 11:22:43 [Test worker] INFO  o.testcontainers.DockerClientFactory - ✔︎ Docker server version should be at least 1.6.0
+2025-01-20 11:22:43 [Test worker] INFO  tc.mysql:8.0 - Creating container for image: mysql:8.0
+2025-01-20 11:22:43 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 is starting: c12511ed4857cbae8e330186996e700c8f11fdc8278a8faab033885893a01005
+2025-01-20 11:22:43 [Test worker] INFO  tc.mysql:8.0 - Waiting for database connection to become available at jdbc:mysql://localhost:62624/hhplus using query 'SELECT 1'
+2025-01-20 11:22:54 [Test worker] INFO  tc.mysql:8.0 - Container mysql:8.0 started in PT11.1849766S
+2025-01-20 11:22:54 [Test worker] INFO  tc.mysql:8.0 - Container is started (JDBC URL: jdbc:mysql://localhost:62624/hhplus)
+2025-01-20 11:22:55 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-20 11:22:55 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-20 11:22:55 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-20 11:22:55 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-20 11:22:55 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@260ccf0
+2025-01-20 11:22:55 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-20 11:22:55 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-20 11:22:57 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-20 11:22:57 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:22:58 [Test worker] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-20 11:23:00 [Test worker] INFO  i.d.c.a.r.c.ConcertReservationConcurrencyTest - Started ConcertReservationConcurrencyTest in 20.423 seconds (process running for 21.961)
+2025-01-20 11:23:01 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-20 11:23:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-01-20 11:23:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

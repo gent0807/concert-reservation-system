@@ -27,7 +27,7 @@ public class ConcertDetail {
     @Column(name = "cocert_basic_id", nullable = false)
     private Long concertBasicId;
 
-    @Column(name = "concert_detail_status", nullable = false, columnDefinition = "ENUM('RESERVABLE')")
+    @Column(name = "concert_detail_status", nullable = false)
     private ConcertDetailStatusType concertDetailStatus;
 
     @Column(name = "start_time", nullable = false)
