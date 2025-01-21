@@ -3,6 +3,7 @@ package io.dev.concertreservationsystem.interfaces.common.exception.handler;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -73,6 +74,18 @@ public class APICustomExceptionHandler extends ResponseEntityExceptionHandler {
                                                         .errorMap(errors)
                                                         .build());
     }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception e) {
+
+        log.error("EXCEPTION : [{}]", e.getMessage());
+
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder()
+                                                        .message(e.getMessage())
+                                                        .build());
+    }
+
 
 
 

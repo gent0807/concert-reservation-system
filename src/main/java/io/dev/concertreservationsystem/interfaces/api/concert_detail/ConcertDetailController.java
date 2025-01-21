@@ -5,9 +5,12 @@ import io.dev.concertreservationsystem.application.reservation.concert.ConcertRe
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/concert-details")
 @Tag(name="예약 가능 날짜 API(과제)", description="예약 가능한 실제 공연 목록을 조회하는 api입니다.")
+@Validated
 public class ConcertDetailController {
 
         private final ConcertReserveAdminFacade concertReserveAdminFacade;
 
         @GetMapping("{concert-id}/reservable")
         @Operation(summary = "예약가능한 콘서트 실제 공연 목록 조회", description = "예약가능한 콘서트 실제 공연 목록 조회")
-        public ResponseEntity<List<ConcertDetailResponseDTO>> findReservableConcertDetails(@PathVariable("concert-basic-id") Long concertBasicId) {
+        public ResponseEntity<List<ConcertDetailResponseDTO>> findReservableConcertDetails(@PathVariable("concert-basic-id") @NotBlank @Min(0) Long concertBasicId) {
 
 
                 // concertReserveAdminDTOParam의 concertId를 이용하여 해당 콘서트의 예약 가능한 날짜, 예약 가능한 실제 공연 목록을 조회하는,

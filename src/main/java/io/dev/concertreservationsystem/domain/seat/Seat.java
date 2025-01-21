@@ -24,8 +24,6 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id")
-    @Positive
-    @Min(0)
     private Long seatId;
 
     @Column(name = "concert_detail_id", nullable = false, columnDefinition = "bigint unsigned")
@@ -43,7 +41,7 @@ public class Seat {
     @Min(30000)
     private int price;
 
-    @Column(name = "seat_status", nullable = false, columnDefinition = "varchar(20) default 'RESERVABLE'")
+    @Column(name = "seat_status", nullable = false)
     private SeatStatusType seatStatus;
 
     @Column(name = "expired_at", columnDefinition = "TIMESTAMP")

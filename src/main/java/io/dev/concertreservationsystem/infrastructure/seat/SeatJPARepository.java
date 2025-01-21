@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SeatJPARepository extends JpaRepository<Seat, Long> {
-    Optional<List<Seat>> findSeatsByConcertDetailIdAndSeatStatus(Long concertDetailId, SeatStatusType seatStatusReservable);
+    Optional<List<Seat>> findSeatsByConcertDetailIdAndSeatStatus(Long concertDetailId, SeatStatusType seatStatus);
 
     List<Seat> findSeatsByConcertDetailId(Long concertDetailId);
 
