@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.*;
 
 @SpringBootTest
+@Testcontainers
 public class PointHistoryConcurrencyTest {
     @Autowired
     private PointHistoryService pointHistoryService;
