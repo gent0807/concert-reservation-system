@@ -9,32 +9,30 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-@Profile("default")
+@Profile("optimistic-lock")
 @RequiredArgsConstructor
-public class UserRepositoryImpl implements UserRepository {
-
-    private final UserJPARepository userJPARepository;
-
-    @Override
-    public void createUser(User user) {
-        userJPARepository.save(user);
-    }
+public class OptimisticUserRepositoryImpl implements UserRepository {
+    private final OptimisticUserRepository optimisticUserRepository;
 
     @Override
     public User findUserByUserIdWithLock(String userId) {
-        return userJPARepository.findUserByUserIdForUpdate(userId);
-
+        return optimisticUserRepository.findUserByUserIdForUpdate(userId);
     }
+
+
+    @Override
+    public void createUser(User user) {
+        optimisticUserRepository.save(user);
+    }
+
 
     @Override
     public Optional<User> findUserByUserId(String userId){
-        return userJPARepository.findUserByUserId(userId);
+        return optimisticUserRepository.findUserByUserId(userId);
     }
 
     @Override
     public User saveUser(User user){
-        return userJPARepository.save(user);
+        return optimisticUserRepository.save(user);
     }
-
 }
-

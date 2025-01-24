@@ -265,16 +265,108 @@
           @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
           private LocalDateTime deletedAt;
         }
-          ```
-        
+      ```
+      #### 낙관적 락을 위한 repository 인터페이스 OptimisticUserRepository
+       ```java
+            public interface OptimisticUserRepository extends UserJPARepository{
+
+            @Override
+            @Lock(LockModeType.OPTIMISTIC)
+            @Query("SELECT u FROM User u WHERE u.userId = :userId")
+              User findUserByUserIdForUpdate(String userId);
+            }
+            
+        ``` 
       
-    * 배타 lock
-      #### 특정 유저의 포인트 충전 요청은 금액과 관련되어 데이터 정합성이 매우 중요할 수 있기 때문에
-      #### 안전하게 READ/UPDATE 위한 배타 lock이 유리할 수 있다.
+        #### OptimisticUserRepository 구현체 정의
+        ```java
+                @Repository
+                @Profile("optimistic-lock")
+                @RequiredArgsConstructor
+                public class OptimisticUserRepositoryImpl implements UserRepository {
+                private final OptimisticUserRepository optimisticUserRepository;
+                
+                    @Override
+                    public User findUserByUserIdWithLock(String userId) {
+                        return optimisticUserRepository.findUserByUserIdForUpdate(userId);
+                    }
+                
+                
+                    @Override
+                    public void createUser(User user) {
+                        optimisticUserRepository.save(user);
+                    }
+                
+                
+                    @Override
+                    public Optional<User> findUserByUserId(String userId){
+                        return optimisticUserRepository.findUserByUserId(userId);
+                    }
+                
+                    @Override
+                    public User saveUser(User user){
+                        return optimisticUserRepository.save(user);
+                    }
+                }
+
+        ```
+
+      * 배타 lock
+        #### 특정 유저의 포인트 충전 요청은 금액과 관련되어 데이터 정합성이 매우 중요할 수 있기 때문에
+        #### 안전하게 READ/UPDATE 위한 배타 lock이 유리할 수 있다.
+      
+        #### 비관적 락을 위한 repository 인터페이스 PessimisticUserRepository
+          ```java
+            public interface PessimisticUserRepository extends UserJPARepository {
+
+                  @Lock(LockModeType.PESSIMISTIC_WRITE)
+                  @Query("SELECT u FROM User u WHERE u.userId = :userId")
+                  User findUserByUserIdForUpdate(String userId);
+
+                  Optional<User> findUserByUserId(String userId);
+
+            }
+           ```
+        #### PessimisticUserRepository 구현체
+          ```java
+                @Repository
+                @Profile("pessimistic-lock")
+                @RequiredArgsConstructor
+                public class PessimisticUserRepositoryImpl implements UserRepository {
+
+                private final PessimisticUserRepository pessimisticUserRepository;
+
+                @Override
+                public User findUserByUserIdWithLock(String userId) {
+                        return pessimisticUserRepository.findUserByUserIdForUpdate(userId);
+                }
+
+
+                @Override
+                public void createUser(User user) {
+                    pessimisticUserRepository.save(user);
+                }
+            
+            
+                @Override
+                public Optional<User> findUserByUserId(String userId){
+                    return pessimisticUserRepository.findUserByUserId(userId);
+                }
+            
+                @Override
+                public User saveUser(User user){
+                    return pessimisticUserRepository.save(user);
+                }
+            
+            }
+         ```
     * Test 비교
-    ```java
+    
+```java
     @SpringBootTest
     @Testcontainers
+    @ActiveProfiles("pessimistic-lock")
+    @Slf4j
     public class ConcertReservationConcurrencyTest {
     @Autowired
     ConcertReserveAdminFacade concertReserveAdminFacade;
@@ -387,10 +479,9 @@
       }
 
         
-       ```
-
-    * Case 2  : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
-    * Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러개 발생
-    * Case 4  : Transaction A (특정 유저 포인트 충전), Transaction C (결제 시 특정 유저 포인트 차감) 동시에 발생
-    * Case 5  : Transaction B (특정 콘서트 실제 공연 좌석 예약 상태 변경), Transaction C(결제 시 특정 콘서트 실제 공연 좌석 에약 상태 변경) 동시에 발생
+  ```
+* Case 2  : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
+* Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러개 발생
+* Case 4  : Transaction A (특정 유저 포인트 충전), Transaction C (결제 시 특정 유저 포인트 차감) 동시에 발생
+* Case 5  : Transaction B (특정 콘서트 실제 공연 좌석 예약 상태 변경), Transaction C(결제 시 특정 콘서트 실제 공연 좌석 에약 상태 변경) 동시에 발생
   
