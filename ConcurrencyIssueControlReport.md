@@ -76,17 +76,14 @@
           #### 두 트랜잭션이 모두 동일한 자원에 대해 s-lock 얻은 상태에서,
           #### 두 트랜잭션 모두 커밋(s-lock 해제)되기 전에 UPDATE 쿼리 실행하여 x-lock 얻으려 할 때,
           #### 두 트랜잭션이 서로의 s-lock 해제될 때까지 대기함으로써 두 트랜잭션 모두 무한 대기에 빠질 수 있다.
-        * #### x-lock and x-lock
-          #### 두 트랜잭션이 각 트랜잭션 내에서 모두 동일한 자원들에 대해 x-lock 얻는다고 할때,
-          #### 두 트랜잭션의 x-lock 자원들의 잠금 순서가 서로 다르면,
-          #### 두 트랜잭션이 특정 자원들의 x-lock 해제될 때까지 대기하여, 두 트랜잭션이 모두 무한 대기에 빠질 수 있다.
+          * #### x-lock and x-lock
+            #### 두 트랜잭션이 각 트랜잭션 내에서 모두 동일한 자원들에 대해 x-lock 얻는다고 할때,
+            #### 두 트랜잭션의 x-lock 자원들의 잠금 순서가 서로 다르면,
+            #### 두 트랜잭션이 서로 특정 자원들의 x-lock 해제될 때까지 대기하여, 두 트랜잭션이 모두 무한 대기에 빠질 수 있다.
  
-          ![images_gojung_post_b8c0a12b-30e9-4aaf-97ec-765226db0164_image](https://github.com/user-attachments/assets/9ab4d57a-5f2b-4011-9378-067abed25442)
-
-
-
-      5. 비관적 락은 동시에 데이터에 접근하는 트랜잭션과 수정 작업이 많거나, 데이터의 정합성이 중요한 시나리오에 적합하다.                           
-      6. 다만, 대기 시간 증가와 교착 상태 발생 가능성, 불필요한 락으로 인한 성능 저하, 동시성 처리 불리 이슈가 발생한다.                             
+            ![images_gojung_post_b8c0a12b-30e9-4aaf-97ec-765226db0164_image](https://github.com/user-attachments/assets/9ab4d57a-5f2b-4011-9378-067abed25442)
+     5. 비관적 락은 동시에 데이터에 접근하는 트랜잭션과 수정 작업이 많거나, 데이터의 정합성이 중요한 시나리오에 적합하다.
+     6. 다만, 대기 시간 증가와 교착 상태 발생 가능성, 불필요한 락으로 인한 성능 저하, 동시성 처리 불리 이슈가 발생한다.                             
 
       
         
@@ -218,9 +215,182 @@
   *  Seat 테이블의 row
   *  Reservation 테이블의 row
 
+
+#### 
+  
 * Case 1  : Transaction A (특정 유저의 포인트 충전) 동시에 여러 개 발생
-* Case 2  : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
-* Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러개 발생
-* Case 4  : Transaction A (특정 유저 포인트 충전), Transaction C (결제 시 특정 유저 포인트 차감) 동시에 발생
-* Csae 5  : Transaction B (특정 콘서트 실제 공연 좌석 예약 상태 변경), Transaction C(결제 시 특정 콘서트 실제 공연 좌석 에약 상태 변경) 동시에 발생생
+  * User 테이블의 특정 User Row 대한 포인트 수정 동시성 처리
+    * 낙관적 lock 
+       #### 특정 유저의 포인트 충전 요청은 현실을 고려할 시, User 테이블의 row에 대해 상대적으로 충돌이 덜 발생하고 
+       #### 특정 유저의 포인트 충전 요청이 동시에 여러 개 발생하는 것은 비정상적인 요청으로 간주 가능하며,
+       #### 불필요한 잠금으로 인한 성능 저하없이 동시성 처리를 하기엔 낙관적 lock이 유리할 수 있다.
+       #### 낙관적 락 사용을 위한 도메인 엔티티 @Version 선언 
+        ```java
+          @Getter
+          @Setter
+          @Entity
+          @Builder
+          @AllArgsConstructor
+          @NoArgsConstructor(access = AccessLevel.PROTECTED)
+          @Slf4j
+          public class User {
+    
+          @Id
+          private String userId;
+    
+          @Column(name = "user_name", nullable = false)
+          private String userName;
+    
+          @Version
+          private Integer version;
+    
+          @Column(name = "age", nullable = false)
+          @Positive
+          @Min(0)
+          private int age;
+    
+          @Column(name = "gender", nullable = false)
+          private UserGenderType gender;
+    
+          @Column(name = "point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
+          private long point;
+    
+          @CreatedDate
+          @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+          private LocalDateTime createdAt;
+    
+          @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+          private LocalDateTime updatedAt;
+    
+          @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
+          private LocalDateTime deletedAt;
+        }
+          ```
+        
+      
+    * 배타 lock
+      #### 특정 유저의 포인트 충전 요청은 금액과 관련되어 데이터 정합성이 매우 중요할 수 있기 때문에
+      #### 안전하게 READ/UPDATE 위한 배타 lock이 유리할 수 있다.
+    * Test 비교
+    ```java
+    @SpringBootTest
+    @Testcontainers
+    public class ConcertReservationConcurrencyTest {
+    @Autowired
+    ConcertReserveAdminFacade concertReserveAdminFacade;
+
+            @Autowired
+            SeatRepository seatRepository;
+        
+            @Autowired
+            ConcertDetailRepository concertDetailRepository;
+        
+            private static final long TEST_CONCERT_BASIC_ID = 1L;
+        
+            private static final String TEST_USER_ID = UUID.randomUUID().toString();
+        
+            private long TEST_SEAT_ID;
+        
+            @BeforeEach
+            void setUp(){
+        
+                // ConcertDetail 저장
+                ConcertDetail concertDetail = ConcertDetail.builder()
+                        .concertBasicId(TEST_CONCERT_BASIC_ID)
+                        .concertDetailStatus(ConcertDetailStatusType.RESERVABLE)
+                        .startTime(LocalDateTime.of(2025, 10, 1, 10, 0))
+                        .endTime(LocalDateTime.of(2025, 10, 1, 12, 0))
+                        .build();
+        
+                concertDetailRepository.save(concertDetail);
+        
+                long TEST_CONCERT_DETAIL_ID = concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(TEST_CONCERT_BASIC_ID, ConcertDetailStatusType.RESERVABLE).orElseThrow().getFirst().getConcertDetailId();
+        
+                // Seat 저장
+                Seat seat = Seat.builder()
+                                .concertDetailId(TEST_CONCERT_DETAIL_ID)
+                                .seatStatus(SeatStatusType.RESERVABLE)
+                                .seatNumber(1)
+                                .price(50000)
+                                .build();
+        
+                seatRepository.save(seat);
+        
+                TEST_SEAT_ID = seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(TEST_CONCERT_DETAIL_ID, SeatStatusType.RESERVABLE).orElseThrow().getFirst().getSeatId();
+            }
+        
+            @Test
+            public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_DomainModelParamInvalidException() throws InterruptedException {
+        
+        
+                // 쓰레드 설정
+                int threadCount = 5;
+                ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+                CountDownLatch latch = new CountDownLatch(threadCount);
+        
+        
+                // 좌석 예약 DTOList 생성
+                List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList = new ArrayList<>();
+        
+                concertReserveAdminDTOParamList.add(ConcertReserveAdminDTOParam.builder()
+                        .userId(TEST_USER_ID)
+                        .seatId(TEST_SEAT_ID)
+                        .build());
+        
+                // 동시 실행 결과를 저장할 리스트
+                List<Future<Boolean>> results = new ArrayList<>();
+        
+                for(int i = 0; i < threadCount; i++){
+                    results.add(executorService.submit(()->{
+                        latch.countDown();
+                        latch.await();
+        
+                        try{
+                            concertReserveAdminFacade.insertReservations(concertReserveAdminDTOParamList);
+                            return true;
+                        }catch (DomainModelParamInvalidException e){
+                            return false;
+                        }catch(ServiceDataNotFoundException e){
+                            return false;
+                        }
+                    }));
+                }
+        
+                executorService.shutdown();
+                executorService.awaitTermination(1, TimeUnit.MINUTES);
+        
+                // 결과 확인
+                long successCount = results.stream().filter(future -> {
+                    try {
+                        return future.get();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }).count();
+        
+                long failureCount = results.stream().filter(future -> {
+                    try {
+                        return !future.get();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }).count();
+        
+                // 동시성 테스트 결과 검증
+                assertThat(successCount).isEqualTo(1); // 한 요청만 성공해야 함
+                assertThat(failureCount).isEqualTo(threadCount - 1); // 나머지 요청은 실패해야 함
+        
+        
+        
+        
+            }
+      }
+
+        
+       ```
+
+    * Case 2  : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
+    * Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러개 발생
+    * Case 4  : Transaction A (특정 유저 포인트 충전), Transaction C (결제 시 특정 유저 포인트 차감) 동시에 발생
+    * Case 5  : Transaction B (특정 콘서트 실제 공연 좌석 예약 상태 변경), Transaction C(결제 시 특정 콘서트 실제 공연 좌석 에약 상태 변경) 동시에 발생
   

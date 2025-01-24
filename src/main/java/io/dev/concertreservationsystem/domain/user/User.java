@@ -5,6 +5,7 @@ import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCo
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,9 @@ public class User {
 
     @Column(name = "user_name", nullable = false)
     private String userName;
+
+    @Version
+    private Integer version;
 
     @Column(name = "age", nullable = false)
     @Positive

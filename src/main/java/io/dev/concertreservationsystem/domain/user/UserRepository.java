@@ -5,7 +5,7 @@ import java.util.Optional;
 public interface UserRepository {
     void createUser(User user);
 
-    Optional<User> findUserByUserIdWithLock(String userId);
+    User findUserByUserIdWithLock(String userId);
 
     Optional<User> findUserByUserId(String userId);
 

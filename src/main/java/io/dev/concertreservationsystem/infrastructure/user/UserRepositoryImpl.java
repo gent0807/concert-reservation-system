@@ -19,7 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUserByUserIdWithLock(String userId) {
+    public User findUserByUserIdWithLock(String userId) {
         return userJPARepository.findUserByUserIdForUpdate(userId);
 
     }

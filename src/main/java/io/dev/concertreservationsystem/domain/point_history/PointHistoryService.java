@@ -36,10 +36,7 @@ public class PointHistoryService {
     public List<PointHistoryDTOResult> insertChargeUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
         // 유저 포인트 동시 충전에 대한 동시성 제어 위해 데이터베에스 테이블 특정 유저 row 비관적 lock: 각 트랜잭션마다 적용
-        User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId())
-                .orElseThrow(()->{
-                    throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "POINT_HISTORY SERVICE", "insertUserPointHistory");
-                });
+        User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId());
 
         // 포인트 수정
         user.chargePoint(pointHistoryDTOParam.amount());
@@ -65,11 +62,8 @@ public class PointHistoryService {
     public void useUserPoint(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
         // 유저 정보가 없으면, exception 발생
-        User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId()).orElseThrow(
-                ()->{
-                    throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
-                }
-        );
+        User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId());
+
 
         // 좌석 예약 정보가 없으면 exception 발생
         reservationRepository.findReservationsByUserIdAndPaymentIdWithLock(pointHistoryDTOParam.userId(), pointHistoryDTOParam.paymentId()).orElseThrow(()->{
@@ -82,9 +76,7 @@ public class PointHistoryService {
         });
 
         // 유저 포인트 잔고와 결제 금액 비교
-        userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId()).orElseThrow(()->{
-            throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
-        }).checkPrice(payment.getTotalPrice());
+        userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId()).checkPrice(payment.getTotalPrice());
 
         user.usePoint(payment.getTotalPrice());
 

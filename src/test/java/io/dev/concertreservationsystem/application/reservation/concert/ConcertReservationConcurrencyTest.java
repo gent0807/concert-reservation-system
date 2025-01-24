@@ -9,6 +9,7 @@ import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
+import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class ConcertReservationConcurrencyTest {
     @BeforeEach
     void setUp(){
 
-        /*// ConcertDetail 저장
+        // ConcertDetail 저장
         ConcertDetail concertDetail = ConcertDetail.builder()
                 .concertBasicId(TEST_CONCERT_BASIC_ID)
                 .concertDetailStatus(ConcertDetailStatusType.RESERVABLE)
@@ -67,12 +68,12 @@ public class ConcertReservationConcurrencyTest {
 
         seatRepository.save(seat);
 
-        TEST_SEAT_ID = seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(TEST_CONCERT_DETAIL_ID, SeatStatusType.RESERVABLE).orElseThrow().getFirst().getSeatId();*/
+        TEST_SEAT_ID = seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(TEST_CONCERT_DETAIL_ID, SeatStatusType.RESERVABLE).orElseThrow().getFirst().getSeatId();
     }
 
     @Test
     public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_DomainModelParamInvalidException() throws InterruptedException {
-/*
+
 
         // 쓰레드 설정
         int threadCount = 5;
@@ -98,9 +99,10 @@ public class ConcertReservationConcurrencyTest {
 
                 try{
                     concertReserveAdminFacade.insertReservations(concertReserveAdminDTOParamList);
-
                     return true;
                 }catch (DomainModelParamInvalidException e){
+                    return false;
+                }catch(ServiceDataNotFoundException e){
                     return false;
                 }
             }));
@@ -130,7 +132,7 @@ public class ConcertReservationConcurrencyTest {
         assertThat(successCount).isEqualTo(1); // 한 요청만 성공해야 함
         assertThat(failureCount).isEqualTo(threadCount - 1); // 나머지 요청은 실패해야 함
 
-*/
+
 
 
     }
