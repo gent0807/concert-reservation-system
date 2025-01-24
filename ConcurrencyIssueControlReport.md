@@ -360,127 +360,139 @@
             
             }
          ```
-    * Test 비교
+        * Test 비교
     
-```java
-    @SpringBootTest
-    @Testcontainers
-    @ActiveProfiles("pessimistic-lock")
-    @Slf4j
-    public class ConcertReservationConcurrencyTest {
-    @Autowired
-    ConcertReserveAdminFacade concertReserveAdminFacade;
+          ```java
+              @SpringBootTest
+              @Testcontainers
+              @ActiveProfiles("pessimistic-lock")
+              @Slf4j
+              public class PointHistoryConcurrencyTest {
+            
+              @Autowired
+              private UserRepository userRepository;
+            
+              @Autowired
+              private PointHistoryService pointHistoryService;
+            
+              private static final String TEST_USER_ID = UUID.randomUUID().toString(); // 테스트용 유저 ID
+            
+              private static final long USER_INIT_POINT = 10000L;
+            
+              User saveUser;
+            
+              @BeforeEach
+              void setUp(){
+            
+                  User user = User.builder()
+                          .userId(TEST_USER_ID)
+                          .userName("tester")
+                          .gender(UserGenderType.MALE)
+                          .age(31)
+                          .point(USER_INIT_POINT)
+                          .build();
+            
+                  log.info("user id : {}", user.getUserId());
+            
+                  userRepository.saveUser(user);
+            
+                  saveUser = userRepository.findUserByUserId(user.getUserId()).orElseThrow(()->{
+                      log.info("find user fail in id({})", user.getUserId() );
+                      return null;
+                  });
+            
+                  log.info("save user id : {}", saveUser.getUserId());
+            
+              }
+            
+              @Test
+              public void 동일한_userId로_여러_개의_포인트_충전_요청이_동시에_들어오는_경우_정확한_값으로_계산되어야_한다() throws InterruptedException {
+            
+                  log.info("save user id : {}", saveUser.getUserId());
+            
+                  long startTime;
+            
+                  long endTime;
+            
+                  // 쓰레드 설정
+                  int threadCount = 5;
+                  ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+                  CountDownLatch latch = new CountDownLatch(threadCount);
+            
+            
+                  // 각 쓰레드에서 충전할 포인트
+                  int chargePointPerThread = 10000;
+            
+                  // 포인트 충전 DTO 생성
+                  PointHistoryDTOParam pointHistoryDTOParam = PointHistoryDTOParam.builder()
+                          .userId(saveUser.getUserId())
+                          .type(PointTransactionType.CHARGE)
+                          .amount(chargePointPerThread)
+                          .build();
+            
+                  log.info("pointHistoryDTOParam user id : {}", pointHistoryDTOParam.userId());
+            
+                  // 동시 실행 결과를 저장할 리스트
+                  List<Future<Boolean>> results = new ArrayList<>();
+            
+                  for(int i = 0; i < threadCount; i++){
+                      results.add(executorService.submit(()->{
+                          try{
+                              latch.countDown();
+                              latch.await();
+                              // 서비스에서 포인트 충전
+                              pointHistoryService.insertChargeUserPointHistory(pointHistoryDTOParam);
+                              log.info("충전 성공");
+            
+                              return true;
+                          }catch (ServiceDataNotFoundException e){
+                              log.info("ServiceDataNotFoundException error : {}, {}, {}", e.getMessage(), e.getCause(), e.getStackTrace() );
+            
+                              return false;
+                          }catch (DomainModelParamInvalidException e){
+                              log.info("DomainModelParamInvalidException error : {}, {}, {}", e.getMessage(), e.getCause(), e.getStackTrace() );
+            
+                              return false;
+                          }
+            
+                      }));
+                  }
+            
+                  startTime = System.currentTimeMillis();
+            
+                  executorService.shutdown();
+                  executorService.awaitTermination(1, TimeUnit.MINUTES);
+            
+                  endTime = System.currentTimeMillis();
+            
+                  // 결과 확인
+                  long successCount = results.stream().filter(future -> {
+                      try {
+                          return future.get();
+                      } catch (Exception e) {
+                          return false;
+                      }
+                  }).count();
+            
+                  long resultUserPoint = USER_INIT_POINT + (successCount * chargePointPerThread);
+            
+                  User user = userRepository.findUserByUserId(saveUser.getUserId()).orElseThrow();
+            
+                  log.info("유저 포인트 : {}", user.getPoint() );
+            
+                  log.info("포인트 충전 내역 결과 포인트: {}", resultUserPoint);
+            
+                  Assertions.assertThat(user.getPoint()).isEqualTo(resultUserPoint);
+            
+                  log.info("실행 시간 : {} ms", endTime - startTime);
+               }
+              }
 
-            @Autowired
-            SeatRepository seatRepository;
-        
-            @Autowired
-            ConcertDetailRepository concertDetailRepository;
-        
-            private static final long TEST_CONCERT_BASIC_ID = 1L;
-        
-            private static final String TEST_USER_ID = UUID.randomUUID().toString();
-        
-            private long TEST_SEAT_ID;
-        
-            @BeforeEach
-            void setUp(){
-        
-                // ConcertDetail 저장
-                ConcertDetail concertDetail = ConcertDetail.builder()
-                        .concertBasicId(TEST_CONCERT_BASIC_ID)
-                        .concertDetailStatus(ConcertDetailStatusType.RESERVABLE)
-                        .startTime(LocalDateTime.of(2025, 10, 1, 10, 0))
-                        .endTime(LocalDateTime.of(2025, 10, 1, 12, 0))
-                        .build();
-        
-                concertDetailRepository.save(concertDetail);
-        
-                long TEST_CONCERT_DETAIL_ID = concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(TEST_CONCERT_BASIC_ID, ConcertDetailStatusType.RESERVABLE).orElseThrow().getFirst().getConcertDetailId();
-        
-                // Seat 저장
-                Seat seat = Seat.builder()
-                                .concertDetailId(TEST_CONCERT_DETAIL_ID)
-                                .seatStatus(SeatStatusType.RESERVABLE)
-                                .seatNumber(1)
-                                .price(50000)
-                                .build();
-        
-                seatRepository.save(seat);
-        
-                TEST_SEAT_ID = seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(TEST_CONCERT_DETAIL_ID, SeatStatusType.RESERVABLE).orElseThrow().getFirst().getSeatId();
-            }
-        
-            @Test
-            public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_DomainModelParamInvalidException() throws InterruptedException {
-        
-        
-                // 쓰레드 설정
-                int threadCount = 5;
-                ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
-                CountDownLatch latch = new CountDownLatch(threadCount);
-        
-        
-                // 좌석 예약 DTOList 생성
-                List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList = new ArrayList<>();
-        
-                concertReserveAdminDTOParamList.add(ConcertReserveAdminDTOParam.builder()
-                        .userId(TEST_USER_ID)
-                        .seatId(TEST_SEAT_ID)
-                        .build());
-        
-                // 동시 실행 결과를 저장할 리스트
-                List<Future<Boolean>> results = new ArrayList<>();
-        
-                for(int i = 0; i < threadCount; i++){
-                    results.add(executorService.submit(()->{
-                        latch.countDown();
-                        latch.await();
-        
-                        try{
-                            concertReserveAdminFacade.insertReservations(concertReserveAdminDTOParamList);
-                            return true;
-                        }catch (DomainModelParamInvalidException e){
-                            return false;
-                        }catch(ServiceDataNotFoundException e){
-                            return false;
-                        }
-                    }));
-                }
-        
-                executorService.shutdown();
-                executorService.awaitTermination(1, TimeUnit.MINUTES);
-        
-                // 결과 확인
-                long successCount = results.stream().filter(future -> {
-                    try {
-                        return future.get();
-                    } catch (Exception e) {
-                        return false;
-                    }
-                }).count();
-        
-                long failureCount = results.stream().filter(future -> {
-                    try {
-                        return !future.get();
-                    } catch (Exception e) {
-                        return false;
-                    }
-                }).count();
-        
-                // 동시성 테스트 결과 검증
-                assertThat(successCount).isEqualTo(1); // 한 요청만 성공해야 함
-                assertThat(failureCount).isEqualTo(threadCount - 1); // 나머지 요청은 실패해야 함
-        
-        
-        
-        
-            }
-      }
 
-        
-  ```
+
+          ```
 * Case 2  : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
+    
 * Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러개 발생
 * Case 4  : Transaction A (특정 유저 포인트 충전), Transaction C (결제 시 특정 유저 포인트 차감) 동시에 발생
 * Case 5  : Transaction B (특정 콘서트 실제 공연 좌석 예약 상태 변경), Transaction C(결제 시 특정 콘서트 실제 공연 좌석 에약 상태 변경) 동시에 발생

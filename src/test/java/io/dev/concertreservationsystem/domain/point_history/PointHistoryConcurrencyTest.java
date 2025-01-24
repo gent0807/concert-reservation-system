@@ -36,7 +36,7 @@ public class PointHistoryConcurrencyTest {
     @Autowired
     private PointHistoryService pointHistoryService;
 
-    private static final String TEST_USER_ID = "tid"; // 테스트용 유저 ID
+    private static final String TEST_USER_ID = UUID.randomUUID().toString(); // 테스트용 유저 ID
 
     private static final long USER_INIT_POINT = 10000L;
 
