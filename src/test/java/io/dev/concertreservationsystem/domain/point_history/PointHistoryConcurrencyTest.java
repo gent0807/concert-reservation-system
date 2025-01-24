@@ -7,6 +7,7 @@ import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransac
 import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -24,13 +26,15 @@ import java.util.concurrent.*;
 
 @SpringBootTest
 @Testcontainers
+@ActiveProfiles("pessimistic-lock")
 @Slf4j
 public class PointHistoryConcurrencyTest {
-    @Autowired
-    private PointHistoryService pointHistoryService;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PointHistoryService pointHistoryService;
 
     private static final String TEST_USER_ID = "tid"; // 테스트용 유저 ID
 
