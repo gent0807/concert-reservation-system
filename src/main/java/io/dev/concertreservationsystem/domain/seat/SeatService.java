@@ -6,10 +6,8 @@ import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailReposi
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
-import io.dev.concertreservationsystem.domain.payment.PaymentService;
 import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
-import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
@@ -127,7 +125,7 @@ public class SeatService {
                 reservationRepository.saveReservation(reservation);
 
                 payment.setPaymentStatus(PaymentStatusType.CANCELLED);
-                paymentRepository.savePayment(payment);
+                paymentRepository.save(payment);
             }
         });
 

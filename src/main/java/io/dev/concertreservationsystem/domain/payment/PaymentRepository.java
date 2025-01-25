@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PaymentRepository {
-    void savePayment(Payment payment);
+    void save(Payment payment);
 
     Optional<List<Payment>> findPaymentsByPaymentStatusOrderByCreatedAtDesc(PaymentStatusType paymentStatusType);
 

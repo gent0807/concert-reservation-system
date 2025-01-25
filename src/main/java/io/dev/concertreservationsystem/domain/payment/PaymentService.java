@@ -34,7 +34,7 @@ public class PaymentService {
         // 도메인 모델 내 정적 팩토리 메소드로 생성
         Payment payment = Payment.createPayment(priceList.stream().reduce(0, Integer::sum), PaymentStatusType.PUBLISHED);
 
-        paymentRepository.savePayment(payment);
+        paymentRepository.save(payment);
 
         return paymentRepository.findPaymentsByPaymentStatusOrderByCreatedAtDesc(payment.getPaymentStatus()).orElseThrow(()->{
             throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_SAVE_FAILED, "PAYMENT SERVICE", "publishNewPayment");
@@ -52,7 +52,7 @@ public class PaymentService {
 
         payment.setPaymentStatus(paymentStatusType);
 
-        paymentRepository.savePayment(payment);
+        paymentRepository.save(payment);
 
         return payment.convertToPaymentDTOResult();
     }

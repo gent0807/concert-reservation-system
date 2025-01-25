@@ -106,7 +106,6 @@ public class ConcertReserveAdminFacade {
             seatService.updateStatusOfConcertDetailAndSeats(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()), SeatStatusType.RESERVED);
 
             return paymentDTOResult.convertToConcertReserveAdminDTOResult();
-
     }
 
     // 5. 좌석 점유 취소, 주문 취소

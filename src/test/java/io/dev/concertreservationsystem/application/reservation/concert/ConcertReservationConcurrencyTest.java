@@ -3,11 +3,16 @@ package io.dev.concertreservationsystem.application.reservation.concert;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetail;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailRepository;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
+import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
+import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
+import io.dev.concertreservationsystem.domain.reservation.Reservation;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
+import io.dev.concertreservationsystem.domain.user.User;
+import io.dev.concertreservationsystem.domain.user.UserRepository;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
 import jakarta.persistence.OptimisticLockException;
@@ -18,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
@@ -38,48 +42,93 @@ public class ConcertReservationConcurrencyTest {
     ConcertReserveAdminFacade concertReserveAdminFacade;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     SeatRepository seatRepository;
 
     @Autowired
     ConcertDetailRepository concertDetailRepository;
 
-    private static final long TEST_CONCERT_BASIC_ID = 1L;
+    @Autowired
+    ReservationRepository reservationRepository;
+
+    @Autowired
+    PaymentRepository paymentRepository;
 
     private static final String TEST_USER_ID = UUID.randomUUID().toString();
 
+    private static final long TEST_CONCERT_BASIC_ID = 1L;
+
     private long TEST_SEAT_ID;
+
+    private long TEST_RESERVATION_ID;
+
+    private long TEST_PAYMENT_ID;
+
+    User saveUser;
+
+    ConcertDetail saveConcertDetail;
+
+    Seat saveSeat;
+
+    Reservation saveReservation;
+
+    Payment savePayment;
 
     @BeforeEach
     void setUp(){
 
+        // User 저장
+        saveUser = User.builder()
+                .userId(TEST_USER_ID)
+                .age(31)
+                .point(10000L)
+                .build();
+
         // ConcertDetail 저장
-        ConcertDetail concertDetail = ConcertDetail.builder()
+        saveConcertDetail = ConcertDetail.builder()
                 .concertBasicId(TEST_CONCERT_BASIC_ID)
                 .concertDetailStatus(ConcertDetailStatusType.RESERVABLE)
                 .startTime(LocalDateTime.of(2025, 10, 1, 10, 0))
                 .endTime(LocalDateTime.of(2025, 10, 1, 12, 0))
                 .build();
 
-        concertDetailRepository.save(concertDetail);
+        concertDetailRepository.save(saveConcertDetail);
 
         long TEST_CONCERT_DETAIL_ID = concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(TEST_CONCERT_BASIC_ID, ConcertDetailStatusType.RESERVABLE).orElseThrow().getFirst().getConcertDetailId();
 
         // Seat 저장
-        Seat seat = Seat.builder()
+        saveSeat = Seat.builder()
                         .concertDetailId(TEST_CONCERT_DETAIL_ID)
                         .seatStatus(SeatStatusType.RESERVABLE)
                         .seatNumber(1)
                         .price(50000)
                         .build();
 
-        seatRepository.save(seat);
+        seatRepository.save(saveSeat);
 
         TEST_SEAT_ID = seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(TEST_CONCERT_DETAIL_ID, SeatStatusType.RESERVABLE).orElseThrow().getFirst().getSeatId();
+
+        // Payment 저장
+        savePayment = Payment.builder()
+                        .totalPrice(saveSeat.getPrice())
+                        .paymentStatus(PaymentStatusType.PUBLISHED)
+                        .build();
+
+        paymentRepository.save(savePayment);
+
+        // Reservation 저장
+        Reservation reservation = Reservation.builder()
+                                    .userId(TEST_USER_ID)
+                                    .seatId(TEST_SEAT_ID)
+                                    .paymentId(TEST_PAYMENT_ID)
+                                    .build();
     }
 
     @Test
-    @DisplayName("동일한 좌석에 대한 예약 요청 동시성 테스트()")
-    public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_비관적_lock이면_DomainModelParamInvalidException_or_낙관적_lock이면_OptimisticLockException() throws InterruptedException {
+    @DisplayName("동일한 좌석에 대한 예약 요청 동시에 발생하는 경우, 비관적 lock이면 DomainModelParamInvalidException, 낙관적 lock이면 OptimisticLockException")
+    public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_비관적_lock이면_DomainModelParamInvalidException_낙관적_lock이면_OptimisticLockException() throws InterruptedException {
 
 
         // 쓰레드 설정
@@ -92,9 +141,9 @@ public class ConcertReservationConcurrencyTest {
         List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList = new ArrayList<>();
 
         concertReserveAdminDTOParamList.add(ConcertReserveAdminDTOParam.builder()
-                .userId(TEST_USER_ID)
-                .seatId(TEST_SEAT_ID)
-                .build());
+                                                        .userId(TEST_USER_ID)
+                                                        .seatId(TEST_SEAT_ID)
+                                                        .build());
 
         // 동시 실행 결과를 저장할 리스트
         List<Future<Boolean>> results = new ArrayList<>();

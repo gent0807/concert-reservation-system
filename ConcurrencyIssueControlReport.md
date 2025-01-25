@@ -499,7 +499,7 @@
             }
         ```
 * Case 2 : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
-  * Seat 테이블의 특정 Seat Row와 ConcertDetail 테이블의 특정 ConcertDetail Row에 대한 포인트 수정 동시성 처리
+  * Seat 테이블의 특정 Seat Row와 ConcertDetail 테이블의 특정 ConcertDetail Row에 대한 상태 수정 동시성 처리 필요
     * 낙관적 lock 
       #### 좌석 예약의 경우, 특정 하나의 좌석에 대해서 경합이 실제로 많이 일어날 것이기 때문에 낙관적 lock을 사용할 시, 
       #### 비관적 lock을 사용할 때보다 상대적으로 데이터의 무결성과 정합성을 보장하기는 어렵지만, 
@@ -798,20 +798,43 @@
         @ActiveProfiles("pessimistic-lock")
         @Slf4j
         public class ConcertReservationConcurrencyTest {
-        @Autowired
-        ConcertReserveAdminFacade concertReserveAdminFacade;
-        
+           @Autowired
+           ConcertReserveAdminFacade concertReserveAdminFacade;
+
+            @Autowired
+            UserRepository userRepository;
+
             @Autowired
             SeatRepository seatRepository;
-        
+
             @Autowired
             ConcertDetailRepository concertDetailRepository;
-        
-            private static final long TEST_CONCERT_BASIC_ID = 1L;
-        
+
+            @Autowired
+            ReservationRepository reservationRepository;
+
+            @Autowired
+            PaymentRepository paymentRepository;
+
             private static final String TEST_USER_ID = UUID.randomUUID().toString();
-        
+
+            private static final long TEST_CONCERT_BASIC_ID = 1L;
+
             private long TEST_SEAT_ID;
+
+            private long TEST_RESERVATION_ID;
+
+            private long TEST_PAYMENT_ID;
+
+            User saveUser;
+
+            ConcertDetail saveConcertDetail;
+
+            Seat saveSeat;
+
+            Reservation saveReservation;
+
+            Payment savePayment;
         
             @BeforeEach
             void setUp(){
@@ -842,7 +865,8 @@
             }
         
             @Test
-            public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_DomainModelParamInvalidException() throws InterruptedException {
+            @DisplayName("동일한 좌석에 대한 예약 요청 동시에 발생하는 경우, 비관적 lock이면 DomainModelParamInvalidException, 낙관적 lock이면 OptimisticLockException")
+            public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_비관적_lock이면_DomainModelParamInvalidException_낙관적_lock이면_OptimisticLockException() throws InterruptedException {
         
         
                 // 쓰레드 설정
@@ -909,6 +933,9 @@
         }
         ```
 * Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러 개 발생
+    * User 테이블의 row에 대한 포인트 수정과, Seat, ConcertDetail, Reservation, Payment 테이블의 row에 대한 상태 수정 동시성 처리 필요
+      * 낙관적 lock
+      * 비관적 lock
 * Case 4  : Transaction A (특정 유저 포인트 충전), Transaction C (결제 시 특정 유저 포인트 차감) 동시에 발생
 * Case 5  : Transaction B (특정 콘서트 실제 공연 좌석 예약 상태 변경), Transaction C(결제 시 특정 콘서트 실제 공연 좌석 에약 상태 변경) 동시에 발생
   
