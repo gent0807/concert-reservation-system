@@ -39,32 +39,32 @@
 ### 1.2 데이터베이스 Lock  
 #### 위와 같은 데이터베이스 Race Condition을 해결하기 위한 방안을 알아보자.
 * #### DB Lock
-  1. #### 낙관적 락
+  1. #### 낙관적 lock
       #### 대부분의 트랜잭션은 충돌이 발생하지 않는다고 낙관적으로 가정하는 방법
 
-      #### 낙관적 락은 비관적락과 다르게 데이터베이스가 제공하는 락이 아닌 애플리케이션 레벨에서 락을 구현하게 된다. 
+      #### 낙관적 lock은 비관적 lock과 다르게 데이터베이스가 제공하는 lock이 아닌 애플리케이션 레벨에서 lock을 구현하게 된다. 
       #### JPA에서는 버전 관리 기능(@Version)을 통해 구현
     
-      #### 낙관적 락은 애플리케이션에서 충돌을 관리하기에 트랜잭션을 커밋하기 전까지는 충돌을 알 수 없으며 
-      #### 락은 충돌 발생 시점에만 데이터에 대한 동시성 제어를 수행하기 때문에, 성능상 이점이 있다.
+      #### 낙관적 lock은 애플리케이션에서 충돌을 관리하기에 트랜잭션을 커밋하기 전까지는 충돌을 알 수 없으며 
+      #### lock은 충돌 발생 시점에만 데이터에 대한 동시성 제어를 수행하기 때문에, 성능상 이점이 있다.
    
      ![Optimistic_Lock](https://github.com/user-attachments/assets/6471f4b6-3b8a-4396-add2-2f2ca473fe20)
 
-      #### 결과적으로, 낙관적락은 실제로 데이터 충돌이 자주 일어나지 않을것이라고 예상되는 시나리오에서 좋다.                    
+      #### 결과적으로, 낙관적lock은 실제로 데이터 충돌이 자주 일어나지 않을것이라고 예상되는 시나리오에서 좋다.                    
                                                                                 
       #### 하지만 추가적인 오류 처리가 필요하고 동시 접근이 많이 발생하면 오류 처리를 위해 더 많은 리소스가 소모되는 상황이 만들어질 수 있다.
-  2. #### 비관적 락
-     1. #### s-lock(공유락)
-        #### 공유 락이 걸린 데이터에 대해서는 읽기 연산(SELECT)만 실행 O, 쓰기 연산(WRITE)은 실행 X. 
-        #### 즉, 공유 락이 걸린 데이터는 다른 트랜잭션도 똑같이 공유 락을 획득할 수 있으나, 배타 락은 획득할 수 없다. 
-        #### 공유 락이 걸려도 읽기 작업은 가능하다는 뜻이다.
-        #### 공유 락을 사용하면, 조회한 데이터가 트랜잭션 내내 변경되지 않음을 보장한다.
-     2. #### x-lock(배타락)
-        #### 배타 락은 쓰기 락(Write Lock)이라고도 불린다. 
-        #### 데이터에 대해 배타 락을 획득한 트랜잭션은, 읽기 연산과 쓰기 연산을 모두 실행할 수 있다. 
-        #### 다른 트랜잭션은 배타 락이 걸린 데이터에 대해 읽기 작업도, 쓰기 작업도 수행할 수 없다. 
-        #### 즉, 배타 락이 걸려있다면 다른 트랜잭션은 공유 락, 배타 락 둘 다 획득 할 수 없다. 
-        #### 배타 락을 획득한 트랜잭션은 해당 데이터에 대한 독점권을 갖는 것이다.
+  2. #### 비관적 lock
+     1. #### s-lock(공유lock)
+        #### 공유 lock이 걸린 데이터에 대해서는 읽기 연산(SELECT)만 실행 O, 쓰기 연산(WRITE)은 실행 X. 
+        #### 즉, 공유 lock이 걸린 데이터는 다른 트랜잭션도 똑같이 공유 lock을 획득할 수 있으나, 배타 lock은 획득할 수 없다. 
+        #### 공유 lock이 걸려도 읽기 작업은 가능하다는 뜻이다.
+        #### 공유 lock을 사용하면, 조회한 데이터가 트랜잭션 내내 변경되지 않음을 보장한다.
+     2. #### x-lock(배타lock)
+        #### 배타 lock은 쓰기 lock(Write Lock)이라고도 불린다. 
+        #### 데이터에 대해 배타 lock을 획득한 트랜잭션은, 읽기 연산과 쓰기 연산을 모두 실행할 수 있다. 
+        #### 다른 트랜잭션은 배타 lock이 걸린 데이터에 대해 읽기 작업도, 쓰기 작업도 수행할 수 없다. 
+        #### 즉, 배타 lock이 걸려있다면 다른 트랜잭션은 공유 lock, 배타 lock 둘 다 획득 할 수 없다. 
+        #### 배타 lock을 획득한 트랜잭션은 해당 데이터에 대한 독점권을 갖는 것이다.
  
          <img width="623" alt="image (1)" src="https://github.com/user-attachments/assets/9421b4f2-f844-4c5c-827b-d3ce2ca5f01d" />
      3. DB Lock  호환성
@@ -82,8 +82,8 @@
             #### 두 트랜잭션이 서로 특정 자원들의 x-lock 해제될 때까지 대기하여, 두 트랜잭션이 모두 무한 대기에 빠질 수 있다.
  
             ![images_gojung_post_b8c0a12b-30e9-4aaf-97ec-765226db0164_image](https://github.com/user-attachments/assets/9ab4d57a-5f2b-4011-9378-067abed25442)
-     5. 비관적 락은 동시에 데이터에 접근하는 트랜잭션과 수정 작업이 많거나, 데이터의 정합성이 중요한 시나리오에 적합하다.
-     6. 다만, 대기 시간 증가와 교착 상태 발생 가능성, 불필요한 락으로 인한 성능 저하, 동시성 처리 불리 이슈가 발생한다.                             
+     5. 비관적 lock은 동시에 데이터에 접근하는 트랜잭션과 수정 작업이 많거나, 데이터의 정합성이 중요한 시나리오에 적합하다.
+     6. 다만, 대기 시간 증가와 교착 상태 발생 가능성, 불필요한 lock으로 인한 성능 저하, 동시성 처리 불리 이슈가 발생한다.                             
 
       
         
@@ -214,6 +214,7 @@
   *  ConcertDetail 테이블의 row
   *  Seat 테이블의 row
   *  Reservation 테이블의 row
+  *  Payment 테이블의 row
 
 
 #### 
@@ -224,7 +225,7 @@
        #### 특정 유저의 포인트 충전 요청은 현실을 고려할 시, User 테이블의 row에 대해 상대적으로 충돌이 덜 발생하고 
        #### 특정 유저의 포인트 충전 요청이 동시에 여러 개 발생하는 것은 비정상적인 요청으로 간주 가능하며,
        #### 불필요한 잠금으로 인한 성능 저하없이 동시성 처리를 하기엔 낙관적 lock이 유리할 수 있다.
-       #### 낙관적 락 사용을 위한 도메인 엔티티 @Version 선언 
+       #### 포인트 충전 시 낙관적 lock 사용을 위한 유저 도메인 엔티티에 version 컬럼 선언 
         ```java
           @Getter
           @Setter
@@ -266,19 +267,30 @@
           private LocalDateTime deletedAt;
         }
       ```
-      #### 낙관적 락을 위한 repository 인터페이스 OptimisticUserRepository
+      #### 낙관적 lock을 위한 UserJPARepository 인터페이스 OptimisticUserRepository
        ```java
             public interface OptimisticUserRepository extends UserJPARepository{
 
             @Override
-            @Lock(LockModeType.OPTIMISTIC)
+            @Lock(LockModeType.NONE)
             @Query("SELECT u FROM User u WHERE u.userId = :userId")
               User findUserByUserIdForUpdate(String userId);
             }
             
-        ``` 
-      
-        #### OptimisticUserRepository 구현체 정의
+        ```
+        #### LockModeType.NONE vs LockModeType.OPTIMISTIC
+        #### 낙관적 lock을 적용할 도메인 엔티티에 version 컬럼을 선언하고 
+        #### @Version을 적용한 상황에서 해당 엔티티를 조회하는 쿼리의 Lock 모드가 NONE으로 되어있는 경우,
+        #### 트랜잭션들이 데이터를 조회하는 시점의 무결성을 보장해주지 않는다. 
+        #### 하지만 엔티티를 조회하는 쿼리의 Lock 모드가 OPTIMISTIC으로 되어있는 경우엔,
+        #### 트랜잭션들이 데이터를 조회하는 시점의 무결성을 보장해줄 수 있다. Lock 모드가 OPTIMISTIC 이면, 
+        #### 데이터를 조회하는 시점부터 낙관적 Lock을 이용해 쓰기 작업에 의한 충돌을 감지하기 때문이다.
+        #### 이로 인해, LockMode가 NONE인 경우의 낙관적 lock이 LockMode가 OPTIMISTIC 경우의 낙관적 lock보다 
+        #### 성능면에서는 우수할 수 있지만, 충돌이 상대적으로 많은 상황에선 데이터 정합성이 부족할 수 있다.
+        #### 특정 유저의 포인트의 충전/차감의 경우엔 현실적으로 충돌이 많지 않고, 충돌 발생 시 재시도 하지 않으므로  
+        #### LockMode를 NONE을 선택하였다.
+    
+       #### 낙관적 lock을 위한 UserRepository 구현체 OptimisticUserRepositoryImpl
         ```java
                 @Repository
                 @Profile("optimistic-lock")
@@ -315,185 +327,588 @@
         #### 특정 유저의 포인트 충전 요청은 금액과 관련되어 데이터 정합성이 매우 중요할 수 있기 때문에
         #### 안전하게 READ/UPDATE 위한 배타 lock이 유리할 수 있다.
       
-        #### 비관적 락을 위한 repository 인터페이스 PessimisticUserRepository
+        #### 비관적 lock을 위한 UserJPARepository 인터페이스 PessimisticUserJPARepository
           ```java
-            public interface PessimisticUserRepository extends UserJPARepository {
+            public interface PessimisticUserJPARepository extends UserJPARepository {
 
                   @Lock(LockModeType.PESSIMISTIC_WRITE)
                   @Query("SELECT u FROM User u WHERE u.userId = :userId")
                   User findUserByUserIdForUpdate(String userId);
 
-                  Optional<User> findUserByUserId(String userId);
-
             }
            ```
-        #### PessimisticUserRepository 구현체
+        #### 비관적 lock을 위한 UserRepository 구현체 PessimisticUserRepositoryImpl
           ```java
                 @Repository
                 @Profile("pessimistic-lock")
                 @RequiredArgsConstructor
                 public class PessimisticUserRepositoryImpl implements UserRepository {
 
-                private final PessimisticUserRepository pessimisticUserRepository;
+                private final PessimisticUserJPARepository pessimisticUserJPARepository;
 
                 @Override
                 public User findUserByUserIdWithLock(String userId) {
-                        return pessimisticUserRepository.findUserByUserIdForUpdate(userId);
+                        return pessimisticUserJPARepository.findUserByUserIdForUpdate(userId);
                 }
 
 
                 @Override
                 public void createUser(User user) {
-                    pessimisticUserRepository.save(user);
+                    pessimisticUserJPARepository.save(user);
                 }
             
             
                 @Override
                 public Optional<User> findUserByUserId(String userId){
-                    return pessimisticUserRepository.findUserByUserId(userId);
+                    return pessimisticUserJPARepository.findUserByUserId(userId);
                 }
             
                 @Override
                 public User saveUser(User user){
-                    return pessimisticUserRepository.save(user);
+                    return pessimisticUserJPARepository.save(user);
                 }
             
             }
          ```
-        * Test 비교
+      * Test 
     
-          ```java
-              @SpringBootTest
-              @Testcontainers
-              @ActiveProfiles("pessimistic-lock")
-              @Slf4j
-              public class PointHistoryConcurrencyTest {
+        ```java
+            @SpringBootTest
+            @Testcontainers
+            @ActiveProfiles("optimistic-lock")
+            @Slf4j
+            public class PointHistoryConcurrencyTest {
             
-              @Autowired
-              private UserRepository userRepository;
+            @Autowired
+            private UserRepository userRepository;
             
-              @Autowired
-              private PointHistoryService pointHistoryService;
+            @Autowired
+            private PointHistoryService pointHistoryService;
             
-              private static final String TEST_USER_ID = UUID.randomUUID().toString(); // 테스트용 유저 ID
+            private static final String TEST_USER_ID = UUID.randomUUID().toString(); // 테스트용 유저 ID
             
-              private static final long USER_INIT_POINT = 10000L;
+            private static final long USER_INIT_POINT = 10000L;
             
-              User saveUser;
+            User saveUser;
             
-              @BeforeEach
-              void setUp(){
+            @BeforeEach
+            void setUp(){
             
-                  User user = User.builder()
-                          .userId(TEST_USER_ID)
-                          .userName("tester")
-                          .gender(UserGenderType.MALE)
-                          .age(31)
-                          .point(USER_INIT_POINT)
-                          .build();
+                User user = User.builder()
+                        .userId(TEST_USER_ID)
+                        .userName("tester")
+                        .gender(UserGenderType.MALE)
+                        .age(31)
+                        .point(USER_INIT_POINT)
+                        .build();
             
-                  log.info("user id : {}", user.getUserId());
+                log.info("user id : {}", user.getUserId());
             
-                  userRepository.saveUser(user);
+                userRepository.saveUser(user);
             
-                  saveUser = userRepository.findUserByUserId(user.getUserId()).orElseThrow(()->{
-                      log.info("find user fail in id({})", user.getUserId() );
-                      return null;
-                  });
+                saveUser = userRepository.findUserByUserId(user.getUserId()).orElseThrow(()->{
+                    log.info("find user fail in id({})", user.getUserId() );
+                    return null;
+                });
             
-                  log.info("save user id : {}", saveUser.getUserId());
+                log.info("save user id : {}", saveUser.getUserId());
             
-              }
+            }
             
-              @Test
-              public void 동일한_userId로_여러_개의_포인트_충전_요청이_동시에_들어오는_경우_정확한_값으로_계산되어야_한다() throws InterruptedException {
+            @Test
+            public void 동일한_userId로_여러_개의_포인트_충전_요청이_동시에_들어오는_경우_정확한_값으로_계산되어야_한다() throws InterruptedException {
             
-                  log.info("save user id : {}", saveUser.getUserId());
+                log.info("save user id : {}", saveUser.getUserId());
             
-                  long startTime;
+                long startTime;
             
-                  long endTime;
+                long endTime;
             
-                  // 쓰레드 설정
-                  int threadCount = 5;
-                  ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
-                  CountDownLatch latch = new CountDownLatch(threadCount);
+                // 쓰레드 설정
+                int threadCount = 5;
+                ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+                CountDownLatch latch = new CountDownLatch(threadCount);
             
             
-                  // 각 쓰레드에서 충전할 포인트
-                  int chargePointPerThread = 10000;
+                // 각 쓰레드에서 충전할 포인트
+                int chargePointPerThread = 10000;
             
-                  // 포인트 충전 DTO 생성
-                  PointHistoryDTOParam pointHistoryDTOParam = PointHistoryDTOParam.builder()
-                          .userId(saveUser.getUserId())
-                          .type(PointTransactionType.CHARGE)
-                          .amount(chargePointPerThread)
-                          .build();
+                // 포인트 충전 DTO 생성
+                PointHistoryDTOParam pointHistoryDTOParam = PointHistoryDTOParam.builder()
+                        .userId(saveUser.getUserId())
+                        .type(PointTransactionType.CHARGE)
+                        .amount(chargePointPerThread)
+                        .build();
             
-                  log.info("pointHistoryDTOParam user id : {}", pointHistoryDTOParam.userId());
+                log.info("pointHistoryDTOParam user id : {}", pointHistoryDTOParam.userId());
             
-                  // 동시 실행 결과를 저장할 리스트
-                  List<Future<Boolean>> results = new ArrayList<>();
+                // 동시 실행 결과를 저장할 리스트
+                List<Future<Boolean>> results = new ArrayList<>();
             
-                  for(int i = 0; i < threadCount; i++){
-                      results.add(executorService.submit(()->{
-                          try{
-                              latch.countDown();
-                              latch.await();
-                              // 서비스에서 포인트 충전
-                              pointHistoryService.insertChargeUserPointHistory(pointHistoryDTOParam);
-                              log.info("충전 성공");
+                for(int i = 0; i < threadCount; i++){
+                    results.add(executorService.submit(()->{
+                        try{
+                            latch.countDown();
+                            latch.await();
+                            // 서비스에서 포인트 충전
+                            pointHistoryService.insertChargeUserPointHistory(pointHistoryDTOParam);
+                            log.info("충전 성공");
             
-                              return true;
-                          }catch (ServiceDataNotFoundException e){
-                              log.info("ServiceDataNotFoundException error : {}, {}, {}", e.getMessage(), e.getCause(), e.getStackTrace() );
+                            return true;
+                        }catch (ServiceDataNotFoundException e){
+                            log.info("ServiceDataNotFoundException error : {}, {}, {}", e.getMessage(), e.getCause(), e.getStackTrace() );
             
-                              return false;
-                          }catch (DomainModelParamInvalidException e){
-                              log.info("DomainModelParamInvalidException error : {}, {}, {}", e.getMessage(), e.getCause(), e.getStackTrace() );
+                            return false;
+                        }catch (DomainModelParamInvalidException e){
+                            log.info("DomainModelParamInvalidException error : {}, {}, {}", e.getMessage(), e.getCause(), e.getStackTrace() );
             
-                              return false;
-                          }
+                            return false;
+                        }
             
-                      }));
+                    }));
+                }
+            
+                startTime = System.currentTimeMillis();
+            
+                executorService.shutdown();
+                executorService.awaitTermination(1, TimeUnit.MINUTES);
+            
+                endTime = System.currentTimeMillis();
+            
+                // 결과 확인
+                long successCount = results.stream().filter(future -> {
+                    try {
+                        return future.get();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }).count();
+            
+                long resultUserPoint = USER_INIT_POINT + (successCount * chargePointPerThread);
+            
+                User user = userRepository.findUserByUserId(saveUser.getUserId()).orElseThrow();
+            
+                log.info("유저 포인트 : {}", user.getPoint() );
+            
+                log.info("포인트 충전 내역 결과 포인트: {}", resultUserPoint);
+            
+                Assertions.assertThat(user.getPoint()).isEqualTo(resultUserPoint);
+            
+                log.info("실행 시간 : {} ms", endTime - startTime);
+             }
+            }
+        ```
+* Case 2 : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
+  * Seat 테이블의 특정 Seat Row와 ConcertDetail 테이블의 특정 ConcertDetail Row에 대한 포인트 수정 동시성 처리
+    * 낙관적 lock 
+      #### 좌석 예약의 경우, 특정 하나의 좌석에 대해서 경합이 실제로 많이 일어날 것이기 때문에 낙관적 lock을 사용할 시, 
+      #### 비관적 lock을 사용할 때보다 상대적으로 데이터의 무결성과 정합성을 보장하기는 어렵지만, 
+      #### 데이터베이스 자원의 잠금없이 좌석을 한 자리 먼저 차지하면, 다른 요청들은 전부 예외를 발생시키기 때문에 동시성 처리의 성능면에서는 낙관적 lock이 유리할 수 있다. 
+    
+      #### 좌석 예약 시 낙관적 lock을 사용하기 위한 좌석 도메인 엔티티 Seat와 콘서트 실제 공연 도메인 엔티티 ConcertDetail version 컬럼 선언
+      ```java
+          @Getter
+          @Setter
+          @Entity
+          @Builder
+          @AllArgsConstructor
+          @NoArgsConstructor(access = AccessLevel.PROTECTED)
+          @Slf4j
+          public class Seat {
+        
+              @Id
+              @GeneratedValue(strategy = GenerationType.IDENTITY)
+              @Column(name = "seat_id")
+              private Long seatId;
+        
+              @Column(name = "concert_detail_id", nullable = false, columnDefinition = "bigint unsigned")
+              @Positive
+              @Min(0)
+              private Long concertDetailId;
+            
+              @Version
+              private Integer version;
+        
+              @Column(name = "seat_number", nullable = false, columnDefinition = "int unsigned")
+              @Min(1)
+              @Max(50)
+              private int seatNumber;
+          }
+      ```
+      ```java
+          @Getter
+          @Setter
+          @Entity
+          @Builder
+          @AllArgsConstructor
+          @NoArgsConstructor(access = AccessLevel.PROTECTED)
+          @Slf4j
+          public class ConcertDetail {
+        
+              @Id
+              @GeneratedValue(strategy = GenerationType.IDENTITY)
+              @Column(name = "concert_detail_id")
+              private Long concertDetailId;
+        
+              @Column(name = "concert_basic_id", nullable = false)
+              private Long concertBasicId;
+        
+              @Version
+              private Integer version;
+        
+              @Column(name = "concert_detail_status", nullable = false)
+              private ConcertDetailStatusType concertDetailStatus;
+      }
+
+      ```
+      #### 낙관적 lock을 위한 SeatJPARepository 인터페이스 OptimisticSeatJPARepository
+       ```java
+          public interface OptimisticSeatJPARepository extends SeatJPARepository {
+              @Lock(LockModeType.OPTIMISTIC)
+              @Query(value = "SELECT s from Seat s WHERE s.seatStatus = :seatStatus")
+              Optional<List<Seat>> findSeatsBySeatStatusForUpdate(@Param("seatStatus") SeatStatusType seatStatus);
+            
+              @Lock(LockModeType.OPTIMISTIC)
+              @Query(value = "SELECT s from Seat s WHERE s.seatId = :seatId")
+              Optional<Seat> findSeatBySeatIdForUpdate(@Param("seatId") Long seatId);
+          }
+       ```
+      #### 낙관적 lock을 위한 ConcertDetailJPARepository 인터페이스 OptimisticConcertDetailJPARepository
+       ```java
+          public interface OptimisticConcertDetailJPARepository extends ConcertDetailJPARepository{
+               @Lock(LockModeType.OPTIMISTIC)
+               @Query(value = "SELECT cd from ConcertDetail cd WHERE cd.concertDetailId = :concertDetailId")
+               Optional<ConcertDetail> findConcertDetailByConcertDetailIdForUpdate(@Param("concertDetailId") Long concertDetailId);
+          }
+       ```
+    
+      #### 포인트 충전 차감과 달리 좌석 예약의 경우엔 충돌 발생이 많을 것이므로, 낙과적 lock을 사용하는 경우에도
+      #### LockMode를 OPTIMISTIC으로 하여, 조회 시점부터 낙관적 lock을 적용한 충돌 감지를 하도록 하였다
+      #### 좌석 예약의 경우, 낙관적 lock 충돌이 발생해도 재시도하지 않을 것이므로 데이터 무결성을 
+      #### 포기하고, LockMode를 NONE으로 하여 빠르게 처리를 하는 것이 낫지 않나 싶었지만, 
+      #### 그것보다 충돌이 많이 발생하는 것에 대한 제어가 중요하다 판단해, 낙관적 lock의 LockMode를 OPTIMISTIC으로 하였다.
+    
+      #### 낙관적 lock을 위한 SeatRepository 구현체 OptimisticSeatRepositoryImpl
+      ```java
+           @Repository
+           @RequiredArgsConstructor
+           @Profile(value = "optimistic-lock")
+           public class OptimisticSeatRepositoryImpl implements SeatRepository {
+                  private final OptimisticSeatJPARepository optimisticSeatJPARepository;
+
+                  @Override
+                  public Optional<List<Seat>> findReservableSeatsByConcertDetailIdAndSeatStatusType(Long concertDetailId, SeatStatusType seatStatus){
+                      return optimisticSeatJPARepository.findSeatsByConcertDetailIdAndSeatStatus(concertDetailId, seatStatus);
                   }
             
-                  startTime = System.currentTimeMillis();
+                  @Override
+                  public Optional<Seat> findSeatBySeatIdWithLock(Long seatId){
+                      return optimisticSeatJPARepository.findSeatBySeatIdForUpdate(seatId);
+                  }
             
-                  executorService.shutdown();
-                  executorService.awaitTermination(1, TimeUnit.MINUTES);
+                  @Override
+                  public void save(Seat seat){
+                      optimisticSeatJPARepository.save(seat);
+                  }
             
-                  endTime = System.currentTimeMillis();
+                  @Override
+                  public List<Seat> findSeatsByConcertDetailId(Long concertDetailId){
+                      return optimisticSeatJPARepository.findSeatsByConcertDetailId(concertDetailId);
+                  }
             
-                  // 결과 확인
-                  long successCount = results.stream().filter(future -> {
-                      try {
-                          return future.get();
-                      } catch (Exception e) {
-                          return false;
-                      }
-                  }).count();
-            
-                  long resultUserPoint = USER_INIT_POINT + (successCount * chargePointPerThread);
-            
-                  User user = userRepository.findUserByUserId(saveUser.getUserId()).orElseThrow();
-            
-                  log.info("유저 포인트 : {}", user.getPoint() );
-            
-                  log.info("포인트 충전 내역 결과 포인트: {}", resultUserPoint);
-            
-                  Assertions.assertThat(user.getPoint()).isEqualTo(resultUserPoint);
-            
-                  log.info("실행 시간 : {} ms", endTime - startTime);
-               }
-              }
+                  @Override
+                  public Optional<List<Seat>> findSeatsBySeatStatusWithLock(SeatStatusType seatStatusType){
+                      return optimisticSeatJPARepository.findSeatsBySeatStatusForUpdate(SeatStatusType.OCCUPIED);
+                  }
+           }
+      ```
+      #### 낙관적 lock을 위한 ConcertDetailRepository 구현체 OptimisticConcertDetailRepositoryImpl
+      ```java
+           @Repository
+           @RequiredArgsConstructor
+           @Profile(value = "optimistic-lock")
+           public class OptimisticConcertDetailRepositoryImpl implements ConcertDetailRepository {
+                 private final OptimisticConcertDetailJPARepository optimisticConcertDetailJPARepository;
 
+                 @Override
+                 public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
+                      return optimisticConcertDetailJPARepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatus);
+                 }
 
+                  @Override
+                  public Optional<ConcertDetail> findConcertDetailByConcertDetailIdWithLock(Long concertDetailId){
+                      return optimisticConcertDetailJPARepository.findConcertDetailByConcertDetailIdForUpdate(concertDetailId);
+                  }
 
-          ```
-* Case 2  : Transaction B (특정 콘서트 실제 공연 좌석 예약) 동시에 여러 개 발생
+                  @Override
+                  public ConcertDetail save(ConcertDetail concertDetail){
+                          return optimisticConcertDetailJPARepository.save(concertDetail);
+                  }
+          }
+      ```
+      * 배타 lock
+        #### 좌석 예약의 경우, 특정 하나의 좌석에 대해서 경합이 실제로 많이 일어날 것이기 때문에 비관적 lock을 사용할 시,
+        #### 데이터베이스 자원을 잠금으로 인한, 성능 저하 이슈가 발생할 수 있지만, 확실한 데이터 정합성을 보장해줄 수 있다.
+      
+        #### 배타 lock을 위한 SeatJPARepository 인터페이스 PessimisticSeatRepository
+        ```java
+            public interface PessimisticSeatJPARepository extends SeatJPARepository {
+
+            @Lock(LockModeType.PESSIMISTIC_WRITE)
+            @Query(value = "SELECT s from Seat s WHERE s.seatStatus = :seatStatus")
+            Optional<List<Seat>> findSeatsBySeatStatusForUpdate(@Param("seatStatus") SeatStatusType seatStatus);
+        
+            @Lock(LockModeType.PESSIMISTIC_WRITE)
+            @Query(value = "SELECT s from Seat s WHERE s.seatId = :seatId")
+            Optional<Seat> findSeatBySeatIdForUpdate(@Param("seatId") Long seatId);
+            }
+        ```
+        #### 배타 lock을 위한 ConcertDetailJPARepository 인터페이스 PessimisticConcertDetailRepository
+        ```java
+           public interface PessimisticConcertDetailJPARepository extends ConcertDetailJPARepository {
+                @Lock(LockModeType.PESSIMISTIC_WRITE)
+                @Query(value = "SELECT cd from ConcertDetail cd WHERE cd.concertDetailId = :concertDetailId")
+                Optional<ConcertDetail> findConcertDetailByConcertDetailIdForUpdate(@Param("concertDetailId") Long concertDetailId);
+           }
+        ```
+        #### 배타 lock을 위한 SeatRepository 구현체 PessimisticSeatRepositoryImpl
+        ```java
+                @Repository
+                @RequiredArgsConstructor
+                @Profile(value = "pessimistic-lock")
+                public class PessimisticSeatRepositoryImpl implements SeatRepository {
+                        private final PessimisticSeatJPARepository pessimisticSeatJPARepository;
+
+                        @Override
+                        public Optional<List<Seat>> findReservableSeatsByConcertDetailIdAndSeatStatusType(Long concertDetailId, SeatStatusType seatStatus){
+                            return pessimisticSeatJPARepository.findSeatsByConcertDetailIdAndSeatStatus(concertDetailId, seatStatus);
+                        }
+                    
+                        @Override
+                        public Optional<Seat> findSeatBySeatIdWithLock(Long seatId){
+                            return pessimisticSeatJPARepository.findSeatBySeatIdForUpdate(seatId);
+                        }
+                    
+                        @Override
+                        public void save(Seat seat){
+                            pessimisticSeatJPARepository.save(seat);
+                        }
+                    
+                        @Override
+                        public List<Seat> findSeatsByConcertDetailId(Long concertDetailId){
+                            return pessimisticSeatJPARepository.findSeatsByConcertDetailId(concertDetailId);
+                        }
+                    
+                        @Override
+                        public Optional<List<Seat>> findSeatsBySeatStatusWithLock(SeatStatusType seatStatusType){
+                            return pessimisticSeatJPARepository.findSeatsBySeatStatusForUpdate(SeatStatusType.OCCUPIED);
+                        }
+                }
+        ```
+        #### 배타 lock을 위한 ConcertDetailRepository 구현체 PessimisticConcertDetailRepositoryImpl
+        ```java
+                @Repository
+                @RequiredArgsConstructor
+                @Profile(value = "pessimistic-lock")
+                public class PessimisticConcertDetailRepositoryImpl implements ConcertDetailRepository {
+                private final PessimisticConcertDetailJPARepository pessimisticConcertDetailJPARepository;
+                
+                    @Override
+                    public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
+                        return pessimisticConcertDetailJPARepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatus);
+                    }
+                
+                    @Override
+                    public Optional<ConcertDetail> findConcertDetailByConcertDetailIdWithLock(Long concertDetailId){
+                        return pessimisticConcertDetailJPARepository.findConcertDetailByConcertDetailIdForUpdate(concertDetailId);
+                    }
+                
+                    @Override
+                    public ConcertDetail save(ConcertDetail concertDetail){
+                        return pessimisticConcertDetailJPARepository.save(concertDetail);
+                    }
+                }
+        ```        
+        #### lock 발생하는 SeatService 메소드 
+         ```java
+                @Validated(CreateReservations.class)
+                public void checkReservableOfConcertDetailAndSeat(List<@Valid SeatDTOParam> seatDTOParamList) {
+                    seatDTOParamList.stream().forEach(seatDTOParam -> {
     
-* Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러개 발생
+                        Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(()->{
+                            throw new ServiceDataNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID, "CONCERT DETAIL SERVICE", "checkReservableOfConcertDetail");
+                        });
+            
+                        ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailIdWithLock(seat.getConcertDetailId())
+                                .orElseThrow(()->{
+                                    throw new ServiceDataNotFoundException(ErrorCode.CONCERT_DETAIL_NOT_FOUND, "CONCERT DETAIL SERVICE", "checkReservableOfConcertDetail");
+                                });
+            
+                        concertDetail.checkReservable();
+            
+                        seat.checkReservable();
+            
+                    });
+                }
+         ```
+         ```java
+                @Validated({CreateReservations.class, ProcessPayment.class})
+                public void updateStatusOfConcertDetailAndSeats(List<@Valid SeatDTOParam> seatDTOParamList, SeatStatusType seatStatus) {
+                seatDTOParamList.stream().forEach(
+                seatDTOParam -> {
+            
+                                Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(
+                                        ()->{
+                                            throw new ServiceDataNotFoundException(ErrorCode.SEAT_NOT_FOUND_BY_SEAT_ID, "SEAT SERVICE", "updateStatusOfSeats");
+                                        }
+                                );
+            
+                                seat.updateSeatStatus(seatStatus);
+            
+                                seat.updateExpiredAt(LocalDateTime.now().plusMinutes(5));
+            
+                                seatRepository.save(seat);
+            
+                                ConcertDetail concertDetail = concertDetailRepository.findConcertDetailByConcertDetailIdWithLock(seat.getConcertDetailId()).orElseThrow(
+                                        ()->{
+                                            throw new ServiceDataNotFoundException(ErrorCode.CONCERT_DETAIL_NOT_FOUND, "SEAT SERVICE", "updateStatusOfSeats");
+                                        }
+                                );
+            
+                                concertDetail.setConcertDetailStatus(ConcertDetailStatusType.COMPLETED);
+            
+                                List<Seat> seatList = seatRepository.findSeatsByConcertDetailId(concertDetail.getConcertDetailId());
+            
+                                seatList.stream().forEach(s->{
+                                    if(s.getSeatStatus() == SeatStatusType.RESERVABLE){
+                                        concertDetail.setConcertDetailStatus(ConcertDetailStatusType.RESERVABLE);
+                                    }
+                                });
+            
+                                concertDetailRepository.save(concertDetail);
+            
+                            }
+                    );
+                }
+         ```
+    * Test
+        ```java
+        @SpringBootTest
+        @Testcontainers
+        @ActiveProfiles("pessimistic-lock")
+        @Slf4j
+        public class ConcertReservationConcurrencyTest {
+        @Autowired
+        ConcertReserveAdminFacade concertReserveAdminFacade;
+        
+            @Autowired
+            SeatRepository seatRepository;
+        
+            @Autowired
+            ConcertDetailRepository concertDetailRepository;
+        
+            private static final long TEST_CONCERT_BASIC_ID = 1L;
+        
+            private static final String TEST_USER_ID = UUID.randomUUID().toString();
+        
+            private long TEST_SEAT_ID;
+        
+            @BeforeEach
+            void setUp(){
+        
+                // ConcertDetail 저장
+                ConcertDetail concertDetail = ConcertDetail.builder()
+                        .concertBasicId(TEST_CONCERT_BASIC_ID)
+                        .concertDetailStatus(ConcertDetailStatusType.RESERVABLE)
+                        .startTime(LocalDateTime.of(2025, 10, 1, 10, 0))
+                        .endTime(LocalDateTime.of(2025, 10, 1, 12, 0))
+                        .build();
+        
+                concertDetailRepository.save(concertDetail);
+        
+                long TEST_CONCERT_DETAIL_ID = concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(TEST_CONCERT_BASIC_ID, ConcertDetailStatusType.RESERVABLE).orElseThrow().getFirst().getConcertDetailId();
+        
+                // Seat 저장
+                Seat seat = Seat.builder()
+                                .concertDetailId(TEST_CONCERT_DETAIL_ID)
+                                .seatStatus(SeatStatusType.RESERVABLE)
+                                .seatNumber(1)
+                                .price(50000)
+                                .build();
+        
+                seatRepository.save(seat);
+        
+                TEST_SEAT_ID = seatRepository.findReservableSeatsByConcertDetailIdAndSeatStatusType(TEST_CONCERT_DETAIL_ID, SeatStatusType.RESERVABLE).orElseThrow().getFirst().getSeatId();
+            }
+        
+            @Test
+            public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_DomainModelParamInvalidException() throws InterruptedException {
+        
+        
+                // 쓰레드 설정
+                int threadCount = 5;
+                ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+                CountDownLatch latch = new CountDownLatch(threadCount);
+        
+        
+                // 좌석 예약 DTOList 생성
+                List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList = new ArrayList<>();
+        
+                concertReserveAdminDTOParamList.add(ConcertReserveAdminDTOParam.builder()
+                        .userId(TEST_USER_ID)
+                        .seatId(TEST_SEAT_ID)
+                        .build());
+        
+                // 동시 실행 결과를 저장할 리스트
+                List<Future<Boolean>> results = new ArrayList<>();
+        
+                for(int i = 0; i < threadCount; i++){
+                    results.add(executorService.submit(()->{
+                        latch.countDown();
+                        latch.await();
+        
+                        try{
+                            concertReserveAdminFacade.insertReservations(concertReserveAdminDTOParamList);
+                            return true;
+                        }catch (DomainModelParamInvalidException e){
+                            return false;
+                        }catch(ServiceDataNotFoundException e){
+                            return false;
+                        }catch (OptimisticLockException e){
+                            return false;
+                        }
+                    }));
+                }
+        
+                executorService.shutdown();
+                executorService.awaitTermination(1, TimeUnit.MINUTES);
+        
+                // 결과 확인
+                long successCount = results.stream().filter(future -> {
+                    try {
+                        return future.get();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }).count();
+        
+                long failureCount = results.stream().filter(future -> {
+                    try {
+                        return !future.get();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }).count();
+        
+                // 동시성 테스트 결과 검증
+                assertThat(successCount).isEqualTo(1); // 한 요청만 성공해야 함
+                assertThat(failureCount).isEqualTo(threadCount - 1); // 나머지 요청은 실패해야 함
+            }
+        
+        
+        }
+        ```
+* Case 3  : Transaction C (특정 결제 정보의 결제 처리) 동시에 여러 개 발생
 * Case 4  : Transaction A (특정 유저 포인트 충전), Transaction C (결제 시 특정 유저 포인트 차감) 동시에 발생
 * Case 5  : Transaction B (특정 콘서트 실제 공연 좌석 예약 상태 변경), Transaction C(결제 시 특정 콘서트 실제 공연 좌석 에약 상태 변경) 동시에 발생
   

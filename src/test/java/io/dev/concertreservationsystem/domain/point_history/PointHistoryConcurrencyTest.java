@@ -26,7 +26,7 @@ import java.util.concurrent.*;
 
 @SpringBootTest
 @Testcontainers
-@ActiveProfiles("pessimistic-lock")
+@ActiveProfiles("optimistic-lock")
 @Slf4j
 public class PointHistoryConcurrencyTest {
 

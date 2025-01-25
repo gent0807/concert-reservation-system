@@ -12,33 +12,32 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@Profile("default")
-public class SeatRepositoryImpl implements SeatRepository {
-
-    private final SeatJPARepository seatJPARepository;
+@Profile(value = "optimistic-lock")
+public class OptimisticSeatRepositoryImpl implements SeatRepository {
+    private final OptimisticSeatRepository optimisticSeatRepository;
 
     @Override
     public Optional<List<Seat>> findReservableSeatsByConcertDetailIdAndSeatStatusType(Long concertDetailId, SeatStatusType seatStatus){
-        return seatJPARepository.findSeatsByConcertDetailIdAndSeatStatus(concertDetailId, seatStatus);
+        return optimisticSeatRepository.findSeatsByConcertDetailIdAndSeatStatus(concertDetailId, seatStatus);
     }
 
     @Override
     public Optional<Seat> findSeatBySeatIdWithLock(Long seatId){
-        return seatJPARepository.findSeatBySeatIdForUpdate(seatId);
+        return optimisticSeatRepository.findSeatBySeatIdForUpdate(seatId);
     }
 
     @Override
     public void save(Seat seat){
-        seatJPARepository.save(seat);
+        optimisticSeatRepository.save(seat);
     }
 
     @Override
     public List<Seat> findSeatsByConcertDetailId(Long concertDetailId){
-        return seatJPARepository.findSeatsByConcertDetailId(concertDetailId);
+        return optimisticSeatRepository.findSeatsByConcertDetailId(concertDetailId);
     }
 
     @Override
     public Optional<List<Seat>> findSeatsBySeatStatusWithLock(SeatStatusType seatStatusType){
-        return seatJPARepository.findSeatsBySeatStatusForUpdate(SeatStatusType.OCCUPIED);
+        return optimisticSeatRepository.findSeatsBySeatStatusForUpdate(SeatStatusType.OCCUPIED);
     }
 }

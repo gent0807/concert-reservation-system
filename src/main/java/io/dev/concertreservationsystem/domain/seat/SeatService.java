@@ -6,6 +6,7 @@ import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailReposi
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
+import io.dev.concertreservationsystem.domain.payment.PaymentService;
 import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
@@ -20,6 +21,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
+@Profile(value = "pessimistic-lock")
 public class SeatService {
 
     private final SeatRepository seatRepository;
@@ -130,6 +133,7 @@ public class SeatService {
 
     }
 
+    @Validated(ProcessPayment.class)
     public void checkSeatsOccupied(List<SeatDTOParam> seatDTOParams) {
         seatDTOParams.stream().forEach(seatDTOParam -> {
            Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(()->{

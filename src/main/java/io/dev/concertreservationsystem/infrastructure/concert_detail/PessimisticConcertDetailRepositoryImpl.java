@@ -12,24 +12,22 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@Profile(value = "default")
-public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
-    private final ConcertDetailJPARepository concertDetailJPARepository;
+@Profile(value = "pessimistic-lock")
+public class PessimisticConcertDetailRepositoryImpl implements ConcertDetailRepository {
+    private final PessimisticConcertDetailRepository pessimisticConcertDetailRepository;
 
     @Override
     public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
-        return concertDetailJPARepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatus);
+        return pessimisticConcertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatus);
     }
 
     @Override
     public Optional<ConcertDetail> findConcertDetailByConcertDetailIdWithLock(Long concertDetailId){
-        return concertDetailJPARepository.findConcertDetailByConcertDetailIdForUpdate(concertDetailId);
+        return pessimisticConcertDetailRepository.findConcertDetailByConcertDetailIdForUpdate(concertDetailId);
     }
 
     @Override
     public ConcertDetail save(ConcertDetail concertDetail){
-        return concertDetailJPARepository.save(concertDetail);
+        return pessimisticConcertDetailRepository.save(concertDetail);
     }
-
-
 }

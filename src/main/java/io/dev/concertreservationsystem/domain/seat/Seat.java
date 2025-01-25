@@ -31,6 +31,9 @@ public class Seat {
     @Min(0)
     private Long concertDetailId;
 
+    @Version
+    private Integer version;
+
     @Column(name = "seat_number", nullable = false, columnDefinition = "int unsigned")
     @Min(1)
     @Max(50)

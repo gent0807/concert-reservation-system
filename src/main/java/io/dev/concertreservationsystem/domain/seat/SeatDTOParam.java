@@ -4,11 +4,12 @@ import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.C
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
 public record SeatDTOParam(
-        @NotBlank(groups = {CreateReservations.class, ProcessPayment.class})
+        @NotNull(groups = {CreateReservations.class, ProcessPayment.class})
         @Min(value = 0, groups = {CreateReservations.class, ProcessPayment.class})
         Long seatId
 ) {

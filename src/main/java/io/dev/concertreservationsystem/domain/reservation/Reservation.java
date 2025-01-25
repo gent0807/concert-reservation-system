@@ -33,6 +33,9 @@ public class Reservation {
     @Column(name = "payment_id")
     private Long paymentId;
 
+    @Version
+    private Integer version;
+
     @Column(name = "reservation_status", nullable = false)
     private ReservationStatusType reservationStatus;
 

@@ -24,8 +24,11 @@ public class ConcertDetail {
     @Column(name = "concert_detail_id")
     private Long concertDetailId;
 
-    @Column(name = "cocert_basic_id", nullable = false)
+    @Column(name = "concert_basic_id", nullable = false)
     private Long concertBasicId;
+
+    @Version
+    private Integer version;
 
     @Column(name = "concert_detail_status", nullable = false)
     private ConcertDetailStatusType concertDetailStatus;

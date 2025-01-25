@@ -10,10 +10,14 @@ import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
+import jakarta.persistence.OptimisticLockException;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -27,6 +31,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Testcontainers
+@ActiveProfiles("pessimistic-lock")
+@Slf4j
 public class ConcertReservationConcurrencyTest {
     @Autowired
     ConcertReserveAdminFacade concertReserveAdminFacade;
@@ -72,7 +78,8 @@ public class ConcertReservationConcurrencyTest {
     }
 
     @Test
-    public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_DomainModelParamInvalidException() throws InterruptedException {
+    @DisplayName("동일한 좌석에 대한 예약 요청 동시성 테스트()")
+    public void 동일한_좌석에_예약_요청이_동시에_발생하는_경우_동기화_처리하여_이미_점유된_좌석에_대한_상태_확인_시_비관적_lock이면_DomainModelParamInvalidException_or_낙관적_lock이면_OptimisticLockException() throws InterruptedException {
 
 
         // 쓰레드 설정
@@ -104,6 +111,8 @@ public class ConcertReservationConcurrencyTest {
                     return false;
                 }catch(ServiceDataNotFoundException e){
                     return false;
+                }catch (OptimisticLockException e){
+                    return false;
                 }
             }));
         }
@@ -131,10 +140,6 @@ public class ConcertReservationConcurrencyTest {
         // 동시성 테스트 결과 검증
         assertThat(successCount).isEqualTo(1); // 한 요청만 성공해야 함
         assertThat(failureCount).isEqualTo(threadCount - 1); // 나머지 요청은 실패해야 함
-
-
-
-
     }
 
 

@@ -5,10 +5,10 @@ import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
-public interface OptimisticUserRepository extends UserJPARepository{
+public interface OptimisticUserJPARepository extends UserJPARepository{
 
     @Override
-    @Lock(LockModeType.OPTIMISTIC)
+    @Lock(LockModeType.NONE)
     @Query("SELECT u FROM User u WHERE u.userId = :userId")
     User findUserByUserIdForUpdate(String userId);
 }
