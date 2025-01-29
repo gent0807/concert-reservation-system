@@ -21,7 +21,7 @@ public record PointHistoryFacadeDTOParam(
 
         @NotBlank
         @Min(0)
-        Integer amount
+        Long amount
 ) {
 
     public PointHistoryDTOParam convertToPointHistoryDTOParam() {

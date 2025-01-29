@@ -16,13 +16,8 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserJPARepository userJPARepository;
 
     @Override
-    public void createUser(User user) {
-        userJPARepository.save(user);
-    }
-
-    @Override
     public User findUserByUserIdWithLock(String userId) {
-        return userJPARepository.findUserByUserIdForUpdate(userId);
+        return userJPARepository.findUserByUserIdForUpdateWithOptimisticLock(userId);
 
     }
 
@@ -32,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User saveUser(User user){
+    public User save(User user){
         return userJPARepository.save(user);
     }
 

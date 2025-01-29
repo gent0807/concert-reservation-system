@@ -13,16 +13,11 @@ import java.util.Optional;
 @Profile("optimistic-lock")
 public class OptimisticUserRepositoryImpl implements UserRepository {
 
-    private final OptimisticUserJPARepository optimisticUserJPARepository;
+    private final UserJPARepository optimisticUserJPARepository;
 
     @Override
     public User findUserByUserIdWithLock(String userId) {
-        return optimisticUserJPARepository.findUserByUserIdForUpdate(userId);
-    }
-
-    @Override
-    public void createUser(User user) {
-        optimisticUserJPARepository.save(user);
+        return optimisticUserJPARepository.findUserByUserIdForUpdateWithOptimisticLock(userId);
     }
 
 
@@ -32,7 +27,7 @@ public class OptimisticUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User saveUser(User user){
+    public User save(User user){
         return optimisticUserJPARepository.save(user);
     }
 }

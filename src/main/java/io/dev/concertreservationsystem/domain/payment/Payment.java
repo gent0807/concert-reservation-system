@@ -5,6 +5,9 @@ import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCo
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -14,7 +17,9 @@ import java.util.Arrays;
 @Entity
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "payment")
 @Slf4j
 public class Payment {
 
@@ -26,23 +31,41 @@ public class Payment {
     private PaymentStatusType paymentStatus;
 
     @Column(name = "total_price", nullable = false, columnDefinition = "INT UNSIGNED DEFAULT 0")
-    private Integer totalPrice;
+    private Long totalPrice;
 
-    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Version
+    private Integer version;
+
+    @CreatedDate
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @LastModifiedDate
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
 
-    public Payment(Integer totalPrice, PaymentStatusType paymentStatus){
+    public Payment(Long totalPrice, PaymentStatusType paymentStatus){
         this.totalPrice = totalPrice;
         this.paymentStatus = paymentStatus;
     }
 
-    public static Payment createPayment(Integer reduce, PaymentStatusType paymentStatusType) {
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "paymentId=" + paymentId +
+                ", paymentStatus=" + paymentStatus +
+                ", totalPrice=" + totalPrice +
+                ", version=" + version +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
+
+    public static Payment createPayment(Long reduce, PaymentStatusType paymentStatusType) {
 
         if(reduce == null || reduce < 0){
             throw new DomainModelParamInvalidException(ErrorCode.PAYMENT_TOTAL_PRICE_INVALID, "PAYMENT", "createPayment");

@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Profile(value = "optimistic-lock")
 public class OptimisticConcertDetailRepositoryImpl implements ConcertDetailRepository {
-    private final OptimisticConcertDetailRepository optimisticConcertDetailRepository;
+    private final ConcertDetailJPARepository optimisticConcertDetailRepository;
 
     @Override
     public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
@@ -23,7 +23,7 @@ public class OptimisticConcertDetailRepositoryImpl implements ConcertDetailRepos
 
     @Override
     public Optional<ConcertDetail> findConcertDetailByConcertDetailIdWithLock(Long concertDetailId){
-        return optimisticConcertDetailRepository.findConcertDetailByConcertDetailIdForUpdate(concertDetailId);
+        return optimisticConcertDetailRepository.findConcertDetailByConcertDetailIdForUpdateWithOptimisticLock(concertDetailId);
     }
 
     @Override

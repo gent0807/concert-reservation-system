@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Repository
 public interface PointHistoryRepository {
-    void savePointHistory(PointHistory pointHistory);
+    void save(PointHistory pointHistory);
 
     Optional<List<PointHistory>> findPointHistoriesByUserId(String userId);
 }

@@ -8,6 +8,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -17,7 +20,9 @@ import java.util.Arrays;
 @Entity
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "seat")
 @Slf4j
 public class Seat {
 
@@ -37,12 +42,12 @@ public class Seat {
     @Column(name = "seat_number", nullable = false, columnDefinition = "int unsigned")
     @Min(1)
     @Max(50)
-    private int seatNumber;
+    private Integer seatNumber;
 
     @Column(name = "price", nullable = false, columnDefinition = "int unsigned default 50000")
     @Positive
     @Min(30000)
-    private int price;
+    private Long price;
 
     @Column(name = "seat_status", nullable = false)
     private SeatStatusType seatStatus;
@@ -50,9 +55,11 @@ public class Seat {
     @Column(name = "expired_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime expiredAt;
 
+    @CreatedDate
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
@@ -80,7 +87,6 @@ public class Seat {
     public SeatDTOResult convertToSeatDTOResult() {
 
         checkSeatValidation();
-
 
         return SeatDTOResult.builder()
                 .seatId(this.seatId)
@@ -115,15 +121,15 @@ public class Seat {
 
     }
 
-    private void checkSeatUpdatedAtValidation() {
-        if (this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            throw new DomainModelParamInvalidException(ErrorCode.SEAT_UPDATED_AT_INVALID, "SEAT", "checkSeatUpdatedAtValidation");
+    private void checkSeatCreatedAtValidation() {
+        if(this.createdAt == null || (this.createdAt.getMinute() > LocalDateTime.now().getMinute())){
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_CREATED_AT_INVALID, "SEAT", "checkSeatCreatedAtValidation");
         }
     }
 
-    private void checkSeatCreatedAtValidation() {
-        if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            throw new DomainModelParamInvalidException(ErrorCode.SEAT_CREATED_AT_INVALID, "SEAT", "checkSeatCreatedAtValidation");
+    private void checkSeatUpdatedAtValidation() {
+        if (this.updatedAt == null || (this.updatedAt.getMinute() > LocalDateTime.now().getMinute())){
+            throw new DomainModelParamInvalidException(ErrorCode.SEAT_UPDATED_AT_INVALID, "SEAT", "checkSeatUpdatedAtValidation");
         }
     }
 

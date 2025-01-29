@@ -13,19 +13,12 @@ import java.util.Optional;
 @Profile("pessimistic-lock")
 public class PessimisticUserRepositoryImpl implements UserRepository {
 
-    private final PessimisticUserJPARepository pessimisticUserJPARepository;
+    private final UserJPARepository pessimisticUserJPARepository;
 
     @Override
     public User findUserByUserIdWithLock(String userId) {
-        return pessimisticUserJPARepository.findUserByUserIdForUpdate(userId);
+        return pessimisticUserJPARepository.findUserByUserIdForUpdateWithPessimisticLock(userId);
     }
-
-
-    @Override
-    public void createUser(User user) {
-        pessimisticUserJPARepository.save(user);
-    }
-
 
     @Override
     public Optional<User> findUserByUserId(String userId){
@@ -33,7 +26,7 @@ public class PessimisticUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User saveUser(User user){
+    public User save(User user){
         return pessimisticUserJPARepository.save(user);
     }
 

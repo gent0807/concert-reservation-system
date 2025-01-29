@@ -12,7 +12,6 @@ import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransac
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -31,25 +30,24 @@ public class PointHistoryService {
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
 
-
     @Validated(CreatePointHistory.class)
     @Transactional
     public List<PointHistoryDTOResult> insertChargeUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
-        // 유저 포인트 동시 충전에 대한 동시성 제어 위해 데이터베에스 테이블 특정 유저 row 비관적 lock: 각 트랜잭션마다 적용
+        // 유저 포인트 동시 충전에 대한 동시성 제어 위해 데이터베에스 테이블 특정 유저 row lock: 각 트랜잭션마다 적용
         User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId());
 
         // 포인트 수정
         user.chargePoint(pointHistoryDTOParam.amount());
 
         // 포인트 수정한 유저 정보 저장(put)
-        userRepository.saveUser(user);
+        userRepository.save(user);
 
         // 도메인 모델 내 정적 팩토리 메소드로 생성
         PointHistory pointHistory = PointHistory.createPointHistory(pointHistoryDTOParam.userId(), pointHistoryDTOParam.type(), pointHistoryDTOParam.amount(), user.getPoint());
 
         // 포인트 충전 차감 내역 저장
-        pointHistoryRepository.savePointHistory(pointHistory);
+        pointHistoryRepository.save(pointHistory);
 
         // 유저의 포인트 충전 차감 내역 목록 반환
         return pointHistoryRepository.findPointHistoriesByUserId(pointHistory.getUserId())
@@ -64,7 +62,6 @@ public class PointHistoryService {
 
         // 유저 정보가 없으면, exception 발생
         User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId());
-
 
         // 좌석 예약 정보가 없으면 exception 발생
         reservationRepository.findReservationsByUserIdAndPaymentIdWithLock(pointHistoryDTOParam.userId(), pointHistoryDTOParam.paymentId()).orElseThrow(()->{
@@ -81,9 +78,9 @@ public class PointHistoryService {
 
         user.usePoint(payment.getTotalPrice());
 
-        userRepository.saveUser(user);
+        userRepository.save(user);
 
-        pointHistoryRepository.savePointHistory(PointHistory.createPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
+        pointHistoryRepository.save(PointHistory.createPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
 
     }
 }

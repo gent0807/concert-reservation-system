@@ -1,6 +1,5 @@
 package io.dev.concertreservationsystem.domain.reservation;
 
-import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
@@ -26,14 +25,14 @@ public class ReservationService {
 
     private final SeatRepository seatRepository;
 
-    @Validated(CreateReservations.class)
-    public List<ReservationDTOResult> insertReservations(List<@Valid ReservationDTOParam> reservationDTOParamList) {
+    //@Validated(CreateReservations.class)
+    public List<ReservationDTOResult> insertReservations(List<ReservationDTOParam> reservationDTOParamList) {
 
         return  reservationDTOParamList.stream().map((reservationDTOParam)->{
                     // 도메인 모델 내 정적 팩토리 메소드로 생성
                     Reservation reservation = Reservation.createReservation(reservationDTOParam.userId(), reservationDTOParam.seatId(), reservationDTOParam.paymentId(), ReservationStatusType.TEMP);
 
-                    reservationRepository.saveReservation(reservation);
+                    reservationRepository.save(reservation);
 
                     return reservationRepository.findReservationByUserIdAndSeatIdAndPaymentId(reservation.getUserId(), reservation.getSeatId(), reservation.getPaymentId())
                             .orElseThrow(()->{
@@ -51,7 +50,7 @@ public class ReservationService {
                    throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "RESERVATION SERVICE", "updateStatusOfReservations");
                }).stream().forEach((reservation)->{
                    reservation.setReservationStatus(reservationStatusType);
-                   reservationRepository.saveReservation(reservation);
+                   reservationRepository.save(reservation);
                });
     }
 

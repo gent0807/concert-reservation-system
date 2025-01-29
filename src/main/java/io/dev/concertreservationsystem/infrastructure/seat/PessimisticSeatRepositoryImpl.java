@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Profile(value = "pessimistic-lock")
 public class PessimisticSeatRepositoryImpl implements SeatRepository {
-    private final PessimisticSeatRepository pessimisticSeatRepository;
+    private final SeatJPARepository pessimisticSeatRepository;
 
     @Override
     public Optional<List<Seat>> findReservableSeatsByConcertDetailIdAndSeatStatusType(Long concertDetailId, SeatStatusType seatStatus){
@@ -23,7 +23,7 @@ public class PessimisticSeatRepositoryImpl implements SeatRepository {
 
     @Override
     public Optional<Seat> findSeatBySeatIdWithLock(Long seatId){
-        return pessimisticSeatRepository.findSeatBySeatIdForUpdate(seatId);
+        return pessimisticSeatRepository.findSeatBySeatIdForUpdateWithPessimisticLock(seatId);
     }
 
     @Override
@@ -38,6 +38,6 @@ public class PessimisticSeatRepositoryImpl implements SeatRepository {
 
     @Override
     public Optional<List<Seat>> findSeatsBySeatStatusWithLock(SeatStatusType seatStatusType){
-        return pessimisticSeatRepository.findSeatsBySeatStatusForUpdate(SeatStatusType.OCCUPIED);
+        return pessimisticSeatRepository.findSeatsBySeatStatusForUpdateWithPessimisticLock(SeatStatusType.OCCUPIED);
     }
 }

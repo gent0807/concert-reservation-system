@@ -16,11 +16,27 @@ public interface ReservationJPARepository extends JpaRepository<Reservation,Long
 
     Optional<Reservation> findReservationByUserIdAndSeatIdAndPaymentId(String userId, Long seatId, Long paymentId);
 
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query(value = "SELECT r from Reservation r WHERE r.userId = :userId AND r.paymentId = :paymentId")
+    Optional<List<Reservation>> findReservationsByUserIdAndPaymentIdForShareWithPessimisticLock(@Param("userId") String userId, @Param("paymentId") Long paymentId);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT r from Reservation r WHERE r.userId = :userId AND r.paymentId = :paymentId")
-    Optional<List<Reservation>> findReservationsByUserIdAndPaymentIdForUpdate(@Param("userId") String userId,@Param("paymentId") Long paymentId);
+    Optional<List<Reservation>> findReservationsByUserIdAndPaymentIdForUpdateWithPessimisticLock(@Param("userId") String userId, @Param("paymentId") Long paymentId);
+
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query(value = "SELECT r from Reservation r WHERE r.seatId = :seatId AND r.reservationStatus = :reservationStatus")
+    Optional<Reservation> findReservationBySeatIdAndReservationStatusForShareWithPessimisticLock(@Param("seatId") Long seatId, @Param("reservationStatus") ReservationStatusType reservationStatus);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT r from Reservation r WHERE r.seatId = :seatId AND r.reservationStatus = :reservationStatus")
-    Optional<Reservation> findReservationBySeatIdAndReservationStatusForUpdate(@Param("seatId") Long seatId, @Param("reservationStatus") ReservationStatusType reservationStatus);
+    Optional<Reservation> findReservationBySeatIdAndReservationStatusForUpdateWithPessimisticLock(@Param("seatId") Long seatId, @Param("reservationStatus") ReservationStatusType reservationStatus);
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query(value = "SELECT r from Reservation r WHERE r.userId = :userId AND r.paymentId = :paymentId")
+    Optional<List<Reservation>> findReservationsByUserIdAndPaymentIdForUpdateWithOptimisticLock(@Param("userId") String userId, @Param("paymentId") Long paymentId);
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query(value = "SELECT r from Reservation r WHERE r.seatId = :seatId AND r.reservationStatus = :reservationStatus")
+    Optional<Reservation> findReservationBySeatIdAndReservationStatusForUpdateWithOptimisticLock(@Param("seatId") Long seatId, @Param("reservationStatus") ReservationStatusType reservationStatus);
 }

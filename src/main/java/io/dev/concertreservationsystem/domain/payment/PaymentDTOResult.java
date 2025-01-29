@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public record PaymentDTOResult(
         Long paymentId,
         PaymentStatusType paymentStatus,
-        Integer totalPrice,
+        Long totalPrice,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 

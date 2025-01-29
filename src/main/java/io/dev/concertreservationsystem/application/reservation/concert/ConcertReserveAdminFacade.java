@@ -19,6 +19,8 @@ import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.S
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 @Validated
 public class ConcertReserveAdminFacade {
 
@@ -57,25 +60,25 @@ public class ConcertReserveAdminFacade {
     }
 
     // 3. 좌석 예약 주문서 발행, 좌석 임시 점유(occupied)
-    @Validated(CreateReservations.class)
+    //@Validated(CreateReservations.class)
     @Transactional
-    public List<ConcertReserveAdminDTOResult> insertReservations(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
+    public List<ConcertReserveAdminDTOResult> insertReservations(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
-            // 콘서트 실제 공연 좌석들의 예약 상태/예약 가능 여부 확인, 예약 불가(상태가 reservable 아닌 경우)이면 exception 발생
-            seatService.checkReservableOfConcertDetailAndSeat(ConcertReserveAdminDTOParam.convertToSeatDTOParamList(concertReserveAdminDTOParamList));
+        // 콘서트 실제 공연 좌석들의 예약 상태/예약 가능 여부 확인, 예약 불가(상태가 reservable 아닌 경우)이면 exception 발생
+        seatService.checkReservableOfConcertDetailAndSeat(ConcertReserveAdminDTOParam.convertToSeatDTOParamList(concertReserveAdminDTOParamList));
 
-            // 미결제 상태의 결제 정보 신규 저장(주문서 발행)
-            PaymentDTOResult paymentDTOResult = paymentService.publishNewPayment(concertReserveAdminDTOParamList);
+        // 미결제 상태의 결제 정보 신규 저장(주문서 발행)
+        PaymentDTOResult paymentDTOResult = paymentService.publishNewPayment(concertReserveAdminDTOParamList);
 
-            // 좌석들 임시 예약 정보 신규 등록
-            List<ReservationDTOResult> reservationDTOResultList = reservationService.insertReservations(ConcertReserveAdminDTOParam.convertToReservationDTOParamList(concertReserveAdminDTOParamList, paymentDTOResult));
+        // 좌석들 임시 예약 정보 신규 등록
+        List<ReservationDTOResult> reservationDTOResultList = reservationService.insertReservations(ConcertReserveAdminDTOParam.convertToReservationDTOParamList(concertReserveAdminDTOParamList, paymentDTOResult));
 
-            // 좌석들의 예약 상태/예약 가능 여부를 점유 상태로 수정
-            seatService.updateStatusOfConcertDetailAndSeats(reservationDTOResultList.stream().map(reservationDTOResult -> {
-                return SeatDTOParam.builder().seatId(reservationDTOResult.seatId()).build();
-            }).collect(Collectors.toList()), SeatStatusType.OCCUPIED);
+        // 좌석들의 예약 상태/예약 가능 여부를 점유 상태로 수정
+        seatService.updateStatusOfConcertDetailAndSeats(reservationDTOResultList.stream().map(reservationDTOResult -> {
+            return SeatDTOParam.builder().seatId(reservationDTOResult.seatId()).build();
+        }).collect(Collectors.toList()), SeatStatusType.OCCUPIED);
 
-            return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
+        return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
 
     }
 

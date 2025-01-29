@@ -24,7 +24,7 @@ public class SeatRepositoryImpl implements SeatRepository {
 
     @Override
     public Optional<Seat> findSeatBySeatIdWithLock(Long seatId){
-        return seatJPARepository.findSeatBySeatIdForUpdate(seatId);
+        return seatJPARepository.findSeatBySeatIdForUpdateWithPessimisticLock(seatId);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class SeatRepositoryImpl implements SeatRepository {
 
     @Override
     public Optional<List<Seat>> findSeatsBySeatStatusWithLock(SeatStatusType seatStatusType){
-        return seatJPARepository.findSeatsBySeatStatusForUpdate(SeatStatusType.OCCUPIED);
+        return seatJPARepository.findSeatsBySeatStatusForUpdateWithPessimisticLock(SeatStatusType.OCCUPIED);
     }
 }

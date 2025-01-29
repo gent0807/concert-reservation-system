@@ -33,9 +33,12 @@ public enum ErrorCode {
     POINT_HISTORY_AMOUNT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_AMOUNT_INVALID" , "유효하지 않은 포인트 충전 차감량입니다."),
     POINT_HISTORY_RESULT_POINT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_RESULT_POINT_INVALID", "유효하지 않은 유저의 총 포인트 잔고입니다."),
     POINT_HISTORY_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_ID_INVALID", "유효하지 않은 포인트 충전 차감 내역 아이디입니다."),
-    POINT_HISTORY_CREATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_CREATED_AT_INVALID", "유효하진 않은 포인트 충전 차감 내역 생성일입니다."),
-    POINT_HISTORY_UPDATED_AT_INVALID(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_UPDATED_AT_INVALID", "유효하지 않은 포인트 충전 차감 내역 수정일입니다."),
+    POINT_HISTORY_CREATED_AT_AFTER_NOW(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_CREATED_AT_INVALID", "포인트 충전 차감 내역 생성일이 현재 시각 이후로, 유효하지 않습니다."),
+    POINT_HISTORY_CREATED_AT_NULL(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_CREATED_AT_NULL", "포인트 충전 차감 내역 생성일이 없습니다."),
+    POINT_HISTORY_UPDATED_AT_AFTER_NOW(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_UPDATED_AT_INVALID", "포인트 충전 차감 내역 수정일이 현재 시각 이후로, 유효하지 않은 포인트 충전 차감 내역 수정일입니다."),
+    POINT_HISTORY_UPDATED_AT_NULL(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_UPDATED_AT_NULL", "포인트 충전 차감 내역 수정일이 없습니다."),
     POINT_HISTORY_SAVE_FAILED(HttpStatus.NOT_ACCEPTABLE, "POINT_HISTORY_SAVE_FAILED", "포인트 충전 차감 내역 저장에 실패했습니다."),
+
 
     // 콘서트 실제 공연 관련 ErrorCode
     CONCERT_BASIC_ID_INVALID(HttpStatus.NOT_ACCEPTABLE, "CONCERT_BASIC_ID_INVALID", "유효하지 않은 콘서트 기본 정보 아이디입니다."),

@@ -15,7 +15,15 @@ public interface ConcertDetailJPARepository extends JpaRepository<ConcertDetail,
 
     Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(@Param("concertBasicId") Long concertBasicId, @Param("concertDetailStatusType") ConcertDetailStatusType concertDetailStatus);
 
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query(value = "SELECT cd from ConcertDetail cd WHERE cd.concertDetailId = :concertDetailId")
+    Optional<ConcertDetail> findConcertDetailByConcertDetailIdForShareWithPessimisticLock(@Param("concertDetailId") Long concertDetailId);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT cd from ConcertDetail cd WHERE cd.concertDetailId = :concertDetailId")
-    Optional<ConcertDetail> findConcertDetailByConcertDetailIdForUpdate(@Param("concertDetailId") Long concertDetailId);
+    Optional<ConcertDetail> findConcertDetailByConcertDetailIdForUpdateWithPessimisticLock(@Param("concertDetailId") Long concertDetailId);
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query(value = "SELECT cd from ConcertDetail cd WHERE cd.concertDetailId = :concertDetailId")
+    Optional<ConcertDetail> findConcertDetailByConcertDetailIdForUpdateWithOptimisticLock(@Param("concertDetailId") Long concertDetailId);
 }

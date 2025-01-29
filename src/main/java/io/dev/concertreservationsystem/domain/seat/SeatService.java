@@ -19,7 +19,6 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -31,7 +30,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-@Profile(value = "pessimistic-lock")
 public class SeatService {
 
     private final SeatRepository seatRepository;
@@ -55,8 +53,8 @@ public class SeatService {
 
     }
 
-    @Validated({CreateReservations.class, ProcessPayment.class})
-    public void updateStatusOfConcertDetailAndSeats(List<@Valid SeatDTOParam> seatDTOParamList, SeatStatusType seatStatus) {
+    //@Validated({CreateReservations.class, ProcessPayment.class})
+    public void updateStatusOfConcertDetailAndSeats(List<SeatDTOParam> seatDTOParamList, SeatStatusType seatStatus) {
         seatDTOParamList.stream().forEach(
                 seatDTOParam -> {
 
@@ -122,7 +120,7 @@ public class SeatService {
                 seatRepository.save(seat);
 
                 reservation.setReservationStatus(ReservationStatusType.CANCELLED);
-                reservationRepository.saveReservation(reservation);
+                reservationRepository.save(reservation);
 
                 payment.setPaymentStatus(PaymentStatusType.CANCELLED);
                 paymentRepository.save(payment);
@@ -142,8 +140,9 @@ public class SeatService {
         });
     }
 
-    @Validated(CreateReservations.class)
-    public void checkReservableOfConcertDetailAndSeat(List<@Valid SeatDTOParam> seatDTOParamList) {
+    //@Validated(CreateReservations.class)
+    public void checkReservableOfConcertDetailAndSeat(List<SeatDTOParam> seatDTOParamList) {
+
         seatDTOParamList.stream().forEach(seatDTOParam -> {
 
             Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(()->{

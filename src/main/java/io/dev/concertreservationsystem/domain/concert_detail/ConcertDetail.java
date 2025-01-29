@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -15,7 +17,9 @@ import java.util.Arrays;
 @Entity
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "concert_detail")
 @Slf4j
 public class ConcertDetail {
 
@@ -43,6 +47,7 @@ public class ConcertDetail {
     @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
@@ -98,15 +103,16 @@ public class ConcertDetail {
         checkUpdatedAtInvalid();
     }
 
-    public void checkUpdatedAtInvalid() {
-        if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_UPDATED_AT_INVALID, "CONCERT_DETAIL", "checkUpdatedAtInvalid");
+    public void checkCreatedAtValidation() {
+        if(this.createdAt == null || (this.createdAt.getMinute() > LocalDateTime.now().getMinute())){
+            throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_CREATED_AT_INVALID, "CONCERT_DETAIL", "checkCreatedAtValidation");
         }
     }
 
-    public void checkCreatedAtValidation() {
-        if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_CREATED_AT_INVALID, "CONCERT_DETAIL", "checkCreatedAtValidation");
+
+    public void checkUpdatedAtInvalid() {
+        if(this.updatedAt == null || (this.updatedAt.getMinute() > LocalDateTime.now().getMinute())){
+            throw new DomainModelParamInvalidException(ErrorCode.CONCERT_DETAIL_UPDATED_AT_INVALID, "CONCERT_DETAIL", "checkUpdatedAtInvalid");
         }
     }
 
@@ -147,9 +153,4 @@ public class ConcertDetail {
         }
     }
 
-    public ConcertDetailDTOParam convertToConcertDetailDTOParam() {
-        return ConcertDetailDTOParam.builder()
-                .concertBasicId(this.concertDetailId)
-                .build();
-    }
 }

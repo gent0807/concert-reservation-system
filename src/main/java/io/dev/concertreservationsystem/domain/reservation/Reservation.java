@@ -6,6 +6,9 @@ import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCo
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -15,7 +18,9 @@ import java.util.Arrays;
 @Entity
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "reservation")
 @Slf4j
 public class Reservation {
     
@@ -39,14 +44,31 @@ public class Reservation {
     @Column(name = "reservation_status", nullable = false)
     private ReservationStatusType reservationStatus;
 
-    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreatedDate
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @LastModifiedDate
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "reservationId=" + reservationId +
+                ", seatId=" + seatId +
+                ", userId='" + userId + '\'' +
+                ", paymentId=" + paymentId +
+                ", version=" + version +
+                ", reservationStatus=" + reservationStatus +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 
     public Reservation(String userId, Long seatId, Long paymentId, ReservationStatusType reservationStatus){
         this.userId = userId;
@@ -56,6 +78,8 @@ public class Reservation {
     }
 
     public static Reservation createReservation(String userId, Long seatId, Long paymentId, ReservationStatusType reservationStatus){
+
+        log.debug("userId: {}, seatId: {}, paymentId: {}, reservationStatus: {}", userId, seatId, paymentId, reservationStatus);
 
         if(userId == null || userId.isBlank()){
             log.error("userId is null or blank");
@@ -82,21 +106,12 @@ public class Reservation {
 
     public ReservationDTOResult convertToReservationDTOResult() {
         return ReservationDTOResult.builder()
-                .reservationId(reservationId)
-                .userId(userId)
-                .seatId(seatId)
-                .paymentId(paymentId)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
-                .build();
-    }
-
-    public ReservationDTOParam convertToReservationDTOParam(){
-        return ReservationDTOParam.builder()
-                .userId(userId)
-                .seatId(seatId)
-                .paymentId(paymentId)
-                .reservationId(reservationId)
+                .reservationId(this.reservationId)
+                .userId(this.userId)
+                .seatId(this.seatId)
+                .paymentId(this.paymentId)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
                 .build();
     }
 

@@ -16,12 +16,30 @@ public interface SeatJPARepository extends JpaRepository<Seat, Long> {
 
     List<Seat> findSeatsByConcertDetailId(Long concertDetailId);
 
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query(value = "SELECT s from Seat s WHERE s.seatStatus = :seatStatus")
+    Optional<List<Seat>> findSeatsBySeatStatusForShareWithPessimisticLock(@Param("seatStatus") SeatStatusType seatStatus);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT s from Seat s WHERE s.seatStatus = :seatStatus")
-    Optional<List<Seat>> findSeatsBySeatStatusForUpdate(@Param("seatStatus") SeatStatusType seatStatus);
+    Optional<List<Seat>> findSeatsBySeatStatusForUpdateWithPessimisticLock(@Param("seatStatus") SeatStatusType seatStatus);
+
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query(value = "SELECT s from Seat s WHERE s.seatId = :seatId")
+    Optional<Seat> findSeatBySeatIdForShareWithPessimisticLock(@Param("seatId") Long seatId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT s from Seat s WHERE s.seatId = :seatId")
-    Optional<Seat> findSeatBySeatIdForUpdate(@Param("seatId") Long seatId);
+    Optional<Seat> findSeatBySeatIdForUpdateWithPessimisticLock(@Param("seatId") Long seatId);
+
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query(value = "SELECT s from Seat s WHERE s.seatStatus = :seatStatus")
+    Optional<List<Seat>> findSeatsBySeatStatusForUpdateWithOptimisticLock(SeatStatusType seatStatusType);
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query(value = "SELECT s from Seat s WHERE s.seatId = :seatId")
+    Optional<Seat> findSeatBySeatIdForUpdateWithOptimisticLock(Long seatId);
+
+
 }

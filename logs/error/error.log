@@ -1,0 +1,12 @@
+2025-01-30 00:01:08 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:01:08 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:01:08 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:01:08 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:08:26 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:08:26 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:08:26 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:08:26 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:17:28 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:17:28 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:17:28 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction
+2025-01-30 00:17:28 ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Deadlock found when trying to get lock; try restarting transaction

@@ -20,7 +20,7 @@ public record PointHistoryDTOParam(
 
         @NotNull(groups = CreatePointHistory.class)
         @Min(value = 0, groups = CreatePointHistory.class)
-        Integer amount,
+        Long amount,
 
         @NotNull(groups = ProcessPayment.class)
         @Min(value = 0, groups = ProcessPayment.class)

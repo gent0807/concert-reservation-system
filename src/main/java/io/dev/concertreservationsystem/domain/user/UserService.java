@@ -31,7 +31,7 @@ public class UserService {
         // 도메인 모델 내 정적 팩토리 메소드로 생성
         User user = User.createUser(userDTOParam.userId(), userDTOParam.userName(), userDTOParam.age(), userDTOParam.gender());
 
-        userRepository.createUser(user);
+        userRepository.save(user);
 
         return userRepository.findUserByUserId(user.getUserId())
                 .orElseThrow(() -> {

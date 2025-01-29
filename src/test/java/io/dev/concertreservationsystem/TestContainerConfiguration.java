@@ -1,8 +1,10 @@
 package io.dev.concertreservationsystem;
 
 import jakarta.annotation.PreDestroy;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @Configuration

@@ -2,16 +2,15 @@ package io.dev.concertreservationsystem.domain.user;
 
 import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,7 +20,9 @@ import java.util.Arrays;
 @Entity
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "user")
 @Slf4j
 public class User {
 
@@ -39,26 +40,32 @@ public class User {
     @Min(0)
     private int age;
 
+    @Column(name = "point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
+    @Positive
+    @Min(0)
+    private long point;
+
     @Column(name = "gender", nullable = false)
     private UserGenderType gender;
-
-    @Column(name = "point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
-    private long point;
 
     @CreatedDate
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime deletedAt;
 
+    private static final long USER_INIT_POINT = 0L;
+
     public User(String userId, String userName, Integer age, UserGenderType gender){
         this.userId = userId;
         this.userName = userName;
         this.age = age;
+        this.point = USER_INIT_POINT;
         this.gender = gender;
     }
 
@@ -168,7 +175,7 @@ public class User {
         this.setPoint(this.point - price);
     }
 
-    public void checkPrice(Integer totalPrice) {
+    public void checkPrice(Long totalPrice) {
         if(this.point < totalPrice){
             throw new DomainModelParamInvalidException(ErrorCode.PAYMENT_OVER_USER_POINT, "USER", "checkPrice");
         }

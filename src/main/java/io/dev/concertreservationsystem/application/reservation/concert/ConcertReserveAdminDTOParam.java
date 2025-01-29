@@ -14,45 +14,48 @@ import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.S
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Builder
+@Slf4j
 public record ConcertReserveAdminDTOParam(
 
-        @NotBlank(groups = {CreateReservations.class, ProcessPayment.class})
+        @NotNull(groups = {CreateReservations.class, ProcessPayment.class})
         @Min(value = 0, groups = {CreateReservations.class, ProcessPayment.class})
         String userId,
 
 
-        @NotBlank(groups = SearchReservableConcertDetail.class)
+        @NotNull(groups = SearchReservableConcertDetail.class)
         @Min(value = 0, groups = SearchReservableConcertDetail.class)
         Long concertBasicId,
 
-        @NotBlank(groups = {SearchReservableConcertDetail.class,  SearchReservableSeat.class})
+        @NotNull(groups = {SearchReservableConcertDetail.class,  SearchReservableSeat.class})
         @Min(value = 0, groups = {SearchReservableConcertDetail.class,  SearchReservableSeat.class})
         Long concertDetailId,
 
-        @NotBlank(groups = CreateReservations.class)
+        @NotNull(groups = CreateReservations.class)
         @Min(value = 0, groups = CreateReservations.class)
         Long seatId,
 
-        @NotBlank
+        @NotNull
         @Min(value = 0)
         Long reservationId,
 
-        @NotBlank(groups = ProcessPayment.class)
+        @NotNull(groups = ProcessPayment.class)
         @Min(value = 0, groups = ProcessPayment.class)
         Long paymentId
 
 ){
 
 
-    @Validated(CreateReservations.class)
-    public static List<ReservationDTOParam> convertToReservationDTOParamList(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList, PaymentDTOResult paymentDTOResult) {
+    //@Validated(CreateReservations.class)
+    public static List<ReservationDTOParam> convertToReservationDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList, PaymentDTOResult paymentDTOResult) {
         return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToReservationDTOParam)
                             .map(reservationDTOParam -> {
                                         return ReservationDTOParam.builder()
@@ -63,8 +66,9 @@ public record ConcertReserveAdminDTOParam(
                                         }).collect(Collectors.toList());
     }
 
-    @Validated(CreateReservations.class)
-    public static List<SeatDTOParam> convertToSeatDTOParamList(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
+    //@Validated(CreateReservations.class)
+    public static List<SeatDTOParam> convertToSeatDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
+
         return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToSeatDTOParam).collect(Collectors.toList());
     }
 
@@ -92,6 +96,7 @@ public record ConcertReserveAdminDTOParam(
     }
 
     private SeatDTOParam convertToSeatDTOParam() {
+
         return SeatDTOParam.builder()
                 .seatId(this.seatId)
                 .build();
@@ -110,6 +115,7 @@ public record ConcertReserveAdminDTOParam(
     public ReservationDTOParam convertToReservationDTOParam() {
         return ReservationDTOParam.builder()
                 .userId(this.userId)
+                .seatId(this.seatId)
                 .paymentId(this.paymentId)
                 .build();
     }
