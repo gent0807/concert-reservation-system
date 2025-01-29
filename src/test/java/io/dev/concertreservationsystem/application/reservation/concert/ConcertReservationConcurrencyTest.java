@@ -248,8 +248,19 @@ public class ConcertReservationConcurrencyTest {
             }
         }).count();
 
+        /*
+        long failCount = results.stream().filter(future->{
+            try {
+                return !future.get();
+            } catch (Exception e) {
+                return false;
+            }
+        }).count();
+         */
+
         // 동시성 테스트 결과 검증
         assertThat(successCount).isEqualTo(1); // 한 요청만 성공해야 함
+        //assertThat(failCount).isEqualTo(threadCount-1);
 
         log.debug("실행 시간 : {} ms", endTime - startTime);
     }
