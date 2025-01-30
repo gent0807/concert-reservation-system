@@ -6,22 +6,23 @@ import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.P
 import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransactionType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
 public record PointHistoryDTOParam(
-        @NotBlank(groups = {ProcessPayment.class, CreatePointHistory.class})
+        @NotNull(groups = {ProcessPayment.class, CreatePointHistory.class})
         String userId,
 
-        @NotBlank(groups = CreatePointHistory.class)
+        @NotNull(groups = CreatePointHistory.class)
         @NotInvalidPointTransactionType(groups = CreatePointHistory.class)
         PointTransactionType type,
 
-        @NotBlank(groups = CreatePointHistory.class)
+        @NotNull(groups = CreatePointHistory.class)
         @Min(value = 0, groups = CreatePointHistory.class)
-        Integer amount,
+        Long amount,
 
-        @NotBlank(groups = ProcessPayment.class)
+        @NotNull(groups = ProcessPayment.class)
         @Min(value = 0, groups = ProcessPayment.class)
         Long paymentId
 ) {

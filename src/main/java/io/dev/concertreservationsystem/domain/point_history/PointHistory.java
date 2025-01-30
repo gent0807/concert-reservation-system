@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -18,6 +20,7 @@ import java.util.Arrays;
 @Entity
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 public class PointHistory {
@@ -43,7 +46,7 @@ public class PointHistory {
     @Column(name = "amount", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
     @Positive
     @Min(0)
-    private Integer amount;
+    private Long amount;
 
     @Column(name = "result_point", nullable = false, columnDefinition = "BIGINT UNSIGNED DEFAULT 0")
     @Positive
@@ -54,6 +57,7 @@ public class PointHistory {
     @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
@@ -61,14 +65,14 @@ public class PointHistory {
     private LocalDateTime deletedAt;
 
 
-    public PointHistory(String userId, PointTransactionType type, Integer amount, Long resultPoint){
+    public PointHistory(String userId, PointTransactionType type, Long amount, Long resultPoint){
         this.userId = userId;
         this.type = type;
         this.amount = amount;
         this.resultPoint = resultPoint;
     }
 
-    public static PointHistory createPointHistory(String userId, PointTransactionType type, Integer amount, Long resultPoint){
+    public static PointHistory createPointHistory(String userId, PointTransactionType type, Long amount, Long resultPoint){
 
         if(userId == null || userId.isBlank()){
             log.error("userId is null or blank");
@@ -115,7 +119,7 @@ public class PointHistory {
 
         checkPointHistoryPointTransactionTypeValidation();
 
-        checkPoinyHistoryAmountValidation();
+        checkPointHistoryAmountValidation();
 
         checkPointHistoryResultPointValidation();
 
@@ -138,7 +142,7 @@ public class PointHistory {
         }
     }
 
-    public void checkPoinyHistoryAmountValidation() {
+    public void checkPointHistoryAmountValidation() {
         if (this.amount == null || this.amount < 0){
             throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_AMOUNT_INVALID, "POINT_HISTORY", "checkPoinyHistoryAmountValidation");
         }
@@ -151,15 +155,26 @@ public class PointHistory {
     }
 
     public void checkPointHistoryCreatedAtValidation() {
-        if (this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
-            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_CREATED_AT_INVALID,"POINT_HISTORY", "checkPointHistoryCreatedAtValidation");
+
+        if(this.createdAt == null){
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_CREATED_AT_NULL, "POINT_HISTORY", "checkPointHistoryCreatedAtValidation");
+        }
+
+        if (this.createdAt.getMinute() > LocalDateTime.now().getMinute()){
+
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_CREATED_AT_AFTER_NOW,"POINT_HISTORY", "checkPointHistoryCreatedAtValidation");
         }
     }
 
 
     public void checkPointHistoryUpdatedAtValidation() {
-        if (this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
-            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_UPDATED_AT_INVALID, "POINT_HISTORY", "checkPointHistoryUpdatedAtValidation");
+
+        if(this.updatedAt == null){
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_UPDATED_AT_NULL, "POINT_HISTORY", "checkPointHistoryCreatedAtValidation");
+        }
+
+        if (this.updatedAt.getMinute() > LocalDateTime.now().getMinute()){
+            throw new DomainModelParamInvalidException(ErrorCode.POINT_HISTORY_UPDATED_AT_AFTER_NOW, "POINT_HISTORY", "checkPointHistoryUpdatedAtValidation");
         }
     }
 }

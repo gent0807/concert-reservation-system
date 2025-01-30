@@ -11,7 +11,7 @@ public record SeatResponseDTO(
         Long concertDetailId,
         Integer seatNumber,
         SeatStatusType seatStatus,
-        Integer price,
+        Long price,
         LocalDateTime expiredAt,
         LocalDateTime createdAt,
         LocalDateTime updatedAt

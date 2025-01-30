@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository {
-    void saveReservation(Reservation reservation);
+    void save(Reservation reservation);
 
     Optional<Reservation> findReservationByUserIdAndSeatIdAndPaymentId(String userId, Long seatId, Long paymentId);
 

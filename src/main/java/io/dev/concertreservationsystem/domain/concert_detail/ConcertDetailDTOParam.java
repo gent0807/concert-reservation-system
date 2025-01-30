@@ -6,16 +6,17 @@ import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.S
 import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
 public record ConcertDetailDTOParam(
 
-        @NotBlank(groups = SearchReservableConcertDetail.class)
+        @NotNull(groups = SearchReservableConcertDetail.class)
         @Min(value = 0, groups = SearchReservableConcertDetail.class)
         Long concertBasicId,
 
-        @NotBlank(groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class})
+        @NotNull(groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class})
         @Min(value = 0, groups = {SearchReservableConcertDetail.class, SearchReservableSeat.class })
         Long concertDetailId
 ) {

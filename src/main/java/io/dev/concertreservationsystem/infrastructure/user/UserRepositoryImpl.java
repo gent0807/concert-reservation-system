@@ -3,24 +3,21 @@ package io.dev.concertreservationsystem.infrastructure.user;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
+@Profile("default")
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
     private final UserJPARepository userJPARepository;
 
     @Override
-    public void createUser(User user) {
-        userJPARepository.save(user);
-    }
-
-    @Override
-    public Optional<User> findUserByUserIdWithLock(String userId) {
-        return userJPARepository.findUserByUserIdForUpdate(userId);
+    public User findUserByUserIdWithLock(String userId) {
+        return userJPARepository.findUserByUserIdForUpdateWithOptimisticLock(userId);
 
     }
 
@@ -30,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User saveUser(User user){
+    public User save(User user){
         return userJPARepository.save(user);
     }
 

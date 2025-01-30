@@ -4,6 +4,8 @@ import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,11 +13,13 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
+@Profile(value = "default")
 public class PaymentRepositoryImpl implements PaymentRepository {
         private final PaymentJPARepository paymentJPARepository;
 
         @Override
-        public void savePayment(Payment payment){
+        public void save(Payment payment){
                 paymentJPARepository.save(payment);
         }
 
@@ -26,6 +30,6 @@ public class PaymentRepositoryImpl implements PaymentRepository {
 
         @Override
         public Optional<Payment> findPaymentByPaymentIdWithLock(Long paymentId){
-                return paymentJPARepository.findPaymentByPaymentIdForUpdate(paymentId);
+                return paymentJPARepository.findPaymentByPaymentIdForUpdateWithPessimisticLock(paymentId);
         }
 }

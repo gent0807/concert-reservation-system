@@ -24,17 +24,17 @@ public class PaymentService {
 
     private final SeatRepository seatRepository;
 
-    @Validated(CreateReservations.class)
-    public PaymentDTOResult publishNewPayment(List<@Valid ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
+    //@Validated(CreateReservations.class)
+    public PaymentDTOResult publishNewPayment(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
-        List<Integer> priceList = concertReserveAdminDTOParamList.stream().map(concertReserveAdminDTOParam->{
+        List<Long> priceList = concertReserveAdminDTOParamList.stream().map(concertReserveAdminDTOParam->{
             return seatRepository.findSeatBySeatIdWithLock(concertReserveAdminDTOParam.seatId()).orElseThrow().getPrice();
         }).toList();
 
         // 도메인 모델 내 정적 팩토리 메소드로 생성
-        Payment payment = Payment.createPayment(priceList.stream().reduce(0, Integer::sum), PaymentStatusType.PUBLISHED);
+        Payment payment = Payment.createPayment(priceList.stream().reduce(0L, Long::sum), PaymentStatusType.PUBLISHED);
 
-        paymentRepository.savePayment(payment);
+        paymentRepository.save(payment);
 
         return paymentRepository.findPaymentsByPaymentStatusOrderByCreatedAtDesc(payment.getPaymentStatus()).orElseThrow(()->{
             throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_SAVE_FAILED, "PAYMENT SERVICE", "publishNewPayment");
@@ -52,7 +52,7 @@ public class PaymentService {
 
         payment.setPaymentStatus(paymentStatusType);
 
-        paymentRepository.savePayment(payment);
+        paymentRepository.save(payment);
 
         return payment.convertToPaymentDTOResult();
     }

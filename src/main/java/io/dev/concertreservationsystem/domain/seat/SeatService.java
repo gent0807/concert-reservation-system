@@ -8,7 +8,6 @@ import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
-import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
@@ -54,8 +53,8 @@ public class SeatService {
 
     }
 
-    @Validated({CreateReservations.class, ProcessPayment.class})
-    public void updateStatusOfConcertDetailAndSeats(List<@Valid SeatDTOParam> seatDTOParamList, SeatStatusType seatStatus) {
+    //@Validated({CreateReservations.class, ProcessPayment.class})
+    public void updateStatusOfConcertDetailAndSeats(List<SeatDTOParam> seatDTOParamList, SeatStatusType seatStatus) {
         seatDTOParamList.stream().forEach(
                 seatDTOParam -> {
 
@@ -121,15 +120,16 @@ public class SeatService {
                 seatRepository.save(seat);
 
                 reservation.setReservationStatus(ReservationStatusType.CANCELLED);
-                reservationRepository.saveReservation(reservation);
+                reservationRepository.save(reservation);
 
                 payment.setPaymentStatus(PaymentStatusType.CANCELLED);
-                paymentRepository.savePayment(payment);
+                paymentRepository.save(payment);
             }
         });
 
     }
 
+    @Validated(ProcessPayment.class)
     public void checkSeatsOccupied(List<SeatDTOParam> seatDTOParams) {
         seatDTOParams.stream().forEach(seatDTOParam -> {
            Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(()->{
@@ -140,8 +140,9 @@ public class SeatService {
         });
     }
 
-    @Validated(CreateReservations.class)
-    public void checkReservableOfConcertDetailAndSeat(List<@Valid SeatDTOParam> seatDTOParamList) {
+    //@Validated(CreateReservations.class)
+    public void checkReservableOfConcertDetailAndSeat(List<SeatDTOParam> seatDTOParamList) {
+
         seatDTOParamList.stream().forEach(seatDTOParam -> {
 
             Seat seat = seatRepository.findSeatBySeatIdWithLock(seatDTOParam.seatId()).orElseThrow(()->{

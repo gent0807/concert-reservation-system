@@ -4,6 +4,7 @@ import io.dev.concertreservationsystem.domain.reservation.Reservation;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,11 +12,12 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Profile(value = "default")
 public class ReservationRepositoryImpl implements ReservationRepository {
     private final ReservationJPARepository reservationJPARepository;
 
     @Override
-    public void saveReservation(Reservation reservation){
+    public void save(Reservation reservation){
         reservationJPARepository.save(reservation);
     }
 
@@ -26,11 +28,11 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Optional<List<Reservation>> findReservationsByUserIdAndPaymentIdWithLock(String userId, Long paymentId){
-        return reservationJPARepository.findReservationsByUserIdAndPaymentIdForUpdate(userId, paymentId);
+        return reservationJPARepository.findReservationsByUserIdAndPaymentIdForUpdateWithPessimisticLock(userId, paymentId);
     }
 
     @Override
     public Optional<Reservation> findReservationBySeatIdAndStatusWithLock(Long seatId, ReservationStatusType reservationStatusType){
-        return reservationJPARepository.findReservationBySeatIdAndReservationStatusForUpdate(seatId, reservationStatusType);
+        return reservationJPARepository.findReservationBySeatIdAndReservationStatusForUpdateWithPessimisticLock(seatId, reservationStatusType);
     }
 }

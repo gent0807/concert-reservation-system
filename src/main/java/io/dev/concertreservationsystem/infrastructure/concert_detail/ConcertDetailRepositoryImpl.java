@@ -4,6 +4,7 @@ import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetail;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailRepository;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Profile(value = "default")
 public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
     private final ConcertDetailJPARepository concertDetailJPARepository;
 
@@ -21,12 +23,12 @@ public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
 
     @Override
     public Optional<ConcertDetail> findConcertDetailByConcertDetailIdWithLock(Long concertDetailId){
-        return concertDetailJPARepository.findConcertDetailByConcertDetailIdForUpdate(concertDetailId);
+        return concertDetailJPARepository.findConcertDetailByConcertDetailIdForShareWithPessimisticLock(concertDetailId);
     }
 
     @Override
     public ConcertDetail save(ConcertDetail concertDetail){
-        return concertDetailJPARepository.save(concertDetail);
+        return concertDetailJPARepository.saveAndFlush(concertDetail);
     }
 
 

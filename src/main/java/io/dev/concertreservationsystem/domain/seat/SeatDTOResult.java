@@ -12,7 +12,7 @@ public record SeatDTOResult(
         Long seatId,
         Long concertDetailId,
         Integer seatNumber,
-        Integer price,
+        Long price,
         SeatStatusType seatStatus,
         LocalDateTime expiredAt,
         LocalDateTime createdAt,
