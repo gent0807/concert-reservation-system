@@ -40,4 +40,5 @@ out/
 logs/debug/
 logs/info/
 logs/error/
+logs/**
 
