@@ -2093,3 +2093,148 @@
 2025-01-30 22:53:13 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-01-30 22:53:13 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - ConcertDataSource - Shutdown initiated...
 2025-01-30 22:53:14 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - ConcertDataSource - Shutdown completed.
+2025-01-30 22:57:10 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-30 22:57:10 [main] INFO  i.d.c.ConcertReservationSystemApplication - Starting ConcertReservationSystemApplication using Java 21.0.5 with PID 27440 (D:\IntelliJDev\concert-reservation-system\build\classes\java\main started by USER in D:\IntelliJDev\concert-reservation-system)
+2025-01-30 22:57:10 [main] INFO  i.d.c.ConcertReservationSystemApplication - The following 1 profile is active: "default"
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_basic.ConcertBasicJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.concert_detail.ConcertDetailJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.payment.PaymentJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.point_history.PointHistoryJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.reservation.ReservationJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.seat.SeatJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.token.TokenJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface io.dev.concertreservationsystem.infrastructure.user.UserJPARepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26 ms. Found 0 JDBC repository interfaces.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-30 22:57:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 142 ms. Found 8 JPA repository interfaces.
+2025-01-30 22:57:11 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8088 (http)
+2025-01-30 22:57:11 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8088"]
+2025-01-30 22:57:11 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-01-30 22:57:11 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-01-30 22:57:11 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-01-30 22:57:11 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1121 ms
+2025-01-30 22:57:11 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-30 22:57:11 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-30 22:57:12 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-30 22:57:12 [main] INFO  com.zaxxer.hikari.HikariDataSource - ConcertDataSource - Starting...
+2025-01-30 22:57:12 [main] INFO  com.zaxxer.hikari.pool.HikariPool - ConcertDataSource - Added connection com.mysql.cj.jdbc.ConnectionImpl@5cf3a7f9
+2025-01-30 22:57:12 [main] INFO  com.zaxxer.hikari.HikariDataSource - ConcertDataSource - Start completed.
+2025-01-30 22:57:12 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (ConcertDataSource)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-30 22:57:12 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-30 22:57:12 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@52e5ad71] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2025-01-30 22:57:13 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@3e79473d] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2025-01-30 22:57:13 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-30 22:57:13 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-30 22:57:14 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8088"]
+2025-01-30 22:57:14 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8088 (http) with context path '/'
+2025-01-30 22:57:14 [main] INFO  i.d.c.ConcertReservationSystemApplication - Started ConcertReservationSystemApplication in 4.183 seconds (process running for 4.56)
+2025-01-30 22:58:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-92a21d81-4533-41de-b6e8-592e2c3fb919] | <<--------------------------------------------------------------------------
+2025-01-30 22:58:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2c9e2f87-111b-42d8-9db7-1d61efd424f2] | <<--------------------------------------------------------------------------
+2025-01-30 22:58:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-92a21d81-4533-41de-b6e8-592e2c3fb919] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T22:58:00.007554800
+2025-01-30 22:58:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2c9e2f87-111b-42d8-9db7-1d61efd424f2] | ACTIVE_TOKEN_SCHEDULER | START TIME : 2025-01-30T22:58:00.007554800
+2025-01-30 22:58:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-92a21d81-4533-41de-b6e8-592e2c3fb919] | schedule processed in 63 ms : 2025-01-30T22:58:00.069624700
+2025-01-30 22:58:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-92a21d81-4533-41de-b6e8-592e2c3fb919] | END TIME : 2025-01-30T22:58:00.069624700
+2025-01-30 22:58:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-92a21d81-4533-41de-b6e8-592e2c3fb919] | -------------------------------------------------------------------------->>
+2025-01-30 22:58:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2c9e2f87-111b-42d8-9db7-1d61efd424f2] | schedule processed in 64 ms : 2025-01-30T22:58:00.070622200
+2025-01-30 22:58:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2c9e2f87-111b-42d8-9db7-1d61efd424f2] | END TIME : 2025-01-30T22:58:00.070622200
+2025-01-30 22:58:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2c9e2f87-111b-42d8-9db7-1d61efd424f2] | -------------------------------------------------------------------------->>
+2025-01-30 22:59:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-c553e986-6650-469f-9336-055ba55a168f] | <<--------------------------------------------------------------------------
+2025-01-30 22:59:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-c553e986-6650-469f-9336-055ba55a168f] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T22:59:00.013415300
+2025-01-30 22:59:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-c553e986-6650-469f-9336-055ba55a168f] | schedule processed in 3 ms : 2025-01-30T22:59:00.016413600
+2025-01-30 22:59:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-c553e986-6650-469f-9336-055ba55a168f] | END TIME : 2025-01-30T22:59:00.016413600
+2025-01-30 22:59:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-c553e986-6650-469f-9336-055ba55a168f] | -------------------------------------------------------------------------->>
+2025-01-30 23:00:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2feb00c6-0a65-4147-952b-eb3cd5f64e5b] | <<--------------------------------------------------------------------------
+2025-01-30 23:00:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-25f3fb7d-37ea-4e89-bb11-df8242067110] | <<--------------------------------------------------------------------------
+2025-01-30 23:00:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2feb00c6-0a65-4147-952b-eb3cd5f64e5b] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:00:00.004801300
+2025-01-30 23:00:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-25f3fb7d-37ea-4e89-bb11-df8242067110] | ACTIVE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:00:00.004801300
+2025-01-30 23:00:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f55b2f31-617f-46a9-83f1-dc04542f7eae] | <<--------------------------------------------------------------------------
+2025-01-30 23:00:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f55b2f31-617f-46a9-83f1-dc04542f7eae] | SEAT_SCHEDULER | START TIME : 2025-01-30T23:00:00.004801300
+2025-01-30 23:00:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2feb00c6-0a65-4147-952b-eb3cd5f64e5b] | schedule processed in 2 ms : 2025-01-30T23:00:00.006800500
+2025-01-30 23:00:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2feb00c6-0a65-4147-952b-eb3cd5f64e5b] | END TIME : 2025-01-30T23:00:00.006800500
+2025-01-30 23:00:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-2feb00c6-0a65-4147-952b-eb3cd5f64e5b] | -------------------------------------------------------------------------->>
+2025-01-30 23:00:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-25f3fb7d-37ea-4e89-bb11-df8242067110] | schedule processed in 2 ms : 2025-01-30T23:00:00.006800500
+2025-01-30 23:00:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-25f3fb7d-37ea-4e89-bb11-df8242067110] | END TIME : 2025-01-30T23:00:00.007799800
+2025-01-30 23:00:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-25f3fb7d-37ea-4e89-bb11-df8242067110] | -------------------------------------------------------------------------->>
+2025-01-30 23:00:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f55b2f31-617f-46a9-83f1-dc04542f7eae] | schedule processed in 11 ms : 2025-01-30T23:00:00.015799800
+2025-01-30 23:00:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f55b2f31-617f-46a9-83f1-dc04542f7eae] | END TIME : 2025-01-30T23:00:00.015799800
+2025-01-30 23:00:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f55b2f31-617f-46a9-83f1-dc04542f7eae] | -------------------------------------------------------------------------->>
+2025-01-30 23:01:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f3e252eb-6c24-4599-a063-81069d2975a0] | <<--------------------------------------------------------------------------
+2025-01-30 23:01:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f3e252eb-6c24-4599-a063-81069d2975a0] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:01:00.006252
+2025-01-30 23:01:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f3e252eb-6c24-4599-a063-81069d2975a0] | schedule processed in 3 ms : 2025-01-30T23:01:00.009253
+2025-01-30 23:01:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f3e252eb-6c24-4599-a063-81069d2975a0] | END TIME : 2025-01-30T23:01:00.009253
+2025-01-30 23:01:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-f3e252eb-6c24-4599-a063-81069d2975a0] | -------------------------------------------------------------------------->>
+2025-01-30 23:02:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-56306525-a870-40d9-b9b0-51bb26e15c08] | <<--------------------------------------------------------------------------
+2025-01-30 23:02:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a52ef027-505b-4fee-9824-3201f7d67fff] | <<--------------------------------------------------------------------------
+2025-01-30 23:02:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-56306525-a870-40d9-b9b0-51bb26e15c08] | ACTIVE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:02:00.006566700
+2025-01-30 23:02:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a52ef027-505b-4fee-9824-3201f7d67fff] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:02:00.006566700
+2025-01-30 23:02:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a52ef027-505b-4fee-9824-3201f7d67fff] | schedule processed in 3 ms : 2025-01-30T23:02:00.009576
+2025-01-30 23:02:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a52ef027-505b-4fee-9824-3201f7d67fff] | END TIME : 2025-01-30T23:02:00.009576
+2025-01-30 23:02:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a52ef027-505b-4fee-9824-3201f7d67fff] | -------------------------------------------------------------------------->>
+2025-01-30 23:02:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-56306525-a870-40d9-b9b0-51bb26e15c08] | schedule processed in 3 ms : 2025-01-30T23:02:00.009576
+2025-01-30 23:02:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-56306525-a870-40d9-b9b0-51bb26e15c08] | END TIME : 2025-01-30T23:02:00.009576
+2025-01-30 23:02:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-56306525-a870-40d9-b9b0-51bb26e15c08] | -------------------------------------------------------------------------->>
+2025-01-30 23:03:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cdc5cc46-dbf0-4a26-b0f0-a54299b761bc] | <<--------------------------------------------------------------------------
+2025-01-30 23:03:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cdc5cc46-dbf0-4a26-b0f0-a54299b761bc] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:03:00.007110
+2025-01-30 23:03:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cdc5cc46-dbf0-4a26-b0f0-a54299b761bc] | schedule processed in 3 ms : 2025-01-30T23:03:00.010114700
+2025-01-30 23:03:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cdc5cc46-dbf0-4a26-b0f0-a54299b761bc] | END TIME : 2025-01-30T23:03:00.010114700
+2025-01-30 23:03:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cdc5cc46-dbf0-4a26-b0f0-a54299b761bc] | -------------------------------------------------------------------------->>
+2025-01-30 23:04:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cd916f59-e32c-4e9a-b1cf-76944895aac7] | <<--------------------------------------------------------------------------
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-972c1c23-bfcc-41b5-ae41-6747e4fa3e7c] | <<--------------------------------------------------------------------------
+2025-01-30 23:04:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cd916f59-e32c-4e9a-b1cf-76944895aac7] | ACTIVE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:04:00.000551500
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-972c1c23-bfcc-41b5-ae41-6747e4fa3e7c] | SEAT_SCHEDULER | START TIME : 2025-01-30T23:04:00.000551500
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-972c1c23-bfcc-41b5-ae41-6747e4fa3e7c] | schedule processed in 2 ms : 2025-01-30T23:04:00.002554
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-972c1c23-bfcc-41b5-ae41-6747e4fa3e7c] | END TIME : 2025-01-30T23:04:00.002554
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-972c1c23-bfcc-41b5-ae41-6747e4fa3e7c] | -------------------------------------------------------------------------->>
+2025-01-30 23:04:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cd916f59-e32c-4e9a-b1cf-76944895aac7] | schedule processed in 2 ms : 2025-01-30T23:04:00.002554
+2025-01-30 23:04:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cd916f59-e32c-4e9a-b1cf-76944895aac7] | END TIME : 2025-01-30T23:04:00.002554
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-62ffd92a-5246-45f9-b364-9c5e12aaab87] | <<--------------------------------------------------------------------------
+2025-01-30 23:04:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-cd916f59-e32c-4e9a-b1cf-76944895aac7] | -------------------------------------------------------------------------->>
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-62ffd92a-5246-45f9-b364-9c5e12aaab87] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:04:00.002554
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-62ffd92a-5246-45f9-b364-9c5e12aaab87] | schedule processed in 2 ms : 2025-01-30T23:04:00.004556
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-62ffd92a-5246-45f9-b364-9c5e12aaab87] | END TIME : 2025-01-30T23:04:00.004556
+2025-01-30 23:04:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-62ffd92a-5246-45f9-b364-9c5e12aaab87] | -------------------------------------------------------------------------->>
+2025-01-30 23:05:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-e04e5671-3ab0-4e18-bf4f-3947292268f9] | <<--------------------------------------------------------------------------
+2025-01-30 23:05:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-e04e5671-3ab0-4e18-bf4f-3947292268f9] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:05:00.009430500
+2025-01-30 23:05:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-e04e5671-3ab0-4e18-bf4f-3947292268f9] | schedule processed in 3 ms : 2025-01-30T23:05:00.012648800
+2025-01-30 23:05:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-e04e5671-3ab0-4e18-bf4f-3947292268f9] | END TIME : 2025-01-30T23:05:00.013651
+2025-01-30 23:05:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-e04e5671-3ab0-4e18-bf4f-3947292268f9] | -------------------------------------------------------------------------->>
+2025-01-30 23:06:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-23b2df96-e57e-432f-8143-75030ffd5ebb] | <<--------------------------------------------------------------------------
+2025-01-30 23:06:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-73ebdac8-1207-4580-a234-82aa3fc59300] | <<--------------------------------------------------------------------------
+2025-01-30 23:06:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-23b2df96-e57e-432f-8143-75030ffd5ebb] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:06:00.001873100
+2025-01-30 23:06:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-73ebdac8-1207-4580-a234-82aa3fc59300] | ACTIVE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:06:00.001873100
+2025-01-30 23:06:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-23b2df96-e57e-432f-8143-75030ffd5ebb] | schedule processed in 2 ms : 2025-01-30T23:06:00.003874700
+2025-01-30 23:06:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-23b2df96-e57e-432f-8143-75030ffd5ebb] | END TIME : 2025-01-30T23:06:00.003874700
+2025-01-30 23:06:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-23b2df96-e57e-432f-8143-75030ffd5ebb] | -------------------------------------------------------------------------->>
+2025-01-30 23:06:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-73ebdac8-1207-4580-a234-82aa3fc59300] | schedule processed in 2 ms : 2025-01-30T23:06:00.003874700
+2025-01-30 23:06:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-73ebdac8-1207-4580-a234-82aa3fc59300] | END TIME : 2025-01-30T23:06:00.003874700
+2025-01-30 23:06:00 [MyScheduler-3] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-73ebdac8-1207-4580-a234-82aa3fc59300] | -------------------------------------------------------------------------->>
+2025-01-30 23:07:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a2679284-ee02-42dd-b6a2-ede7b841f4db] | <<--------------------------------------------------------------------------
+2025-01-30 23:07:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a2679284-ee02-42dd-b6a2-ede7b841f4db] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:07:00.000974
+2025-01-30 23:07:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a2679284-ee02-42dd-b6a2-ede7b841f4db] | schedule processed in 2 ms : 2025-01-30T23:07:00.002974700
+2025-01-30 23:07:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a2679284-ee02-42dd-b6a2-ede7b841f4db] | END TIME : 2025-01-30T23:07:00.002974700
+2025-01-30 23:07:00 [MyScheduler-1] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-a2679284-ee02-42dd-b6a2-ede7b841f4db] | -------------------------------------------------------------------------->>
+2025-01-30 23:08:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-dbccdf58-6fb5-41eb-b01c-2836088c1028] | <<--------------------------------------------------------------------------
+2025-01-30 23:08:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-0267e01c-65d4-42c8-b783-4d29e0a2057c] | <<--------------------------------------------------------------------------
+2025-01-30 23:08:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-dbccdf58-6fb5-41eb-b01c-2836088c1028] | SEAT_SCHEDULER | START TIME : 2025-01-30T23:08:00.006911100
+2025-01-30 23:08:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-1cacd401-c67f-4ae1-b8e8-d49026fd8afc] | <<--------------------------------------------------------------------------
+2025-01-30 23:08:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-0267e01c-65d4-42c8-b783-4d29e0a2057c] | ACTIVE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:08:00.006911100
+2025-01-30 23:08:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-1cacd401-c67f-4ae1-b8e8-d49026fd8afc] | EXPIRE_TOKEN_SCHEDULER | START TIME : 2025-01-30T23:08:00.006911100
+2025-01-30 23:08:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-1cacd401-c67f-4ae1-b8e8-d49026fd8afc] | schedule processed in 2 ms : 2025-01-30T23:08:00.008916600
+2025-01-30 23:08:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-1cacd401-c67f-4ae1-b8e8-d49026fd8afc] | END TIME : 2025-01-30T23:08:00.008916600
+2025-01-30 23:08:00 [MyScheduler-2] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-1cacd401-c67f-4ae1-b8e8-d49026fd8afc] | -------------------------------------------------------------------------->>
+2025-01-30 23:08:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-0267e01c-65d4-42c8-b783-4d29e0a2057c] | schedule processed in 2 ms : 2025-01-30T23:08:00.008916600
+2025-01-30 23:08:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-0267e01c-65d4-42c8-b783-4d29e0a2057c] | END TIME : 2025-01-30T23:08:00.008916600
+2025-01-30 23:08:00 [MyScheduler-5] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-0267e01c-65d4-42c8-b783-4d29e0a2057c] | -------------------------------------------------------------------------->>
+2025-01-30 23:08:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-dbccdf58-6fb5-41eb-b01c-2836088c1028] | schedule processed in 3 ms : 2025-01-30T23:08:00.009917200
+2025-01-30 23:08:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-dbccdf58-6fb5-41eb-b01c-2836088c1028] | END TIME : 2025-01-30T23:08:00.009917200
+2025-01-30 23:08:00 [MyScheduler-4] INFO  i.d.c.i.s.DataStatusScheduler - UUID - [SCHEDULER-dbccdf58-6fb5-41eb-b01c-2836088c1028] | -------------------------------------------------------------------------->>

@@ -37,4 +37,7 @@ out/
 .vscode/
 
 ### log ###
-logs/**
+logs/debug/
+logs/info/
+logs/error/
+
