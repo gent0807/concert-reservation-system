@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@Profile(value = "default")
 public class PointHistoryRepositoryImpl implements PointHistoryRepository {
     private final PointHistoryJPARepository pointHistoryJPARepository;
 

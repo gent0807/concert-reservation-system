@@ -2,7 +2,6 @@ package io.dev.concertreservationsystem.common.exception.handler;
 
 import io.dev.concertreservationsystem.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
