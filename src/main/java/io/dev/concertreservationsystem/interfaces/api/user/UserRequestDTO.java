@@ -2,7 +2,7 @@ package io.dev.concertreservationsystem.interfaces.api.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dev.concertreservationsystem.application.user.UserFacadeDTOParam;
-import io.dev.concertreservationsystem.interfaces.common.validation.annotation.NotInvalidUserGenderType;
+import io.dev.concertreservationsystem.common.validation.annotation.NotInvalidUserGenderType;
 import io.dev.concertreservationsystem.domain.user.UserGenderType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

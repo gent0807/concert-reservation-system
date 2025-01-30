@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.user;
 
-import io.dev.concertreservationsystem.interfaces.common.validation.annotation.NotInvalidUserGenderType;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateUser;
+import io.dev.concertreservationsystem.common.validation.annotation.NotInvalidUserGenderType;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreateUser;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

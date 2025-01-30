@@ -1,11 +1,8 @@
 package io.dev.concertreservationsystem.domain.concert_detail;
 
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableConcertDetail;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableSeat;
+import io.dev.concertreservationsystem.common.validation.interfaces.SearchReservableConcertDetail;
+import io.dev.concertreservationsystem.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 

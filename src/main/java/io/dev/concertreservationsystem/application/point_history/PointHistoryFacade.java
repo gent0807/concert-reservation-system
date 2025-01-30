@@ -2,7 +2,7 @@ package io.dev.concertreservationsystem.application.point_history;
 
 import io.dev.concertreservationsystem.domain.point_history.PointHistoryDTOResult;
 import io.dev.concertreservationsystem.domain.point_history.PointHistoryService;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreatePointHistory;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreatePointHistory;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
