@@ -2,8 +2,8 @@ package io.dev.concertreservationsystem.application.token;
 
 import io.dev.concertreservationsystem.domain.token.TokenDTOResult;
 import io.dev.concertreservationsystem.domain.token.TokenService;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CheckTokenStatusValid;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateToken;
+import io.dev.concertreservationsystem.common.validation.interfaces.CheckTokenStatusValid;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreateToken;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,13 +1,11 @@
 package io.dev.concertreservationsystem.domain.concert_detail;
 
 
-import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
-import io.dev.concertreservationsystem.domain.seat.Seat;
 import io.dev.concertreservationsystem.domain.seat.SeatRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableConcertDetail;
+import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
+import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.common.validation.interfaces.SearchReservableConcertDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

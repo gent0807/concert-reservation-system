@@ -2,10 +2,10 @@ package io.dev.concertreservationsystem.domain.token;
 
 
 import io.dev.concertreservationsystem.domain.user.UserRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CheckTokenStatusValid;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateToken;
+import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
+import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.common.validation.interfaces.CheckTokenStatusValid;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreateToken;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

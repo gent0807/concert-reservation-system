@@ -1,11 +1,10 @@
 package io.dev.concertreservationsystem.domain.user;
 
-import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.common.exception.error.DomainModelParamInvalidException;
+import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;

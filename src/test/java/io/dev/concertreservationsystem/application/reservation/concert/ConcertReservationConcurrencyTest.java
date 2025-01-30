@@ -5,7 +5,6 @@ import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailReposi
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailStatusType;
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
-import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
 import io.dev.concertreservationsystem.domain.reservation.Reservation;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.seat.Seat;
@@ -14,10 +13,9 @@ import io.dev.concertreservationsystem.domain.seat.SeatStatusType;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserGenderType;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
+import io.dev.concertreservationsystem.common.exception.error.DomainModelParamInvalidException;
+import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +25,6 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

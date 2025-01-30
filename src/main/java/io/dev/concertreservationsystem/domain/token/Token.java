@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.token;
 
-import io.dev.concertreservationsystem.interfaces.common.exception.error.DomainModelParamInvalidException;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.common.exception.error.DomainModelParamInvalidException;
+import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;

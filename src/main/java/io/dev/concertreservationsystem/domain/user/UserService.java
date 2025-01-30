@@ -2,9 +2,9 @@ package io.dev.concertreservationsystem.domain.user;
 
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ServiceDataNotFoundException;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateUser;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreateUser;
+import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

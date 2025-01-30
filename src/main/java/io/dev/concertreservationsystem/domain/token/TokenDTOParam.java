@@ -1,7 +1,7 @@
 package io.dev.concertreservationsystem.domain.token;
 
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CheckTokenStatusValid;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateUser;
+import io.dev.concertreservationsystem.common.validation.interfaces.CheckTokenStatusValid;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreateUser;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 

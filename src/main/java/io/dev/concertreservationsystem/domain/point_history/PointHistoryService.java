@@ -1,13 +1,14 @@
 package io.dev.concertreservationsystem.domain.point_history;
 
+import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
+import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.domain.payment.Payment;
 import io.dev.concertreservationsystem.domain.payment.PaymentRepository;
 import io.dev.concertreservationsystem.domain.reservation.ReservationRepository;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
-import io.dev.concertreservationsystem.interfaces.common.exception.error.*;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreatePointHistory;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreatePointHistory;
+import io.dev.concertreservationsystem.common.validation.interfaces.ProcessPayment;
 import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransactionType;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

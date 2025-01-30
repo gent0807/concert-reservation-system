@@ -7,17 +7,14 @@ import io.dev.concertreservationsystem.domain.point_history.PointHistoryDTOParam
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOParam;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
 import io.dev.concertreservationsystem.domain.user.UserDTOParam;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateReservations;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.ProcessPayment;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableConcertDetail;
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.SearchReservableSeat;
-import jakarta.validation.Valid;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreateReservations;
+import io.dev.concertreservationsystem.common.validation.interfaces.ProcessPayment;
+import io.dev.concertreservationsystem.common.validation.interfaces.SearchReservableConcertDetail;
+import io.dev.concertreservationsystem.common.validation.interfaces.SearchReservableSeat;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;

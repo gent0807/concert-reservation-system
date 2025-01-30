@@ -23,7 +23,7 @@ public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
 
     @Override
     public Optional<ConcertDetail> findConcertDetailByConcertDetailIdWithLock(Long concertDetailId){
-        return concertDetailJPARepository.findConcertDetailByConcertDetailIdForShareWithPessimisticLock(concertDetailId);
+        return concertDetailJPARepository.findConcertDetailByConcertDetailIdForUpdateWithPessimisticLock(concertDetailId);
     }
 
     @Override

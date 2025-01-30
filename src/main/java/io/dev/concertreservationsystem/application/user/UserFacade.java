@@ -1,6 +1,6 @@
 package io.dev.concertreservationsystem.application.user;
 
-import io.dev.concertreservationsystem.interfaces.common.validation.interfaces.CreateUser;
+import io.dev.concertreservationsystem.common.validation.interfaces.CreateUser;
 import io.dev.concertreservationsystem.domain.user.UserDTOResult;
 import io.dev.concertreservationsystem.domain.user.UserService;
 import jakarta.validation.Valid;
