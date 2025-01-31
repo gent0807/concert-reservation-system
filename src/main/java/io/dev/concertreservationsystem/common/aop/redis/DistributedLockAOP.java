@@ -41,16 +41,16 @@ public class DistributedLockAOP {
         RLock lock = redissonClient.getLock(key);
 
         try {
-            boolean locked = lock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
+            boolean locked = lock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());  // subscribe
             if (locked) {
                 return joinPoint.proceed();
             } else {
-                log.info("해당 락을 다른 사람이 사용하고 있음");
-                throw new IllegalStateException("해당 작업은 현재 다른 프로세스에서 진행 중입니다.");
+                log.info("다른 프로세스에서 락 선제 획득");
+                throw new IllegalStateException("현재 다른 프로세스에서 사용 중");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException("락 획득 중 인터럽트 발생", e);
+            throw new RuntimeException("락 획득 중 InterruptedException 발생", e);
         } finally {
             if (lock.isHeldByCurrentThread()) {
                 lock.unlock();
