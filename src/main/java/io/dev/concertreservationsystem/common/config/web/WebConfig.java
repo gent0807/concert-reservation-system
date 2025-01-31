@@ -1,4 +1,4 @@
-package io.dev.concertreservationsystem.common.config;
+package io.dev.concertreservationsystem.common.config.web;
 
 import io.dev.concertreservationsystem.common.interceptor.TokenInterceptor;
 import lombok.RequiredArgsConstructor;
