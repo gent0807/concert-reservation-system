@@ -10,7 +10,10 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
+
 /*
+    RedisTemplate 단일 사용할 것이지만 configure
+ */
 @EnableCaching
 @Configuration
 public class RedisCacheConfig {
@@ -29,4 +32,3 @@ public class RedisCacheConfig {
     }
 
 }
-*/
