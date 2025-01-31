@@ -1,12 +1,13 @@
-package io.dev.concertreservationsystem.common.aop;
+package io.dev.concertreservationsystem.common.aop.redis;
 
-import io.dev.concertreservationsystem.common.config.redis.DistributedLock;
+import io.dev.concertreservationsystem.common.util.parser.CustomSpringELParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Profile;
@@ -26,16 +27,18 @@ public class DistributedLockAOP {
     private final RedissonClient redissonClient;
 
    // 분산락 포인트컷
-    @Pointcut("@annotation(io.dev.concertreservationsystem.common.config.redis.DistributedLock)")
+    @Pointcut("@annotation(io.dev.concertreservationsystem.common.aop.redis.DistributedLock)")
     public void distributedLockPointcut() {}
 
     // Around : 로직 전후로 해줄 것 -> 락 획득과 해제
     @Around("distributedLockPointcut() && @annotation(distributedLock)")
     public Object handleDistributedLock(ProceedingJoinPoint joinPoint, DistributedLock distributedLock) throws Throwable {
 
-        String key = REDISSON_LOCK_PREFIX + CustomSpringELParser.getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), distributedLock.key());
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 
-        RLock lock = redissonClient.getLock(lockName);
+        String key = REDISSON_LOCK_PREFIX + CustomSpringELParser.getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), distributedLock.lockNm());
+
+        RLock lock = redissonClient.getLock(key);
 
         try {
             boolean locked = lock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());

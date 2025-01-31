@@ -13,6 +13,7 @@ import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransac
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,8 @@ public class PointHistoryService {
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
+
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Validated(CreatePointHistory.class)
     @Transactional

@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.application.reservation.concert;
 
+import io.dev.concertreservationsystem.common.aop.redis.DistributedLock;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOResult;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
@@ -60,6 +61,7 @@ public class ConcertReserveAdminFacade {
     // 3. 좌석 예약 주문서 발행, 좌석 임시 점유(occupied)
     //@Validated(CreateReservations.class)
     @Transactional
+    @DistributedLock(lockNm = "reservation_lock", waitTime = 0L, leaseTime = 1000L)
     public List<ConcertReserveAdminDTOResult> insertReservations(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
 
         // 콘서트 실제 공연 좌석들의 예약 상태/예약 가능 여부 확인, 예약 불가(상태가 reservable 아닌 경우)이면 exception 발생

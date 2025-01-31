@@ -1,4 +1,4 @@
-package io.dev.concertreservationsystem.common.config.redis;
+package io.dev.concertreservationsystem.common.aop.redis;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
