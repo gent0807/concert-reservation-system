@@ -1,18 +1,21 @@
 package io.dev.concertreservationsystem;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.annotation.PreDestroy;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class TestContainerConfiguration {
     public static final MySQLContainer<?> MYSQL_CONTAINER;
 
-    private static final GenericContainer<?> REDIS_CONTAINER;
+    private static final GenericContainer<?> REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK;
 
     static {
         MYSQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"))
@@ -21,16 +24,25 @@ public class TestContainerConfiguration {
                 .withPassword("test");
         MYSQL_CONTAINER.start();
 
-        REDIS_CONTAINER = new GenericContainer<>(DockerImageName.parse("redis:7.0.8-alpine"))
+        REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK = new GenericContainer<>(DockerImageName.parse("redis:7.0.8-alpine"))
                 .withExposedPorts(6379);
-        REDIS_CONTAINER.start();
+        REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.start();
 
         System.setProperty("spring.datasource.url", MYSQL_CONTAINER.getJdbcUrl() + "?characterEncoding=UTF-8&serverTimezone=UTC");
         System.setProperty("spring.datasource.username", MYSQL_CONTAINER.getUsername());
         System.setProperty("spring.datasource.password", MYSQL_CONTAINER.getPassword());
 
-        System.setProperty("spring.redis.host", REDIS_CONTAINER.getHost());
-        System.setProperty("spring.redis.port", REDIS_CONTAINER.getMappedPort(6379).toString());
+        System.setProperty("spring.redis.host", REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.getHost());
+        System.setProperty("spring.redis.port", REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.getMappedPort(6379).toString());
+    }
+
+    @Bean
+    public DataSource dataSource(){
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(MYSQL_CONTAINER.getJdbcUrl());
+        hikariConfig.setDriverClassName(MYSQL_CONTAINER.getDriverClassName());
+
+        return new HikariDataSource(hikariConfig);
     }
 
     @PreDestroy
@@ -39,8 +51,8 @@ public class TestContainerConfiguration {
             MYSQL_CONTAINER.stop();
         }
 
-        if (REDIS_CONTAINER.isRunning()) {
-            REDIS_CONTAINER.stop();
+        if (REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.isRunning()) {
+            REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.stop();
         }
 
     }
