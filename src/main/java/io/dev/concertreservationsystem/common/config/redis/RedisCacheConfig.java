@@ -1,6 +1,7 @@
 package io.dev.concertreservationsystem.common.config.redis;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +32,7 @@ public class RedisCacheConfig {
     @Value("${spring.data.redis.host}")
     private String host;
 
-    @Value("${spring.data.redis.port}")
+    @Value("${spring.data.redis.cache.port}")
     private int port;
 
     @Bean
