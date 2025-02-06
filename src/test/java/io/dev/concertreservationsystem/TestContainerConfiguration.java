@@ -17,6 +17,8 @@ public class TestContainerConfiguration {
 
     private static final GenericContainer<?> REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK;
 
+    private static final GenericContainer<?> REDIS_CONTAINER_FOR_CACHE;
+
     static {
         MYSQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"))
                 .withDatabaseName("hhplus")
@@ -27,6 +29,10 @@ public class TestContainerConfiguration {
         REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK = new GenericContainer<>(DockerImageName.parse("redis:7.0.8-alpine"))
                 .withExposedPorts(6379);
         REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.start();
+
+        REDIS_CONTAINER_FOR_CACHE = new GenericContainer<>(DockerImageName.parse("redis:7.0.8-alpine"));
+
+        REDIS_CONTAINER_FOR_CACHE.start();
 
         System.setProperty("spring.datasource.url", MYSQL_CONTAINER.getJdbcUrl() + "?characterEncoding=UTF-8&serverTimezone=UTC");
         System.setProperty("spring.datasource.username", MYSQL_CONTAINER.getUsername());
@@ -53,6 +59,10 @@ public class TestContainerConfiguration {
 
         if (REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.isRunning()) {
             REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.stop();
+        }
+
+        if(REDIS_CONTAINER_FOR_CACHE.isRunning()){
+            REDIS_CONTAINER_FOR_CACHE.stop();
         }
 
     }
