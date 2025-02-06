@@ -38,10 +38,10 @@ public class RedisTokenServiceImpl implements TokenService{
         // 도메인 모델 내 정적 팩토리 메소드로 생성
         Token token = Token.createTokenForRedis(tokenDTOParam.userId());
 
-        // redis에 token 저장, tokenId 반환
-        Double tokenId = redisTokenRepository.saveWaitingToken(token);
+        // redis에 token 저장, score 반환
+        Double score = redisTokenRepository.saveWaitingToken(token);
 
-        return redisTokenRepository.findWaitingTokenByTokenId(tokenId).stream().findFirst()
+        return redisTokenRepository.findWaitingTokenByScore(score).stream().findFirst()
                                                                         .orElseThrow(()->{
                                                                             throw new ServiceDataNotFoundException(ErrorCode.TOKEN_SAVE_FAILED, "TOKEN SERVICE", "publishToken");
                                                                         }).convertToTokenDTOResult();

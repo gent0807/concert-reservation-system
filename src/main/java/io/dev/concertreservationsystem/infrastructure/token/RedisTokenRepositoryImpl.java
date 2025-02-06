@@ -21,16 +21,19 @@ public class RedisTokenRepositoryImpl implements RedisTokenRepository {
 
     @Override
     public Double saveWaitingToken(Token token) {
-        Double tokenId = redisTemplate.opsForZSet().incrementScore(CacheKey.WAITING_TOKEN_CACHE_NAME, token, 1);
+
+        long score = System.currentTimeMillis();
+
+        redisTemplate.opsForZSet().add(CacheKey.WAITING_TOKEN_CACHE_NAME, token, score);
 
         redisTemplate.expire(CacheKey.WAITING_TOKEN_CACHE_NAME, 11, TimeUnit.MINUTES);
 
-        return tokenId;
+        return (double) score;
     }
 
     @Override
-    public Set<Token> findWaitingTokenByTokenId(Double tokenId) {
-        return redisTemplate.opsForZSet().rangeByScore(CacheKey.WAITING_TOKEN_CACHE_NAME, tokenId, tokenId);
+    public Set<Token> findWaitingTokenByScore(Double score) {
+        return redisTemplate.opsForZSet().rangeByScore(CacheKey.WAITING_TOKEN_CACHE_NAME, score, score);
     }
 
     @Override

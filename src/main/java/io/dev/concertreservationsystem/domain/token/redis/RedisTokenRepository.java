@@ -8,7 +8,7 @@ import java.util.Set;
 public interface RedisTokenRepository {
     Double saveWaitingToken(Token token);
 
-    Set<Token> findWaitingTokenByTokenId(Double tokenId);
+    Set<Token> findWaitingTokenByScore(Double score);
 
     Set<ZSetOperations.TypedTuple<Token>> getActiveTokens(long maxActiveTokenLimit);
 
