@@ -4,6 +4,7 @@ import io.dev.concertreservationsystem.common.exception.error.DomainModelParamIn
 import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -53,15 +55,29 @@ public class Token implements Serializable {
         this.tokenStatus = tokenStatus;
     }
 
+    public Token(String userId){
+        this.userId = userId;
+    }
+
+    public static Token createTokenForRedis(String userId){
+        if(userId == null){
+            log.error("userId is null");
+            throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "TOKEN", "createToken");
+        }
+
+        return new Token(userId);
+    }
+
     public static Token createToken(String userId, TokenStatusType tokenStatus){
 
-        if(userId == null || userId.isBlank()){
-            log.error("userId is null or blank");
+        if(userId == null){
+            log.error("userId is null");
             throw new DomainModelParamInvalidException(ErrorCode.USER_ID_INVALID, "TOKEN", "createToken");
         }
 
         return new Token(userId, tokenStatus);
     }
+
 
     public TokenDTOResult convertToTokenDTOResult() {
 

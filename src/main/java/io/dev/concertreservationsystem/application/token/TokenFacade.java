@@ -2,6 +2,7 @@ package io.dev.concertreservationsystem.application.token;
 
 import io.dev.concertreservationsystem.domain.token.TokenDTOResult;
 import io.dev.concertreservationsystem.domain.token.TokenService;
+import io.dev.concertreservationsystem.domain.token.TokenServiceImpl;
 import io.dev.concertreservationsystem.common.validation.interfaces.CheckTokenStatusValid;
 import io.dev.concertreservationsystem.common.validation.interfaces.CreateToken;
 import jakarta.validation.Valid;
@@ -29,7 +30,7 @@ public class TokenFacade {
 
     @Validated(CheckTokenStatusValid.class)
     public void checkTokenStatusValidation(@Valid TokenFacadeDTOParam tokenFacadeDTOParam) {
-        
+        tokenService.checkTokenStatusValidation(tokenFacadeDTOParam.convertToTokenDTOParam());
     }
 
     // 비활성화 상태인 유저 대기열 토큰들중 상위 10개 활성 상태로
