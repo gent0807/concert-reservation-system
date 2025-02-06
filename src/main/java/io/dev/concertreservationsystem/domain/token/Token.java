@@ -84,7 +84,7 @@ public class Token implements Serializable {
         checkValidation();
 
         return TokenDTOResult.builder()
-                        .tokenId(this.tokenId)
+                        .tokenId(String.valueOf(this.tokenId))
                         .userId(this.userId)
                         .tokenStatus(this.tokenStatus)
                         .build();

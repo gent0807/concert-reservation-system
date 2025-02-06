@@ -6,13 +6,13 @@ import org.springframework.data.redis.core.ZSetOperations;
 import java.util.Set;
 
 public interface RedisTokenRepository {
-    Double saveWaitingToken(Token token);
+    Double saveWaitingToken(String userId);
 
-    Set<Token> findWaitingTokenByScore(Double score);
+    Set<String> findWaitingTokenByScore(Double score);
 
-    Set<ZSetOperations.TypedTuple<Token>> getActiveTokens(long maxActiveTokenLimit);
+    Set<ZSetOperations.TypedTuple<String>> getActiveTokens(long maxActiveTokenLimit);
 
-    void saveActiveToken(ZSetOperations.TypedTuple<Token> token);
+    void saveActiveToken(ZSetOperations.TypedTuple<String> tokenId);
 
-    String findActiveUserByTokenId(Long tokenId);
+    String findActiveUserByTokenId(String tokenId);
 }

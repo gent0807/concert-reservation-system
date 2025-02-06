@@ -35,23 +35,21 @@ public class RedisTokenServiceImpl implements TokenService{
                                                 throw new ServiceDataNotFoundException(ErrorCode.USER_NOT_FOUND, "TOKEN SERVICE", "publishToken");
                                             });
 
-        // 도메인 모델 내 정적 팩토리 메소드로 생성
-        Token token = Token.createTokenForRedis(tokenDTOParam.userId());
-
         // redis에 token 저장, score 반환
-        Double score = redisTokenRepository.saveWaitingToken(token);
+        Double score = redisTokenRepository.saveWaitingToken(tokenDTOParam.userId());
 
-        return redisTokenRepository.findWaitingTokenByScore(score).stream().findFirst()
+        return RedisToken.builder().tokenId(redisTokenRepository.findWaitingTokenByScore(score).stream().findFirst()
                                                                         .orElseThrow(()->{
                                                                             throw new ServiceDataNotFoundException(ErrorCode.TOKEN_SAVE_FAILED, "TOKEN SERVICE", "publishToken");
-                                                                        }).convertToTokenDTOResult();
+                                                                        })).userId(tokenDTOParam.userId()).build().convertToTokenDTOResult();
     }
 
     @Override
     public void activeTokens(long maxActiveTokenLimit) {
-        Set<ZSetOperations.TypedTuple<Token>> set = redisTokenRepository.getActiveTokens(maxActiveTokenLimit);
-        set.stream().forEach(token->{
-            redisTokenRepository.saveActiveToken(token);
+        Set<ZSetOperations.TypedTuple<String>> set = redisTokenRepository.getActiveTokens(maxActiveTokenLimit);
+
+        set.stream().forEach(tokenId->{
+            redisTokenRepository.saveActiveToken(tokenId);
         });
     }
 

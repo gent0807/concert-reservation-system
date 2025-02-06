@@ -5,7 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record TokenDTOResult(
-        Long tokenId,
+        String tokenId,
         String userId,
         TokenStatusType tokenStatus
 ) {

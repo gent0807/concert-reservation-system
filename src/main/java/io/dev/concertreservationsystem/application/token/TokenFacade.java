@@ -28,11 +28,6 @@ public class TokenFacade {
 
     }
 
-    @Validated(CheckTokenStatusValid.class)
-    public void checkTokenStatusValidation(@Valid TokenFacadeDTOParam tokenFacadeDTOParam) {
-        tokenService.checkTokenStatusValidation(tokenFacadeDTOParam.convertToTokenDTOParam());
-    }
-
     // 비활성화 상태인 유저 대기열 토큰들중 상위 10개 활성 상태로
     public void activeTokens(long maxActiveLimit) {
         tokenService.activeTokens(maxActiveLimit);
@@ -42,4 +37,11 @@ public class TokenFacade {
     public void expiredTokens() {
         tokenService.expireTokens();
     }
+
+    @Validated(CheckTokenStatusValid.class)
+    public void checkTokenStatusValidation(@Valid TokenFacadeDTOParam tokenFacadeDTOParam) {
+        tokenService.checkTokenStatusValidation(tokenFacadeDTOParam.convertToTokenDTOParam());
+    }
+
+
 }

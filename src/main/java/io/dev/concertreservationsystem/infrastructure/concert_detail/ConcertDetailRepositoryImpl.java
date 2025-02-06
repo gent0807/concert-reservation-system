@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@Profile(value = "default")
+@Profile(value = {"default", "redis"})
 public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
     private final ConcertDetailJPARepository concertDetailJPARepository;
 

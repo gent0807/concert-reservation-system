@@ -38,15 +38,23 @@ public class TestContainerConfiguration {
         System.setProperty("spring.datasource.username", MYSQL_CONTAINER.getUsername());
         System.setProperty("spring.datasource.password", MYSQL_CONTAINER.getPassword());
 
-        System.setProperty("spring.redis.host", REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.getHost());
-        System.setProperty("spring.redis.port", REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.getMappedPort(6379).toString());
+        System.setProperty("spring.data.redis.host", REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.getHost());
+        System.setProperty("spring.data.redis.port", REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.getMappedPort(6379).toString());
     }
 
     @Bean
     public DataSource dataSource(){
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(MYSQL_CONTAINER.getJdbcUrl());
-        hikariConfig.setDriverClassName(MYSQL_CONTAINER.getDriverClassName());
+        hikariConfig.setJdbcUrl(MYSQL_CONTAINER.getJdbcUrl() + "?characterEncoding=UTF-8&serverTimezone=UTC");
+        hikariConfig.setUsername(MYSQL_CONTAINER.getUsername());
+        hikariConfig.setPassword(MYSQL_CONTAINER.getPassword());
+        hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        hikariConfig.setMaximumPoolSize(200);
+        hikariConfig.setMinimumIdle(60);
+        hikariConfig.setIdleTimeout(10000);
+        hikariConfig.setConnectionTimeout(10000);
+        hikariConfig.setValidationTimeout(10000);
+        hikariConfig.setLeakDetectionThreshold(10000);
 
         return new HikariDataSource(hikariConfig);
     }
