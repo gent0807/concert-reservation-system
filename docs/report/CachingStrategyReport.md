@@ -274,7 +274,7 @@
       <summary> Redis는 key-value 구조로서 value의 타입으로 다양한 자료구조를 지원한다. </summary>
       <div markdown="1">
         
-       #### 1. Strings 타입 데이터
+       #### 1. String 타입 데이터
        일반적인 문자열로, 값은 최대 512MB, String으로 될 수 있는 binary data, JPEG 이미지도 저장 가능하다.
        <br>
        <br>
@@ -283,51 +283,387 @@
        <br>
        명령어 리스트 
        * SET  : SET, SETNX, SETEX, SETPEX, MSET, MSETNX, APPEND, SETRANGE
-       ```redis
-            SET myKey "Hello, Redis!"
-    
-            SET myKey "Hello, Redis" NX EX 60 
-    
-            SETEX myKey 1gi20 "Temporary Value"
-    
-            EXPIRE myKey 180
-       ```
        * GET  : GET, MGET, GETRANGE, STRLEN
        * INCR : INCR, DECR, INCRBY, DECRBY, INCRBYFLOAT
        * Enterprise : SETS, DELS, APPENDS
-       #### 2. Lists
-       #### 3. Hashes
-       #### 4. Sets
-       #### 5. Sorted Sets
-       #### 6. Streams
-      </div>
-      </details>
+       ```redis 
+              127.0.0.1:6379> set user::100::point 1000
+              OK
+              127.0.0.1:6379> get user::100::point
+              "1000"
+              127.0.0.1:6379> set count 100
+              OK
+              127.0.0.1:6379> get count
+              "100"
+              127.0.0.1:6379> incr count
+              (integer) 101
+              127.0.0.1:6379> get count
+              "101"
+              127.0.0.1:6379> incrby count 100
+              (integer) 201
+              127.0.0.1:6379> decr count
+              (integer) 200
+              127.0.0.1:6379> decrby count 100
+              (integer) 100
+              127.0.0.1:6379> get count
+              "100"
+              127.0.0.1:6379> mset user::101::point "100" user::102::point "100"
+              OK
+              127.0.0.1:6379> mget user::101::point user::102::point
+              1) "100"
+              2) "100"       
+       ```
+       #### 2. List 타입 데이터
+       array 형식의 데이터 구조, 데이터를 순서대로 저장
+       <br>
+       <br>
+       중간의 특정 Index 값을 조회할 때는 속도가 느리기 때문에 push/pop 연산을 통해 head-tail에서 추가/삭제한다.
+       <br>
+       <br>
+       메세지 queue로 사용하기 적절하다.
+       <br>
+       <br>
+       명령어 리스트
+       * SET(PUSH) : LPUSH, RPUSH, LPUSHX, RPUSHX, LSET, LINSERT, RPOPLPUSH
+       * GET : LRANGE, LINDEX, LLEN
+       * POP : LPOP, RPOP, BLPOP, BRPOP
+       * REM : LREM,LTRIM
+       * BLOCK : BLPOP, BRPOP, BRPOPLPUSH
+       * Enterprise : LREVERANGE, LPUSHS, RPUSHS
+       ```redis
+            127.0.0.1:6379> LPUSH users "jane"
+            (integer) 1
+            127.0.0.1:6379> LRANGE users 0 -1
+            1) "jane"
+            127.0.0.1:6379> LPUSH users "john"
+            (integer) 2
+            127.0.0.1:6379> RPUSH users "roni"
+            (integer) 3
+            127.0.0.1:6379> LRANGE users 0 -1
+            1) "john"
+            2) "jane"
+            3) "roni"
+            127.0.0.1:6379> LPUSHX users2 "jane"
+            (integer) 0
+            127.0.0.1:6379> LPUSH users "lynn"
+            (integer) 4
+            127.0.0.1:6379> LPOP users
+            "lynn"
+            127.0.0.1:6379> RPOP users
+            "roni"
+            127.0.0.1:6379> LRANGE users 0 -1
+            1) "john"
+            2) "jane"
+            127.0.0.1:6379> LLEN users
+            (integer) 2
+            127.0.0.1:6379> LREM users 0 "jame"
+            (integer) 0
+            127.0.0.1:6379> LREM users 0 "jane"
+            (integer) 1
+            127.0.0.1:6379> LRANGE users 0 -1
+            1) "john"
+            127.0.0.1:6379> LSET users 0 "jamie"
+            OK
+            127.0.0.1:6379> LRANGE users 0 -1
+            1) "jamie"
+            127.0.0.1:6379> RPOPLPUSH users admins
+            "jamie"
+            127.0.0.1:6379> LRANGE admins 0 -1
+            1) "jamie"        
+       ```
+       #### 3. Hash 타입 데이터 
+       field-value로 구성되어있는 전형적인 hash의 형태 
+       <br>
+       <br>
+       key 하위에 subkey를 이용해 추가적인 HashTable을 제공하는 자료구조
+       <br>
+       <br>
+       메모리가 허용하는 한, 제한없이 field들을 넣을 수 있다.
+       <br>
+       <br>
+       명령어 리스트
+       * SET : HSET, HMSET, HSETNX
+       * GET : HGET, HMGET, HLEN, HKEYS, HVALS, HGETALL, HSTRLEN, HSCAN, HEXISTS
+       * REM : HDEL
+       * INCR : HINCRBY, HINCRBYFLOAT
+       ```redis
+            127.0.0.1:6379> hset users::100::details name jinmin year 1995 month 3
+            (integer) 3
+            
+            127.0.0.1:6379> hget users::100::details name
+            "jinmin"
+            
+            127.0.0.1:6379> hget users::100::details year
+            "1995"
+            
+            127.0.0.1:6379> hdel users::100::details year
+            (integer) 1
+            
+            127.0.0.1:6379> hlen users::100::details
+            (integer) 2
+            
+            127.0.0.1:6379> hgetAll users::100::details
+            1) "name"
+            2) "jinmin"
+            3) "month"
+            4) "3"
+            
+            127.0.0.1:6379> hkeys users::100::details
+            1) "name"
+            2) "month"
+            
+            127.0.0.1:6379> hvals users::100::details
+            1) "jinmin"
+            2) "3"
+       ```
+       #### 4. Set 타입 데이터
+       중복된 데이터를 담지 않기 위해 사용하는 자료구조
+       <br>
+       <br>
+       유니크한 key 값
+       <br>
+       <br>
+       정렬되지 않은 집합
+       <br>
+       <br>
+       중복된 데이터를 여러 번 저장하면, 최종 한 번만 저장된다. 
+       <br>
+       <br>
+       Set 간의 연산을 지원, 교집합, 합집합, 차이를 매우 빠르게 추출할 수 있다.
+       <br>
+       <br>
+       명령어 리스트
+       * SET : SADD, SMOVE
+       * GET : SMEMBERS SCARD, SRANDMEMBER, SISMEMBER, SSCAN
+       * POP : SPOP
+       * REM : SREM
+       * 집합 연산 : SUNION, SINTER, SDIFF, SUNIONSTORE, SINTERSTORE, SDIFFSTORE
+       * Enterprise : SLS, SRM, SLEN, SADDS
+       ```redis
+            127.0.0.1:6379> sadd myset a
+            (integer) 1
+            
+            127.0.0.1:6379> sadd myset a
+            (integer) 0
+            
+            127.0.0.1:6379> sadd myset b
+            (integer) 1
+            
+            127.0.0.1:6379> sadd myset c
+            (integer) 1
+            
+            127.0.0.1:6379> srem myset c # 삭제된 member 갯수 반환
+            (integer) 1
+            
+            127.0.0.1:6379> smembers myset
+            1) "b"
+            2) "a"
+            
+            127.0.0.1:6379> scard myset
+            (integer) 2
+            
+            127.0.0.1:6379> sadd myset c d e f # 여러 member 삽입 가능
+            (integer) 4
+            
+            127.0.0.1:6379> smembers myset
+            1) "d"
+            2) "c"
+            3) "a"
+            4) "f"
+            5) "b"
+            6) "e"
+            
+            127.0.0.1:6379> spop myset 3 # 랜덤 member 삭제
+            1) "d"
+            2) "c"
+            3) "f"
+            
+            127.0.0.1:6379> smembers myset
+            1) "a"
+            2) "b"
+            3) "e"
+       ```
+       #### 5. Sorted Set 타입 데이터
+       Set에 score 필드가 추가된 데이터 형태
+       <br>
+       <br>
+       일반적으로 Set은 정렬되어 있지 않고 insert한 순서대로 들어가지만, 
+       <br>
+       <br> 
+       Sorted Set은 Set의 특성을 그대로 가지며, 저장된 member들의 순서도 관리한다.
+       <br>
+       <br>
+       데이터가 저장될 때부터 score 순으로 정렬되며 저장
+       <br>
+       <br>
+       Sorted Set에서 데이터는 데이터는 오름차순으로 내부 정렬
+       <br>
+       <br>
+       value는 중복 불가하지만, score는 중복 가능
+       <br>
+       <br>
+       만약 score 값이 같으면 사전 순으로 정렬되어 저장
+       <br>
+       <br>
+       명령어 리스트
+       * SET : ZADD
+       * GET : ZRANGE, ZRANGEBYSCORE, ZRANGEBYLEX, ZREVRANGE, ZRANK, ZREVRANK, ZSCORE, ZCARD, ZCOUNT, ZSCAN
+       * POP : ZPOPMIN, ZPOPMAX
+       * REM : ZREM, ZREMRANGEBYRANK
+       * INCR : ZINCRBY
+       * 집합연산 : ZUNIONSTORE, ZINTERSTORE
+       * Enterprise : ZISMEMBER, ZLS, ZRM, SLEN, SADDS
+       ```redis
+             127.0.0.1:6379> ZADD tokens 1 user1
+             (integer) 1
+             127.0.0.1:6379> ZADD tokens 2 user2    
+             (integer) 1    
+             127.0.0.1:6379> ZADD tokens 3 user3 4 user4    
+             (integer) 2    
+             127.0.0.1:6379> ZADD tokens 10 user1    
+             (integer) 0    
+             127.0.0.1:6379> ZSCORE tokens user1    
+             "10"    
+             127.0.0.1:6379> ZRANK tokens user1    
+             (integer) 3    
+             127.0.0.1:6379> ZRANK tokens user2    
+             (integer) 0    
+             127.0.0.1:6379> ZRANK tokens user3    
+             (integer) 1    
+             127.0.0.1:6379> ZRANK tokens user4    
+             (integer) 2    
+             127.0.0.1:6379> ZRANGE tokens 0 -1    
+             1) "user2"    
+             2) "user3"    
+             3) "user4"    
+             4) "user1"    
+    ```
+       </div>
+       </details>
   
 
 
 
 ### Caching Strategy
+* #### Read Strategy
+<details>                                       
+  <summary>1. Look Aside</summary>
+  <div markdown="1">
+   
+   #### ![look_aside](https://github.com/user-attachments/assets/67d1a9fb-d594-4b88-8bd1-cda678bb0e49)
 
-### Cache Stampede
+   #### 데이터를 찾을 때 우선 캐시에 저장된 데이터가 있는지 우선적으로 확인하는 전략, 만일 캐시에 데이터가 없으면 DB에서 조회
+   #### 반복적인 읽기가 많은 호출에 적합
+   #### 캐시와 DB가 분리되어 가용되기 때문에 원하는 데이터만 별도로 구성하여 캐시에 저장할 수 있고, 캐시 장애 대비 구성이 되어있다.
+   #### redis 서버가 다운되면 순간적으로 DB로 몰려서 부하가 발생할 수 있다. 
+   #### Cache Store와 Data Store 간 "정합성 유지 문제"가 발생할 수 있으며, 초기 조회 시 무조건 Data Store를 호출해야 하므로 
+   #### 단건 호출 빈도가 높은 서비스에 적합하지 않은 대신, 반복적으로 동일 쿼리를 수행하는 서비스에 적합한 아키텍처이다.
+   * CacheWarming   
+   <br> 
+     * 미리  cache로 데이터를 밀어 넣어두는 작업을 의미한다.
+     * 이 작업을 수행하지 않으면, 서비스 초기에 트래픽 급증 시 대량의 cache miss 발생하여 데이터 베이스 부하가 급증할 수 있다. 
+     * 다만, 캐시 자체는 용량이 작아, 무한정으로 데이터를 들고 있을 수는 없어 일정 시간이 지나면, expire 되는데, 그러면 다시 Thundering Herd가 
+     발생될 수 있기 때문에, 캐시의 TTL을  잘 조정할 필요가 있다. 
+   </div>
+</details>
 
-### Spring Boot + Redis
+<details>                                                                                                                        
+  <summary>2. Read Through</summary>                                                                                               
+  <div markdown="1">                                                                                                             
 
-## 현재 쿼리, 스케줄러
+   #### ![read_through](https://github.com/user-attachments/assets/c1920b9e-2313-4132-95f5-bd4ac68677a3)
 
-1. 유저 정보 조회
-2. 포인트 충전/차감 내역 조회
-3. 포인트 충전/차감 내역 리스트 조회
-4. 대기열 토큰 정보 조회
-5. 대기열 토큰 정보 리스트 조회
-6. 콘서트 실제 공연 정보 조회
-7. 콘서트 실제 공연 정보 리스트 조회
-8. 콘서트 좌석 정보 조회
-9. 콘서트 좌석 정보 리스트 조회
-10. 유저 좌석 예약 정보 조회
-11. 유저 결제 정보 조회
+                                                                                                                               
+   #### 캐시에서만 데이터를 읽어오는 전략                                                     
+   #### Look Aside와 비슷하지만, 데이터 동기화를 라이브러리 또는 캐시 제공자에게 위임하는 방식이라는 차이가 있다.                                                                                                      
+   #### 따라서, 데이터를 조회하는데 있어, 전체적으로 속도가 느림.                                            
+   #### 또한 데이터 조회를 전적으로 캐시에만 의지하므로, redis가 다운될 경우 서비스 이용에 차질이 생길 수 있다.                                                                            
+   #### 대신에, 캐시와 DB 간의 데이터 동기화가 항상 이루어져 데이터 정합성 문제에서 벗어날 수 있다. 
+   #### 읽기가 많은 워크로드에 적합하다. 
 
-## 캐싱 히트??
+   </div>                                                                                                                           
+</details> 
 
-## TTL
+* #### Write Strategy
+<details>
+<summary>1. Write Through</summary>
+<div markdown="1">
 
-## 현재 프로젝트 적용
+  #### ![write_through](https://github.com/user-attachments/assets/5f180c61-ca22-4d81-acac-b5dcf4444beb)
+
+    
+  #### 데이터베이스와 Cache에 동시에 데이터를 저장하는 전략
+  #### 데이터를 저장할 때 먼저 캐시에 저장한 다음 바로 DB에 저장
+  #### Read Through와 마찬가지로 DB 동기화 작업을 캐시에게 위임
+  #### DB와 캐시가 항상 동기화 되어있어, 캐시의 데이터는 항상 최신 상태로 유지
+  #### 데이터 유실이 발생하면 안 되는 상황에 적합
+  #### 매 요청마다 두 번의 Write가 발생하게 됨으로써 빈번한 생성, 수정이 발생하는 서비스에서는 성능 이슈 발생
+</div> 
+</details>
+
+<details>
+<summary>2. Write Around</summary>
+<div markdown="1">
+
+   #### ![write_around](https://github.com/user-attachments/assets/7b54233b-8e9c-479b-b39b-1659696f39b0)
+
+    
+   #### Write Through보다 훨씬 빠름 
+   #### 모든 데이터는 DB에 저장 (캐시를 갱신하지 않음) 
+   #### Cache Miss가 발생하는 경우에만 DB와 캐시에도 데이터를 저장
+   #### 따라서 캐시와 DB 내의 데이터가 다를 수 있음.
+   #### Write Around 패턴은 속도가 빠르지만, cache miss가 발생하기 전에 데이터베이스에 저장된 데이터가 수정되었을 때,
+   #### 사용자가 조회하는 cache와 데이터베이스 간의 데이터 불일치가 발생하게 된다. 
+   #### 따라서 데이터베이스에 저장된 데이터가 수정, 삭제될 때마다, Cache 또한 삭제하거나 변경해야 하므로, Cache expire 주기를 짧게 조정하는 것이 필요하다.
+
+</div>
+</details>
+
+### Cache Stampede Issue
+
+#### ![cache_stampede](https://github.com/user-attachments/assets/e8ccfd59-3c5b-4df3-8d8b-5dff84ae16dd)
+
+
+* #### 문제 상황 
+    #### 대규모 트래픽이 환경에서 TTL 값이 너무 작게 설정하면, cache stampede 현상이 발생할 가능성이 높다.
+    #### 캐시 읽기 시 Look Aside 전략을 사용할 시,  redis에 데이터가 없다는 응답을 받은 서버가 직접 DB로 데이터를 요청한 뒤, 
+    #### 다시 redis에 저장하는 과정을 거친다. 그런데 이 상황에서 key가 만료되는 순간, 많은 서버에서 이 key를 통해 데이터를 읽으려 하고 있었다면,
+    #### 해당 모든 어플리케이션 서버에서 DB를 향해 읽기 요청을 보내는 duplicate read가 발생한다.
+    #### 또한 읽어온 값을 각각 redis에 쓰는 duplicate write도 발생되는 등, 요청양 폭주로 인한 장애가 발생할 수 있다.
+* #### 해결책
+    #### 1. 랜덤화된 캐시 만료 시간 설정 
+    #### 동일한 시점에 여러 캐시 항목이 한꺼번에 만료되는 것을 방지하기 위해 TTL에 랜덤 값을 추가하여 만료 시간을 분산.
+    #### 2. 스케줄러를 이용한 캐시 백그라운드 갱신
+    #### 캐시가 만료되기 전에 백그라운드에서 데이터를 미리 갱신하여 클라이언트가 캐시 미스를 겪지 않도록 한다.
+    #### 3. 분산락을 적용한 Soft Expiration (캐시 만료 직전 비동기 갱신) 구현
+    #### 캐시 만료되기 직전에 기존의 데이터는 그대로 반환하고 비동기로 db로부터 redis 갱신 작업을 진행한다.
+    #### 이 때, db 부하를 감소시키기 위해 분산락을 이용하여 첫 번째 갱신 요청만 수행하도록 한다.
+    #### 4. resilience4j의 서킷브레이커 패턴을 이용 
+    #### Resilience4j의 서킷 브레이커를 사용하여 캐시 미스 발생 시 데이터베이스로의 요청 폭주를 방지할 수 있습니다.
+    #### 캐시가 만료되거나 데이터베이스 부하가 높은 경우 Fallback 메서드를 통해 임시 데이터를 제공하거나 오류를 graceful하게 처리할 수 있습니다
+    #### 실제 시스템에서는 서킷 브레이커, Request Collapsing, Soft Expiration 등을 결합하여 안정적인 캐시 시스템을 운영할 수 있습니다.
+
+### 대기열 토큰 캐싱 전략
+ 
+#### 대기열 토큰의 경우, 데이터의 만료 주기가 짧고 데이터의 영속성이 중요하지 않기 때문에
+#### 기존의 데이터베이스에 대기열 토큰 정보를 저장하고 관리하던 방식을 Redis에 대기열 토큰 정보를 전부 저장하고 관리하는 방식으로 
+#### 완전히 대체하도록 할 것이다. 대기열 토큰 정보는 데이터의 영속성은 중요치 않은데, 조회는 자주 일어날 것이기 때문에 
+#### DB를 이용하지 않고, 캐싱만으로 그 정보들을 관리하는 것이 훨씬 효율적이라 판단하였다. 
+#### 1. 대기열 토큰 정보들을 value 타입이 Sorted Set인 캐시 wating_tokens에 저장
+#### 2. wating_tokens의 TTL은 11분으로 하되, 새로 데이터가 추가될 때마다 새로 11분으로 갱신
+#### 3. 스케줄러를 이용해 RedisTemplate의 opsForZSet 메소드와 range 메소드를 이용하여 상위 10 개씩 wating_tokens에서 삭제하고
+#### 4. 상위 10개 대기열 토큰 정보들을 key에 각각의 대기열 토큰 ID가 있고, TTL이 10분인 각각의 캐시 공간에 Hash 타입으로 저장해놓고 
+#### 5. 토큰 검증 시 가져온 토큰 ID로 Redis에서 조회하여 존재하고 userId가 일치하면, 활성화된 토큰으로 판별한다.
+
+### 유저 포인트 캐싱 전략 
+
+#### 유저 포인트는 금액과 관련돼 정합성이 굉장히 중요하기 때문에 오직 데이터베이스에서만 그 정보를 저장하고 관리하는 것이 
+#### 좋지 않을까 싶었다. 하지만, 유저 포인트는 유저 관련 정보 중 가장 자주 들여다 볼 정보이며, 정합성이 굉장히 중요한 데이터를 캐싱으로  
+#### 문제없이 빠르고 정확하게 관리하는 것도 하나의 Mission이 될 것이라 생각하여, 유저 포인트 캐싱을 생각해보았다.
+#### 유저 포인트의 경우, 유저 한 명이 다른 유저의 포인트를 조회하는 경우는 없을 것이기 때문에 특정 유저 포인트 조회 시
+#### 캐시 만료로 인한 캐시 스탬피드 문제가 발생하는 경우는 거의 없을 것으로 생각했다. 따라서,
+
+
+### 콘서트 조회 캐싱 전략
+
+### 콘서트 좌석 조회 캐싱 전략

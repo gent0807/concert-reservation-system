@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -19,7 +20,7 @@ import java.util.Arrays;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Slf4j
-public class Token {
+public class Token implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

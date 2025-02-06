@@ -32,7 +32,7 @@ public class RedisCacheConfig {
     @Value("${spring.data.redis.host}")
     private String host;
 
-    @Value("${spring.data.redis.port}")
+    @Value("${spring.data.redis.cache.port}")
     private int port;
 
     @Bean
