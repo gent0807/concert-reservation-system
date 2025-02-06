@@ -9,4 +9,5 @@ public class CacheKey {
 
     public static final String SEAT_CACHE_NAME = "SEATS";
 
+    public static final String ACTIVE_TOKENS_CACHE_NAME = "ACTIVE_TOKENS";
 }

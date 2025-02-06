@@ -53,21 +53,6 @@ public class TokenServiceImpl implements TokenService{
     }
 
     @Override
-    @Validated(CheckTokenStatusValid.class)
-    public void checkTokenStatusValidation(@Valid TokenDTOParam tokenDTOParam) {
-
-        // tokenDTOParam 이용하여 userId와 tokenId가 일치하는 토큰이 있는지 확인
-        Token token = tokenRepository.findByTokenIdAndUserId(tokenDTOParam.tokenId(), tokenDTOParam.userId())
-                                                .orElseThrow(()-> {
-                                                    throw new ServiceDataNotFoundException(ErrorCode.TOKEN_NOT_FOUND, "TOKEN SERVICE", "checkTokenStatusValidation");
-                                                });
-
-        // token 상태 검사
-        token.checkStatus();
-
-    }
-
-    @Override
     @Transactional
     public void activeTokens(long maxActiveTokenLimit) {
 
@@ -93,4 +78,21 @@ public class TokenServiceImpl implements TokenService{
             }
         });
     }
+
+    @Override
+    @Validated(CheckTokenStatusValid.class)
+    public void checkTokenStatusValidation(@Valid TokenDTOParam tokenDTOParam) {
+
+        // tokenDTOParam 이용하여 userId와 tokenId가 일치하는 토큰이 있는지 확인
+        Token token = tokenRepository.findByTokenIdAndUserId(tokenDTOParam.tokenId(), tokenDTOParam.userId())
+                                                .orElseThrow(()-> {
+                                                    throw new ServiceDataNotFoundException(ErrorCode.TOKEN_NOT_FOUND, "TOKEN SERVICE", "checkTokenStatusValidation");
+                                                });
+
+        // token 상태 검사
+        token.checkStatus();
+
+    }
+
+
 }

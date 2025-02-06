@@ -1,12 +1,16 @@
 package io.dev.concertreservationsystem.domain.token.redis;
 
 import io.dev.concertreservationsystem.domain.token.Token;
-import io.dev.concertreservationsystem.domain.token.TokenDTOResult;
+import org.springframework.data.redis.core.ZSetOperations;
 
 import java.util.Set;
 
 public interface RedisTokenRepository {
-    Double saveToken(Token token);
+    Double saveWaitingToken(Token token);
 
     Set<Token> findTokenByTokenId(Double tokenId);
+
+    Set<ZSetOperations.TypedTuple<Token>> getActiveTokens(long maxActiveTokenLimit);
+
+    void saveActiveToken(ZSetOperations.TypedTuple<Token> token);
 }

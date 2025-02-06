@@ -5,13 +5,15 @@ import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoun
 import io.dev.concertreservationsystem.common.validation.interfaces.CreateToken;
 import io.dev.concertreservationsystem.domain.token.*;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +38,7 @@ public class RedisTokenServiceImpl implements TokenService{
         Token token = Token.createTokenForRedis(tokenDTOParam.userId());
 
         // redis에 token 저장, tokenId 반환
-        Double tokenId = redisTokenRepository.saveToken(token);
+        Double tokenId = redisTokenRepository.saveWaitingToken(token);
 
         return redisTokenRepository.findTokenByTokenId(tokenId).stream().findFirst()
                                                                         .orElseThrow(()->{
@@ -45,17 +47,22 @@ public class RedisTokenServiceImpl implements TokenService{
     }
 
     @Override
-    public void checkTokenStatusValidation(TokenDTOParam tokenDTOParam) {
-
-    }
-
-    @Override
     public void activeTokens(long maxActiveTokenLimit) {
-
+        Set<ZSetOperations.TypedTuple<Token>> set = redisTokenRepository.getActiveTokens(maxActiveTokenLimit);
+        set.stream().forEach(token->{
+            redisTokenRepository.saveActiveToken(token);
+        });
     }
 
     @Override
     public void expireTokens() {
 
     }
+
+    @Override
+    public void checkTokenStatusValidation(TokenDTOParam tokenDTOParam) {
+
+    }
+
+
 }
