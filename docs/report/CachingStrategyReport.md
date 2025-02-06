@@ -550,6 +550,8 @@
   <summary>1. Look Aside</summary>
   <div markdown="1">
    
+   #### ![look_aside](https://github.com/user-attachments/assets/67d1a9fb-d594-4b88-8bd1-cda678bb0e49)
+
    #### 데이터를 찾을 때 우선 캐시에 저장된 데이터가 있는지 우선적으로 확인하는 전략, 만일 캐시에 데이터가 없으면 DB에서 조회
    #### 반복적인 읽기가 많은 호출에 적합
    #### 캐시와 DB가 분리되어 가용되기 때문에 원하는 데이터만 별도로 구성하여 캐시에 저장할 수 있고, 캐시 장애 대비 구성이 되어있다.
@@ -568,7 +570,10 @@
 <details>                                                                                                                        
   <summary>2. Read Through</summary>                                                                                               
   <div markdown="1">                                                                                                             
-                                                                                                                                 
+
+   #### ![read_through](https://github.com/user-attachments/assets/c1920b9e-2313-4132-95f5-bd4ac68677a3)
+
+                                                                                                                               
    #### 캐시에서만 데이터를 읽어오는 전략                                                     
    #### Look Aside와 비슷하지만, 데이터 동기화를 라이브러리 또는 캐시 제공자에게 위임하는 방식이라는 차이가 있다.                                                                                                      
    #### 따라서, 데이터를 조회하는데 있어, 전체적으로 속도가 느림.                                            
@@ -583,6 +588,9 @@
 <details>
 <summary>1. Write Through</summary>
 <div markdown="1">
+
+  #### ![write_through](https://github.com/user-attachments/assets/5f180c61-ca22-4d81-acac-b5dcf4444beb)
+
     
   #### 데이터베이스와 Cache에 동시에 데이터를 저장하는 전략
   #### 데이터를 저장할 때 먼저 캐시에 저장한 다음 바로 DB에 저장
@@ -596,6 +604,9 @@
 <details>
 <summary>2. Write Around</summary>
 <div markdown="1">
+
+   #### ![write_around](https://github.com/user-attachments/assets/7b54233b-8e9c-479b-b39b-1659696f39b0)
+
     
    #### Write Through보다 훨씬 빠름 
    #### 모든 데이터는 DB에 저장 (캐시를 갱신하지 않음) 
@@ -609,6 +620,10 @@
 </details>
 
 ### Cache Stampede Issue
+
+#### ![cache_stampede](https://github.com/user-attachments/assets/e8ccfd59-3c5b-4df3-8d8b-5dff84ae16dd)
+
+
 * #### 문제 상황 
     #### 대규모 트래픽이 환경에서 TTL 값이 너무 작게 설정하면, cache stampede 현상이 발생할 가능성이 높다.
     #### 캐시 읽기 시 Look Aside 전략을 사용할 시,  redis에 데이터가 없다는 응답을 받은 서버가 직접 DB로 데이터를 요청한 뒤, 
