@@ -29,7 +29,7 @@ public class RedisTokenRepositoryImpl implements RedisTokenRepository {
     }
 
     @Override
-    public Set<Token> findTokenByTokenId(Double tokenId) {
+    public Set<Token> findWaitingTokenByTokenId(Double tokenId) {
         return redisTemplate.opsForZSet().rangeByScore(CacheKey.WAITING_TOKEN_CACHE_NAME, tokenId, tokenId);
     }
 
@@ -42,6 +42,11 @@ public class RedisTokenRepositoryImpl implements RedisTokenRepository {
     public void saveActiveToken(ZSetOperations.TypedTuple<Token> token) {
         redisTemplate.opsForHash().put(CacheKey.ACTIVE_TOKENS_CACHE_NAME + "::" + token.getScore(), "userId", Objects.requireNonNull(token.getValue()).getUserId());
         redisTemplate.expire(CacheKey.ACTIVE_TOKENS_CACHE_NAME + "::" + token.getScore(), 10, TimeUnit.MINUTES);
+    }
+
+    @Override
+    public String findActiveUserByTokenId(Long tokenId) {
+        return String.valueOf(redisTemplate.opsForHash().get(CacheKey.ACTIVE_TOKENS_CACHE_NAME + "::" + tokenId, "userId"));
     }
 
 

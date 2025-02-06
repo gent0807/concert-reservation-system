@@ -2,6 +2,7 @@ package io.dev.concertreservationsystem.domain.token.redis;
 
 import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
+import io.dev.concertreservationsystem.common.validation.interfaces.CheckTokenStatusValid;
 import io.dev.concertreservationsystem.common.validation.interfaces.CreateToken;
 import io.dev.concertreservationsystem.domain.token.*;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
@@ -40,7 +41,7 @@ public class RedisTokenServiceImpl implements TokenService{
         // redis에 token 저장, tokenId 반환
         Double tokenId = redisTokenRepository.saveWaitingToken(token);
 
-        return redisTokenRepository.findTokenByTokenId(tokenId).stream().findFirst()
+        return redisTokenRepository.findWaitingTokenByTokenId(tokenId).stream().findFirst()
                                                                         .orElseThrow(()->{
                                                                             throw new ServiceDataNotFoundException(ErrorCode.TOKEN_SAVE_FAILED, "TOKEN SERVICE", "publishToken");
                                                                         }).convertToTokenDTOResult();
@@ -60,7 +61,13 @@ public class RedisTokenServiceImpl implements TokenService{
     }
 
     @Override
-    public void checkTokenStatusValidation(TokenDTOParam tokenDTOParam) {
+    @Validated(CheckTokenStatusValid.class)
+    public void checkTokenStatusValidation(@Valid TokenDTOParam tokenDTOParam) {
+
+        // tokenDTOParam 이용하여 userId와 tokenId가 일치하는 토큰이 있는지 확인
+        if(!redisTokenRepository.findActiveUserByTokenId(tokenDTOParam.tokenId()).equals(tokenDTOParam.userId())){
+           throw new ServiceDataNotFoundException(ErrorCode.TOKEN_NOT_FOUND, "TOKEN SERVICE", "checkTokenStatusValidation");
+        }
 
     }
 
