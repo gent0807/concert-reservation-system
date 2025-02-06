@@ -649,11 +649,13 @@
 #### 기존의 데이터베이스에 대기열 토큰 정보를 저장하고 관리하던 방식을 Redis에 대기열 토큰 정보를 전부 저장하고 관리하는 방식으로 
 #### 완전히 대체하도록 할 것이다. 대기열 토큰 정보는 데이터의 영속성은 중요치 않은데, 조회는 자주 일어날 것이기 때문에 
 #### DB를 이용하지 않고, 캐싱만으로 그 정보들을 관리하는 것이 훨씬 효율적이라 판단하였다. 
-#### 1. 대기열 토큰 정보들을 value 타입이 Sorted Set인 캐시 wating_tokens에 저장
-#### 2. wating_tokens의 TTL은 11분으로 하되, 새로 데이터가 추가될 때마다 새로 11분으로 갱신
-#### 3. 스케줄러를 이용해 RedisTemplate의 opsForZSet 메소드와 range 메소드를 이용하여 상위 10 개씩 wating_tokens에서 삭제하고
-#### 4. 상위 10개 대기열 토큰 정보들을 key에 각각의 대기열 토큰 ID가 있고, TTL이 10분인 각각의 캐시 공간에 Hash 타입으로 저장해놓고 
-#### 5. 토큰 검증 시 가져온 토큰 ID로 Redis에서 조회하여 존재하고 userId가 일치하면, 활성화된 토큰으로 판별한다.
+#### 1. 대기열 토큰 아이디를 UUID로 생성하고 value 타입이 Sorted Set인 캐시 공간 "wating_tokens"에 currentTimeMillis를 score로 하여 redis에 추가 저장
+#### 2. "waiting_tokens::{tokenId}"를 key로 하고 "userId" hash key에 대한 value로 userId를 담는 Hash 데이터 redis에 저장, TTL은 11분 
+#### 3. "waiting_tokens"의 TTL은 11분으로 하되, 새로 데이터가 추가될 때마다 새로 11분으로 갱신
+#### 4. 스케줄러를 이용해 RedisTemplate의 opsForZSet 메소드와 range 메소드를 이용하여 하위 10 개씩 waiting_tokens에서 pop하고
+#### 5. waing_tokens 공간에서 pop한 대기열 토큰 아이디를 이용해 "active_tokens::{tokenId}"를 key로하고 "userId" hash key에 대한 value로 userId를 담는 Hash 데이터 redis에 저장, TTL은 10분
+#### 6. "waiting_tokens::{tokenId}"를 key로 하는 Hash 데이터는 삭제
+#### 7. 토큰 검증 시 가져온 토큰 ID로 Redis에서 조회하여 존재하고 userId가 일치하면, 활성화된 토큰으로 판별한다.
 
 ### 유저 포인트 캐싱 전략 
 
