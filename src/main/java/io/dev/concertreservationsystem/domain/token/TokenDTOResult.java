@@ -10,6 +10,9 @@ public record TokenDTOResult(
         TokenStatusType tokenStatus
 ) {
     public TokenFacadeDTOResult convertToTokenFacadeDTOResult() {
-        return null;
+        return TokenFacadeDTOResult.builder()
+                .tokenId(this.tokenId)
+                .userId(this.userId)
+                .build();
     }
 }

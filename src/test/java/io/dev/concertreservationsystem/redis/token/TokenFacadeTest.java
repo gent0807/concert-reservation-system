@@ -1,10 +1,11 @@
-package io.dev.concertreservationsystem.caching.token;
+package io.dev.concertreservationsystem.redis.token;
 
 
 import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminFacade;
 import io.dev.concertreservationsystem.application.token.TokenFacade;
 import io.dev.concertreservationsystem.application.token.TokenFacadeDTOParam;
 import io.dev.concertreservationsystem.application.token.TokenFacadeDTOResult;
+import io.dev.concertreservationsystem.common.config.redis.CacheKey;
 import io.dev.concertreservationsystem.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.domain.token.Token;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -46,6 +48,9 @@ public class TokenFacadeTest {
     @Autowired
     RedisTokenRepository redisTokenRepository;
 
+    @Autowired
+    RedisTemplate<String, String> redisTemplate;
+
     private static final String TEST_USER_ID = UUID.randomUUID().toString();
 
     private static final String TEST_USER_NAME = "TESTER";
@@ -56,7 +61,7 @@ public class TokenFacadeTest {
 
     User saveUser;
 
-    List<Long> saveTokenIdList;
+    List<String> saveTokenIdList = new ArrayList<>();
 
     @BeforeEach
     void setUp(){
@@ -81,10 +86,10 @@ public class TokenFacadeTest {
         for(int i = 0; i < 20; i++){
             Double score = redisTokenRepository.saveWaitingToken(saveUser.getUserId());
 
-            long saveTokenId = redisTokenRepository.findWaitingTokenByScore(score).stream().findFirst().orElseThrow(()->{
+            String saveTokenId = redisTokenRepository.findWaitingTokenByScore(score).stream().findFirst().orElseThrow(()->{
                 log.debug("finding token of token-id [{}] is fail", score);
                 return null;
-            }).getTokenId();
+            });
 
             saveTokenIdList.add(saveTokenId);
         }
@@ -94,12 +99,24 @@ public class TokenFacadeTest {
     @DisplayName("redis를_이용해_대기열_토큰을_하나_발급할_시_결과적으로_redis에_저장된_결과_정보와_요청에_담겼던_정보가_일치해야_한다")
     public void redis를_이용해_대기열_토큰을_하나_발급할_시_결과적으로_redis에_저장된_결과_정보와_요청에_담겼던_정보가_일치해야_한다(){
 
+        long startTime;
+
+        long endTime;
+
         // 대기열 토큰 발급 요청 DTO 생성
         TokenFacadeDTOParam tokenFacadeDTOParam = TokenFacadeDTOParam.builder().userId(saveUser.getUserId()).build();
 
+        startTime = System.currentTimeMillis();
+
         TokenFacadeDTOResult tokenFacadeDTOResult = tokenFacade.publishToken(tokenFacadeDTOParam);
 
+        endTime = System.currentTimeMillis();
+
         assertThat(tokenFacadeDTOResult.userId()).isEqualTo(tokenFacadeDTOParam.userId());
+        //assertThat(tokenFacadeDTOResult.tokenId()).isEqualTo(redisTemplate.opsForZSet().popMin(CacheKey.WAITING_TOKEN_CACHE_NAME, 1).stream().findFirst().get().getValue());
+        assertThat(tokenFacadeDTOResult.userId()).isEqualTo(redisTemplate.opsForHash().get(CacheKey.WAITING_TOKEN_CACHE_NAME + "::" + tokenFacadeDTOResult.tokenId(), "userId"));
+
+        log.debug("실행 시간 : {} ms", endTime - startTime);
 
     }
 
@@ -158,5 +175,6 @@ public class TokenFacadeTest {
 
         log.debug("실행 시간 : {} ms", endTime - startTime);
     }
+
 
 }

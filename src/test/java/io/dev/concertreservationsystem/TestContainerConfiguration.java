@@ -26,11 +26,11 @@ public class TestContainerConfiguration {
                 .withPassword("test");
         MYSQL_CONTAINER.start();
 
-        REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK = new GenericContainer<>(DockerImageName.parse("redis:7.0.8-alpine"))
+        REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK = new GenericContainer<>(DockerImageName.parse("redis:7.4.2-alpine"))
                 .withExposedPorts(6379);
         REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.start();
 
-        REDIS_CONTAINER_FOR_CACHE = new GenericContainer<>(DockerImageName.parse("redis:7.0.8-alpine"));
+        REDIS_CONTAINER_FOR_CACHE = new GenericContainer<>(DockerImageName.parse("redis:7.4.2-alpine"));
 
         REDIS_CONTAINER_FOR_CACHE.start();
 
