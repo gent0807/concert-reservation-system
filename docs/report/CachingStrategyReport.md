@@ -660,15 +660,115 @@
 ### 유저 포인트 캐싱 전략 
 
 #### 유저 포인트는 금액과 관련돼 정합성이 굉장히 중요하기 때문에 오직 데이터베이스에서만 그 정보를 저장하고 관리하는 것이 
-#### 좋지 않을까 싶었다. 하지만, 유저 포인트는 유저 관련 정보 중 가장 자주 들여다 볼 정보이며, 정합성이 굉장히 중요한 데이터를 캐싱으로  
-#### 문제없이 빠르고 정확하게 관리하는 것도 하나의 Mission이 될 것이라 생각하여, 유저 포인트 캐싱을 생각해보았다.
+#### 좋지 않을까 싶었다. 하지만, 유저 포인트는 유저 관련 정보 중 가장 자주 들여다 볼 정보이며, 정합성이 굉장히 중요한 데이터를 
+#### 캐싱으로 빠르고 정확하게 관리하는 것도 하나의 Mission이 될 것이라 생각하여, 유저 포인트 캐싱을 생각해보았다.
 #### 유저 포인트의 경우, 유저 한 명이 다른 유저의 포인트를 조회하는 경우는 없을 것이기 때문에 특정 유저 포인트 조회 시
 #### 캐시 만료로 인한 캐시 스탬피드 문제가 발생하는 경우는 거의 없을 것으로 생각했다. 따라서, 캐시 스탬피드에 대한 부담을 갖지 않고,
 #### Look Aside 읽기 전략과 함께 Write Around 쓰기 전략을 사용하는 것을 먼저 떠올렸다. 그런데 캐시 스탬피드에 대한 걱정은 없지만,
-#### 유저 포인트의 정합성이 굉장히 중요하기 때문에, TTL을 꽤나 짧게 가져가야 겠다는 생각을 해보았는데, 결국엔 그럴바에 읽기 전략은 Look Aside로 두고
-#### 쓰기 전략을 Write Through로 하여, 유저 포인트 갱신마다 
+#### 유저 포인트의 정합성이 굉장히 중요하기 때문에, TTL을 꽤나 짧게 가져가야겠다는 생각을 해보았는데, 결국엔 그럴 바에 읽기 전략은 Look Aside로 두고
+#### 쓰기 전략을 Write Through로 하여, 유저 포인트 갱신 때마다 캐시도 갱신하여 정합성을 맞추는 게 좋을 것 같다는 생각을 했다. 유저 포인트 갱신이
+#### 상대적으로 자주 일어나진 않을 것이기 때문에 갱신 때마다의 쓰기 작업이 성능을 크게 저하시키진 않을 것이며, TTL을 길게 가져갈 수 있을 것이라는 생각이다. 
 
 
-### 콘서트 조회 캐싱 전략
+### 콘서트 조회, 콘서트 좌석 조회 캐싱 전략
+#### 콘서트와 콘서트 좌석의 경우엔, 다수의 유저로부터 빈번하게 조회가 발생할 것이기 때문에 정합성보단 조회 성능을 높이는 방식의
+#### 캐싱 전략을 우선 순위로 고려하였다. 단지 캐시 스탬피드를 모면하기 위해 Write Through, Read Through 방식을 사용하기 보단
+#### Write Around, Look Aside 방식에서 캐시 스탬피드 문제를 효율적으로 해결하는 쪽으로 성능 개선을 시도하는 것이 좋을 것 같다는 생각이다. 
+#### 콘서트와 콘서트 좌석 둘 다 빈번하게 조회가 되는 데이터지만, 상대적으로 콘서트가 콘서트 좌석에 비해선, 갱신 주기가 많이 길 것이기 때문에, 
+#### 콘서트 캐시는 TTL을 상대적으로 길게 가져가는 Write Around, Look Aside 방식을 사용해도 될 것이다. 반면에, 콘서트 좌석은 갱신 주기도 짧지만, 
+#### 조회도 굉장히 자주 일어나기 때문에 TTL을 짥게 가져가는 Write Around, Look Aside 방식을 취해야 할 것이다. 
+#### 이 경우엔 콘서트 좌석이 캐시 스탬피드 위험성이 높다고 볼 수 있을 것이다. 어찌됐든 콘서트 조회와 콘서트 좌석 조회 모두 성능 개선을 위해선 
+#### 캐시 스탬피드 문제를 해결해야 한다. 이를 위해 분산락을 이용한 Soft-Expiration과 resilience4j의 서킷브레이커 패턴을 이용할 수 있다.
+#### 콘서트 조회에는 분산락을 이용한 Soft-Expiration을 사용하고, 콘서트 좌석 조회에는 resilience4j의 서킷브레이커 패턴을 이용하고자 한다.
+* #### 분산락을 이용한 Soft-Expiration
 
-### 콘서트 좌석 조회 캐싱 전략
+  #### Soft-Expirtaion(부드러운 만료)는 캐시가 만료되기 직전, 조회 요청이 올 시, 결과는 그대로 반환하지만, 만료로 간주하여 비동기로 캐시를 갱신하는 방식이다.
+  #### 캐시가 만료되기 전에 비동기로 캐시를 갱신한다고 해서 캐시 스탬피드 문제가 해결되진 않을 것이다. 왜냐하면 결국엔 이 방식도 DB에 순간적으로 많은 요청이 꽂힐 수
+  #### 있는 방식이기 때문이다. 이것을 방지하기 위해 분산락을 이용하여 db로부터 하나의 갱신 요청만 비동기로 수행하도록 하려는 것이다. 
+  ```java
+    import redis.clients.jedis.Jedis;
+
+    public class CacheWithSoftExpirationAndLock {
+
+    private Jedis jedis = new Jedis("localhost");
+
+    public String getData(String key) {
+        String value = jedis.get(key);
+        if (value != null) {
+            // Soft Expiration - 기존 데이터 반환
+            if (isExpired(key)) {
+                // 데이터 만료 시, Mutex 잠금 사용
+                if (jedis.setnx(key + ":lock", "locked") == 1) {
+                    try {
+                        jedis.expire(key + ":lock", 5);  // 잠금 5초 유지
+                        // 비동기로 데이터베이스 갱신
+                        asyncUpdateCache(key);
+                    } finally {
+                        jedis.del(key + ":lock");  // 잠금 해제
+                    }
+                }
+            }
+            return value;
+        } else {
+            // 캐시 미스 처리
+            value = fetchFromDatabase(key);
+            jedis.setex(key, 300, value);  // 캐시 5분 유지
+            return value;
+        }
+    }
+
+    private boolean isExpired(String key) {
+        return jedis.ttl(key) < 10;  // TTL이 10초 미만일 때 만료로 간주
+    }
+
+    private void asyncUpdateCache(String key) {
+        new Thread(() -> {
+            String newData = fetchFromDatabase(key);
+            jedis.setex(key, 300, newData);  // 5분 TTL로 업데이트
+        }).start();
+    }
+
+    private String fetchFromDatabase(String key) {
+        // 데이터베이스 조회 (예제)
+        return "databaseValue";
+    }
+  }
+    ```
+* #### resilience4j의 서킷브레이커 패턴
+      
+
+
+
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+                
+  ```
