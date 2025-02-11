@@ -1,23 +1,17 @@
 package io.dev.concertreservationsystem.redis.token;
 
 
-import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminFacade;
 import io.dev.concertreservationsystem.application.token.TokenFacade;
 import io.dev.concertreservationsystem.application.token.TokenFacadeDTOParam;
 import io.dev.concertreservationsystem.application.token.TokenFacadeDTOResult;
 import io.dev.concertreservationsystem.common.config.redis.CacheKey;
-import io.dev.concertreservationsystem.common.exception.error.DomainModelParamInvalidException;
 import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
-import io.dev.concertreservationsystem.domain.token.Token;
-import io.dev.concertreservationsystem.domain.token.TokenDTOParam;
-import io.dev.concertreservationsystem.domain.token.TokenRepository;
 import io.dev.concertreservationsystem.domain.token.redis.RedisToken;
-import io.dev.concertreservationsystem.domain.token.redis.RedisTokenRepository;
+import io.dev.concertreservationsystem.domain.token.redis.TokenRepository;
 import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserGenderType;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -47,7 +40,7 @@ public class TokenFacadeTest {
     UserRepository userRepository;
 
     @Autowired
-    RedisTokenRepository redisTokenRepository;
+    TokenRepository redisTokenRepository;
 
     @Autowired
     RedisTemplate<String, String> redisTemplate;
