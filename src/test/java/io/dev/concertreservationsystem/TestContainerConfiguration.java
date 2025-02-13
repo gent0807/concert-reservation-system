@@ -55,6 +55,7 @@ public class TestContainerConfiguration {
         hikariConfig.setConnectionTimeout(10000);
         hikariConfig.setValidationTimeout(10000);
         hikariConfig.setLeakDetectionThreshold(10000);
+        hikariConfig.setAutoCommit(false);
 
         return new HikariDataSource(hikariConfig);
     }

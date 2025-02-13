@@ -19,7 +19,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "concert_detail", indexes = @Index(columnList = "concertDetailStatus", unique = true))
+@Table(name = "concert_detail", indexes = @Index(name = "idx_concert_basic_start_time_end_time", columnList = "concert_basic_id, start_time, end_time", unique = true))
 @Slf4j
 public class ConcertDetail {
 

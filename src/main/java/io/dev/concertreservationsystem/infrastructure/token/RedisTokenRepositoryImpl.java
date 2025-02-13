@@ -3,6 +3,7 @@ package io.dev.concertreservationsystem.infrastructure.token;
 import io.dev.concertreservationsystem.common.config.redis.CacheKey;
 import io.dev.concertreservationsystem.domain.token.redis.TokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 @Repository
 @RequiredArgsConstructor
+@Profile("redis")
 public class RedisTokenRepositoryImpl implements TokenRepository {
 
     private final RedisTemplate<String, String> redisTemplate;

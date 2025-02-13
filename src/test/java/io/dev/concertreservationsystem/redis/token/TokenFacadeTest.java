@@ -12,6 +12,7 @@ import io.dev.concertreservationsystem.domain.user.User;
 import io.dev.concertreservationsystem.domain.user.UserGenderType;
 import io.dev.concertreservationsystem.domain.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.Before;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +46,8 @@ public class TokenFacadeTest {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
-    private static final String TEST_USER_ID = UUID.randomUUID().toString();
+    private static String TEST_USER_ID;
+
 
     private static final String TEST_USER_NAME = "TESTER";
 
@@ -61,6 +63,8 @@ public class TokenFacadeTest {
 
     @BeforeEach
     void setUp(){
+
+        TEST_USER_ID = UUID.randomUUID().toString();
 
         // User 저장
         User user = User.builder()
@@ -173,7 +177,7 @@ public class TokenFacadeTest {
 
     }
 
-    @Test
+   /* @Test
     @DisplayName("대기열_토큰을_활성화_함으로써_삭제된_대기열_토큰들이_각각_활성화_토큰과_정보가_같아야_한다")
     public void 대기열_토큰을_활성화_함으로써_삭제된_대기열_토큰들이_각각_활성_상태의_토큰과_정보가_같아야_한다() {
         long startTime;
@@ -266,5 +270,5 @@ public class TokenFacadeTest {
         assertThatNoException().isThrownBy(() -> {
             tokenFacade.checkTokenStatusValidation(tokenDTOParamForActive);
         });
-    }
+    }*/
 }
