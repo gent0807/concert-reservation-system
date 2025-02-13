@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-@Profile(value = "default")
+@Profile(value = {"default", "redis"})
 public class PaymentRepositoryImpl implements PaymentRepository {
         private final PaymentJPARepository paymentJPARepository;
 

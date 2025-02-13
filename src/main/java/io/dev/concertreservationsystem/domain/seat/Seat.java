@@ -22,7 +22,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "seat")
+@Table(name = "seat", indexes = @Index(name = "idx_concert_detail_id_seat_status", columnList = "concert_detail_id, seat_status"))
 @Slf4j
 public class Seat {
 

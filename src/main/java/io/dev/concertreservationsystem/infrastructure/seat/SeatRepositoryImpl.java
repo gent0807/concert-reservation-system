@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@Profile("default")
+@Profile({"default", "redis"})
 public class SeatRepositoryImpl implements SeatRepository {
 
     private final SeatJPARepository seatJPARepository;

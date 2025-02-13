@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Builder
 public record TokenFacadeDTOResult(
-        Long tokenId,
+        String tokenId,
         String userId,
         TokenStatusType tokenStatus,
         LocalDateTime expiredAt

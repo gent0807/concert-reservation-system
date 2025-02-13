@@ -32,9 +32,6 @@ public class PointHistoryService {
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
 
-    // RedisTemplate
-    private final RedisTemplate<String, User> redisTemplate;
-
     @Validated(CreatePointHistory.class)
     @Transactional
     public List<PointHistoryDTOResult> insertChargeUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {

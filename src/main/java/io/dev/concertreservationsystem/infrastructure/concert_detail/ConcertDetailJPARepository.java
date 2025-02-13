@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,4 +27,6 @@ public interface ConcertDetailJPARepository extends JpaRepository<ConcertDetail,
     @Lock(LockModeType.OPTIMISTIC)
     @Query(value = "SELECT cd from ConcertDetail cd WHERE cd.concertDetailId = :concertDetailId")
     Optional<ConcertDetail> findConcertDetailByConcertDetailIdForUpdateWithOptimisticLock(@Param("concertDetailId") Long concertDetailId);
+
+    Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndStartTimeAndEndTimeAndConcertDetailStatus(Long concertBasicId, LocalDateTime startTime, LocalDateTime endTime, ConcertDetailStatusType concertDetailStatus);
 }

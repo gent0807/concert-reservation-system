@@ -7,18 +7,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@Profile(value = "default")
+@Profile(value = {"default", "redis"})
 public class ConcertDetailRepositoryImpl implements ConcertDetailRepository {
     private final ConcertDetailJPARepository concertDetailJPARepository;
 
     @Override
-    public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
-        return concertDetailJPARepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatus);
+    public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndStartTimeAndEndTimeAndConcertDetailStatus(Long concertBasicId, LocalDateTime startTime, LocalDateTime endTime, ConcertDetailStatusType concertDetailStatus){
+        return concertDetailJPARepository.findConcertDetailsByConcertBasicIdAndStartTimeAndEndTimeAndConcertDetailStatus(concertBasicId, startTime, endTime, concertDetailStatus);
     }
 
     @Override
