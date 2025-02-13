@@ -23,7 +23,7 @@ import java.util.Set;
 @Profile(value = "redis")
 public class RedisTokenServiceImpl implements TokenService{
 
-    private final RedisTokenRepository redisTokenRepository;
+    private final TokenRepository redisTokenRepository;
     private final UserRepository userRepository;
 
     @Override

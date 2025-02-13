@@ -79,10 +79,13 @@ public class SeatService {
 
                     List<Seat> seatList = seatRepository.findSeatsByConcertDetailId(concertDetail.getConcertDetailId());
 
-                    seatList.stream().forEach(s->{
+                    seatList.stream().anyMatch(s->{
                         if(s.getSeatStatus() == SeatStatusType.RESERVABLE){
                             concertDetail.setConcertDetailStatus(ConcertDetailStatusType.RESERVABLE);
+
+                            return true;
                         }
+                        return false;
                     });
 
                     concertDetailRepository.save(concertDetail);

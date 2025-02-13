@@ -1,11 +1,10 @@
 package io.dev.concertreservationsystem.domain.token.redis;
 
-import io.dev.concertreservationsystem.domain.token.Token;
 import org.springframework.data.redis.core.ZSetOperations;
 
 import java.util.Set;
 
-public interface RedisTokenRepository {
+public interface TokenRepository {
     Double saveWaitingToken(String userId);
 
     Set<String> findWaitingTokenByScore(Double score);

@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-@Profile(value = "default")
+@Profile(value = "!redis")
 public class TokenServiceImpl implements TokenService{
 
     private final TokenRepository tokenRepository;

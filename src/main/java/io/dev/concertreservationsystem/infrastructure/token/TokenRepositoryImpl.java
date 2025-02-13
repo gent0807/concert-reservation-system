@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@Profile(value = "default")
+@Profile(value = "!redis")
 public class TokenRepositoryImpl implements TokenRepository {
     private final TokenJPARepository tokenJPARepository;
 
