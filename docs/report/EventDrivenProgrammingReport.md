@@ -17,7 +17,7 @@
 ### 2. 이벤트 기반 프로그래밍
   
 * #### 이벤트 기반 프로그래밍이란, 시스템 내의 특정 이벤트들에 반응하여 코드를 실행하는 프로그래밍 패러다임이다.
-* #### 이벤트 기반 프로그래밍을 이용한 보상 트랜잭션과 saga 패턴을 구현함으로써, 마이크로서비스 아키텍처의 도메인 별 분리에 의한 트랙잭션 관리의 어려움을 해결할 수 있다.
+* #### 이벤트 기반 프로그래밍을 이용한 보상 트랜잭션과 saga 패턴을 구현함으로써, 마이크로서비스 아키텍처의 도메인 별 분리에 의한 트랙잭션 관리의 어려움과 전체 시스템의 데이터 일관성 문제를 해결할 수 있다.
 * #### Spring Event Programming
   * #### ApplicationEventPublisher : 이벤트를 발행
   ```java
@@ -74,3 +74,157 @@
     * #### 트랜잭션에 관여하는 모든 App은 Manager에 의해 점진적으로 트랜잭션을 수행하며 결과를 Manager에게 전달하게 되고, 비지니스 로직상 마지막 트랜잭션이 끝나면 Manager를 종료해서 전체 트랜잭션 처리를 종료한다. 
     * #### 만약 중간에 실패하게 되면 Manager에서 보상 트랜잭션을 발동하여 일관성을 유지한다.
       ![img_14.png](img_14.png)
+  
+### 3. 이벤트 기반 콘서트 좌석 결제 프로세스 
+
+  * #### 기존 Facade 패턴, 하나의 트랜잭션 안에서 결제 처리를 위해 여러 서비스의 메소드를 모두 직접 호출한다.
+    ```java
+    Component
+    @RequiredArgsConstructor
+    @Slf4j
+    @Validated
+    public class ConcertReserveAdminFacade {
+
+        private final PointHistoryService pointHistoryService;
+        private final ConcertDetailService concertDetailService;
+        private final SeatService seatService;
+        private final ReservationService reservationService;
+        private final PaymentService paymentService;
+        private final ExternalService externalService;
+    
+        // 4. 주문 금액 결제, 좌석 완전 예약
+        @Validated(ProcessPayment.class)
+        @Transactional
+        public ConcertReserveAdminDTOResult payAndReserveConcertSeats(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+
+                // 결제하려는 예약 좌석들의 상태가 점유 상태인지 확인
+                seatService.checkSeatsOccupied(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()));
+
+                // 좌석 예약 정보들의 상태가 임시 상태인지 확인
+                reservationService.checkReservationsTemp(concertReserveAdminDTOParam.convertToReservationDTOParam());
+
+                // 결제 정보의 상태가 미결제 상태인지 확인
+                paymentService.checkPaymentPublished(concertReserveAdminDTOParam.convertToPaymentDTOParam());
+
+                // 유저의 포인트 차감
+                pointHistoryService.useUserPoint(concertReserveAdminDTOParam.convertToPointHistoryDTOParam());
+
+                // 좌석 예약 정보들 예약 상태를 예약 완료 상태로 변경
+                reservationService.updateStatusOfReservations(concertReserveAdminDTOParam.convertToReservationDTOParam(), ReservationStatusType.CONFIRMED);
+
+                // 결제 정보 결제 완료 상태로 변경
+                PaymentDTOResult paymentDTOResult = paymentService.updateStatusOfPayment(concertReserveAdminDTOParam.convertToPaymentDTOParam(), PaymentStatusType.PAID);
+
+                // 콘서트 실제 공연 좌석들 예약 상태를 reserved 상태로 변경
+                seatService.updateStatusOfConcertDetailAndSeats(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()), SeatStatusType.RESERVED);
+
+                // 외부에 결제 정보 전달
+                externalService.sendPaymentData(paymentDTOResult);
+    
+                return paymentDTOResult.convertToConcertReserveAdminDTOResult();
+        }
+    
+    }
+    ```
+  * #### 이벤트 기반 프로그래밍을 이용한 Orchestration based SAGA pattern으로 콘서트 좌석 결제 프로세스를 구현해보았다. 
+    ```java
+        @Component
+        @RequiredArgsConstructor
+        public class ConcertReserveAdminOrchestration {
+    
+            private final ApplicationEventPublisher applicationEventPublisher;
+    
+            private final ReservationService reservationService;
+    
+            // 유저 포인트 수정 이벤트 발행
+            public void publishUserPointUpdateEvent(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+                applicationEventPublisher.publishEvent(concertReserveAdminDTOParam.convertToPointHistoryDTOParam());
+            }
+    
+            // 유저 포인트 수정 실패 이벤트 리스너
+            public void userPointUpdateFailEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+        
+            }
+    
+            // 유저 포인트 수정 성공 이벤트 리스너
+            public void userPointUpdateSuccessEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+                // 예약 정보 수정 이벤트 발행
+                applicationEventPublisher.publishEvent(concertReserveAdminDTOParam.convertToReservationDTOParam());
+            }
+    
+            // 예약 정보 수정 실패 이벤트 리스너
+            public void reservationUpdateFailEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    
+            }
+    
+            // 예약 정보 수정 성공 이벤트 리스너
+            public void reservationUpdateSuccessEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+                // 결제 정보 수정 이벤트 발행
+                applicationEventPublisher.publishEvent(concertReserveAdminDTOParam.convertToPaymentDTOParam());
+            }
+    
+            // 결제 정보 수정 실패 이벤트 리스너
+            public void paymentUpdateFailEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    
+            }
+    
+            // 결제 정보 수정 성공 이벤트 리스너
+            public void paymentUpdateSuccessEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+                // 좌석 정보 수정 이벤트 발행
+                applicationEventPublisher.publishEvent(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()));
+            }
+    
+            // 좌석 정보 수정 실패 이벤트 리스너
+            public void seatUpdateFailEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    
+            }
+    
+            // 좌석 정보 수정 성공 이벤트 리스너
+            public void seatUpdateSuccessEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+                // 외부에 결제 정보 전송 이벤트 발행
+                applicationEventPublisher.publishEvent(concertReserveAdminDTOParam.convertToExternalDTOParam());
+            }
+    
+            // 외부에 결제 정보 전송 실패 이벤트 리스너
+            public void paymentSendFailEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    
+            }
+    
+            // 외부에 결제 정보 전송 성공 이벤트 리스너
+            public void paymentSendSuccessEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    
+            }
+    
+      }
+
+    ```
+    ```java
+        @Validated(ProcessPayment.class)
+        @Transactional(propagation = Propagation.REQUIRES_NEW)
+        @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+        public void useUserPoint(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
+
+              // 유저 정보가 없으면, exception 발생
+              User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId());
+
+              // 좌석 예약 정보가 없으면 exception 발생
+              reservationRepository.findReservationsByUserIdAndPaymentIdWithLock(pointHistoryDTOParam.userId(), pointHistoryDTOParam.paymentId()).orElseThrow(()->{
+                  throw new ServiceDataNotFoundException(ErrorCode.RESERVATION_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
+              });
+
+              // 결제 정보 아이디로 결제 정보 find
+              Payment payment = paymentRepository.findPaymentByPaymentIdWithLock(pointHistoryDTOParam.paymentId()).orElseThrow(()->{
+                  throw new ServiceDataNotFoundException(ErrorCode.PAYMENT_NOT_FOUND, "POINT_HISTORY SERVICE", "useUserPoint");
+              });
+
+              // 유저 포인트 잔고와 결제 금액 비교
+              userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId()).checkPrice(payment.getTotalPrice());
+
+              user.usePoint(payment.getTotalPrice());
+
+              userRepository.save(user);
+
+              pointHistoryRepository.save(PointHistory.createPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
+
+        }
+    ```
