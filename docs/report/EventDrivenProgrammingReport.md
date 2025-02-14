@@ -199,10 +199,22 @@
 
     ```
     ```java
-        @Validated(ProcessPayment.class)
-        @Transactional(propagation = Propagation.REQUIRES_NEW)
-        @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-        public void useUserPoint(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
+        @Service
+        @RequiredArgsConstructor
+        @Slf4j
+        @Validated
+        public class PointHistoryService {
+
+          private final PointHistoryRepository pointHistoryRepository;
+          private final UserRepository userRepository;
+          private final PaymentRepository paymentRepository;
+          private final ReservationRepository reservationRepository;
+          private final ApplicationEventPublisher applicationEventPublisher;
+    
+         @Validated(ProcessPayment.class)
+         @Transactional(propagation = Propagation.REQUIRES_NEW)
+         @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+         public void useUserPoint(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
               // 유저 정보가 없으면, exception 발생
               User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId());
@@ -226,5 +238,26 @@
 
               pointHistoryRepository.save(PointHistory.createPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
 
-        }
+              // 유저 포인트 정보 수정 성공 이벤트 발행  
+         }
+      }
+    ```
+    ```java
+       @Service
+       @RequiredArgsConstructor
+       public class ExternalService {
+
+            private final ExternalRepository externalRepository;
+            
+            private final ApplicationEventPublisher applicationEventPublisher;         
+    
+            @Transactional(propagation = Propagation.REQUIRES_NEW)
+            @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+            public void sendPaymentData(ExternalDTOParam externalDTOParam) {
+                  externalRepository.sendPaymentData(externalDTOParam);
+                    
+                  // 외부에 결제 정보 전송 성공 이벤트 발행
+            }
+
+       }
     ```

@@ -92,5 +92,7 @@ public class PointHistoryService {
 
         pointHistoryRepository.save(PointHistory.createPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
 
+
+        // 유저 포인트 정보 수정 성공 이벤트 발행
     }
 }
