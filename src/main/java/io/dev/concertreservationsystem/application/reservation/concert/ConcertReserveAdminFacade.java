@@ -3,6 +3,7 @@ package io.dev.concertreservationsystem.application.reservation.concert;
 import io.dev.concertreservationsystem.common.aop.redis.DistributedLock;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOResult;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;
+import io.dev.concertreservationsystem.domain.external.ExternalService;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
 import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
@@ -38,6 +39,8 @@ public class ConcertReserveAdminFacade {
     private final SeatService seatService;
     private final ReservationService reservationService;
     private final PaymentService paymentService;
+    private final ExternalService externalService;
+    private final ConcertReserveAdminOrchestration concertReserveAdminOrchestration;
 
     // 1. 예약 가능한 콘서트 실제 공연 목록 조회
     @Validated(SearchReservableConcertDetail.class)
@@ -78,13 +81,15 @@ public class ConcertReserveAdminFacade {
             return SeatDTOParam.builder().seatId(reservationDTOResult.seatId()).build();
         }).collect(Collectors.toList()), SeatStatusType.OCCUPIED);
 
+
+
         return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
 
     }
 
     // 4. 주문 금액 결제, 좌석 완전 예약
     @Validated(ProcessPayment.class)
-    @Transactional
+    //@Transactional
     public ConcertReserveAdminDTOResult payAndReserveConcertSeats(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
 
             // 결제하려는 예약 좌석들의 상태가 점유 상태인지 확인
@@ -96,7 +101,9 @@ public class ConcertReserveAdminFacade {
             // 결제 정보의 상태가 미결제 상태인지 확인
             paymentService.checkPaymentPublished(concertReserveAdminDTOParam.convertToPaymentDTOParam());
 
-            // 유저의 포인트 차감
+            concertReserveAdminOrchestration.publishUserPointUpdateEvent(concertReserveAdminDTOParam);
+
+           /* // 유저의 포인트 차감
             pointHistoryService.useUserPoint(concertReserveAdminDTOParam.convertToPointHistoryDTOParam());
 
             // 좌석 예약 정보들 예약 상태를 예약 완료 상태로 변경
@@ -108,7 +115,10 @@ public class ConcertReserveAdminFacade {
             // 콘서트 실제 공연 좌석들 예약 상태를 reserved 상태로 변경
             seatService.updateStatusOfConcertDetailAndSeats(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()), SeatStatusType.RESERVED);
 
-            return paymentDTOResult.convertToConcertReserveAdminDTOResult();
+            // 외부에 결제 정보 전달
+            externalService.sendPaymentData(paymentDTOResult);
+
+            return paymentDTOResult.convertToConcertReserveAdminDTOResult();*/
     }
 
     // 5. 좌석 점유 취소, 주문 취소

@@ -19,4 +19,11 @@ public record PaymentDTOResult(
                 .paymentDTOResult(this)
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return "paymentId: " + this.paymentId.longValue() + "\n"
+                + "paymentStatus: " + paymentStatus.toString() + "\n"
+                + "totalPrice: " + totalPrice.longValue();
+    }
 }
