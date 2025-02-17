@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-@Profile("default")
 @RequiredArgsConstructor
+@Profile({"default", "redis"})
 public class UserRepositoryImpl implements UserRepository {
 
     private final UserJPARepository userJPARepository;

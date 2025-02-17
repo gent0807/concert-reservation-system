@@ -4,13 +4,14 @@ import io.dev.concertreservationsystem.domain.token.TokenDTOParam;
 import io.dev.concertreservationsystem.common.validation.interfaces.CheckTokenStatusValid;
 import io.dev.concertreservationsystem.common.validation.interfaces.CreateUser;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
 public record TokenFacadeDTOParam(
 
-        @NotBlank(groups = CheckTokenStatusValid.class)
-        Long tokenId,
+        @NotNull(groups = CheckTokenStatusValid.class)
+        String tokenId,
 
         @NotBlank(groups = {CreateUser.class, CheckTokenStatusValid.class})
         String userId

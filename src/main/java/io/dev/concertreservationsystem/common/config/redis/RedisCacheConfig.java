@@ -1,13 +1,10 @@
 package io.dev.concertreservationsystem.common.config.redis;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.cache.CacheKeyPrefix;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -46,8 +43,8 @@ public class RedisCacheConfig {
      * @return RedisTemplate<String, String>
      */
     @Bean
-    public RedisTemplate<String, String> redisTemplate() {
-        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate() {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.setConnectionFactory(defaultRedisConnectionFactory());
@@ -81,20 +78,12 @@ public class RedisCacheConfig {
         // "seats" 캐시 설정
         RedisCacheConfiguration seatCacheConfiguration = redisCacheConfiguration.entryTtl(Duration.ofMinutes(5));
 
-        // "reservations" 캐시 설정
-        RedisCacheConfiguration reservationCacheConfiguration = redisCacheConfiguration.entryTtl(Duration.ofMinutes(5));
-
-        // "payments" 캐시 설정
-        RedisCacheConfiguration paymentCacheConfiguration = redisCacheConfiguration.entryTtl(Duration.ofMinutes(5));
-
         // 각 캐시에 대한 설정을 매핑
         Map<String, RedisCacheConfiguration> cacheConfigurations = new HashMap<>();
-        cacheConfigurations.put(CacheKey.TOKEN_CACHE_NAME, tokenCacheConfiguration);
+        cacheConfigurations.put(CacheKey.WAITING_TOKEN_CACHE_NAME, tokenCacheConfiguration);
         cacheConfigurations.put(CacheKey.USER_CACHE_NAME, userCacheConfiguration);
         cacheConfigurations.put(CacheKey.CONCERT_DETAIL_CACHE_NAME, concertDetailCacheConfiguration);
         cacheConfigurations.put(CacheKey.SEAT_CACHE_NAME, seatCacheConfiguration);
-        cacheConfigurations.put(CacheKey.RESERVATION_CACHE_NAME, reservationCacheConfiguration);
-        cacheConfigurations.put(CacheKey.PAYMENT_CACHE_NAME, paymentCacheConfiguration);
 
         return RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(defaultRedisConnectionFactory())

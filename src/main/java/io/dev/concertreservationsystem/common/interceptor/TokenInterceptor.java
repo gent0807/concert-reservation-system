@@ -23,7 +23,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         // 토큰 상태 유효성 검사(내부에서 exception 처리)
         tokenFacade.checkTokenStatusValidation(TokenFacadeDTOParam.builder()
-                .tokenId(Long.parseLong(tokenId))
+                .tokenId(tokenId)
                 .userId(userId)
                 .build());
 

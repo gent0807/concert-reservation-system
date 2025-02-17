@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class PessimisticConcertDetailRepositoryImpl implements ConcertDetailRepo
     private final ConcertDetailJPARepository pessimisticConcertDetailRepository;
 
     @Override
-    public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndConcertDetailStatus(Long concertBasicId, ConcertDetailStatusType concertDetailStatus){
+    public Optional<List<ConcertDetail>> findConcertDetailsByConcertBasicIdAndStartTimeAndEndTimeAndConcertDetailStatus(Long concertBasicId, LocalDateTime startTime, LocalDateTime endTime, ConcertDetailStatusType concertDetailStatus){
         return pessimisticConcertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertBasicId, concertDetailStatus);
     }
 

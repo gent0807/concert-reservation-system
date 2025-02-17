@@ -4,6 +4,7 @@ import io.dev.concertreservationsystem.domain.token.Token;
 import io.dev.concertreservationsystem.domain.token.TokenRepository;
 import io.dev.concertreservationsystem.domain.token.TokenStatusType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Profile(value = "!redis")
 public class TokenRepositoryImpl implements TokenRepository {
     private final TokenJPARepository tokenJPARepository;
 

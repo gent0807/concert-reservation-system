@@ -5,11 +5,14 @@ import lombok.Builder;
 
 @Builder
 public record TokenDTOResult(
-        Long tokenId,
+        String tokenId,
         String userId,
         TokenStatusType tokenStatus
 ) {
     public TokenFacadeDTOResult convertToTokenFacadeDTOResult() {
-        return null;
+        return TokenFacadeDTOResult.builder()
+                .tokenId(this.tokenId)
+                .userId(this.userId)
+                .build();
     }
 }
