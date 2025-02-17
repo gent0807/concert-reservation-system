@@ -30,10 +30,10 @@ public class ConcertDetailService {
     @Validated(SearchReservableConcertDetail.class)
     public List<ConcertDetailDTOResult> findReservableConcertDetails(@Valid ConcertDetailDTOParam concertDetailDTOParam) {
 
-        // 도메인 모델 내 정적 팩토리 메소드로 생성
+        // 도메인 모델 내 정적 팩토리 메소드로, 예약 가능 상태의 ConcertDetail 객체  생성
         ConcertDetail concertDetail = ConcertDetail.createConcertDetail(concertDetailDTOParam.concertBasicId(), ConcertDetailStatusType.RESERVABLE);
 
-        return concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertDetail.getConcertBasicId(), concertDetail.getConcertDetailStatus())
+        return concertDetailRepository.findConcertDetailsByConcertBasicIdAndStartTimeAndEndTimeAndConcertDetailStatus(concertDetail.getConcertBasicId(), concertDetail.getStartTime(), concertDetail.getEndTime(), concertDetail.getConcertDetailStatus())
                                                                         .orElseThrow(()->{
                                                                             throw new ServiceDataNotFoundException(ErrorCode.RESERVABLE_CONCERT_DETAIL_NOT_FOUND, "CONCERT DETAIL SERVICE", "findReservableConcertDetails");
                                                                         }).stream().map(ConcertDetail::convertToConcertDetailDTOResult).collect(Collectors.toList());

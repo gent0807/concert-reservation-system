@@ -120,7 +120,7 @@ public class ConcertReservationConcurrencyTest {
 
         concertDetailRepository.save(concertDetail);
 
-        saveConcertDetail = concertDetailRepository.findConcertDetailsByConcertBasicIdAndConcertDetailStatus(concertDetail.getConcertBasicId(), ConcertDetailStatusType.RESERVABLE).orElseThrow(()->{
+        saveConcertDetail = concertDetailRepository.findConcertDetailsByConcertBasicIdAndStartTimeAndEndTimeAndConcertDetailStatus(concertDetail.getConcertBasicId(),concertDetail.getStartTime(), concertDetail.getEndTime(), ConcertDetailStatusType.RESERVABLE).orElseThrow(()->{
             log.debug("finding concertDetail of concert-basic-id [{}] is fail", concertDetail.getConcertBasicId());
             return null;
         }).getFirst();
