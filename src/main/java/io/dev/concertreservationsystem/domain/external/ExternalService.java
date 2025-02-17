@@ -3,6 +3,7 @@ package io.dev.concertreservationsystem.domain.external;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ public class ExternalService {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
+    @Async
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void sendPaymentData(ExternalDTOParam externalDTOParam) {

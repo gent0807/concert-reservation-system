@@ -101,9 +101,9 @@ public class ConcertReserveAdminFacade {
             // 결제 정보의 상태가 미결제 상태인지 확인
             paymentService.checkPaymentPublished(concertReserveAdminDTOParam.convertToPaymentDTOParam());
 
-            concertReserveAdminOrchestration.publishUserPointUpdateEvent(concertReserveAdminDTOParam);
+            //concertReserveAdminOrchestration.publishUserPointUpdateEvent(concertReserveAdminDTOParam);
 
-           /* // 유저의 포인트 차감
+            // 유저의 포인트 차감
             pointHistoryService.useUserPoint(concertReserveAdminDTOParam.convertToPointHistoryDTOParam());
 
             // 좌석 예약 정보들 예약 상태를 예약 완료 상태로 변경
@@ -118,7 +118,7 @@ public class ConcertReserveAdminFacade {
             // 외부에 결제 정보 전달
             externalService.sendPaymentData(paymentDTOResult);
 
-            return paymentDTOResult.convertToConcertReserveAdminDTOResult();*/
+            return paymentDTOResult.convertToConcertReserveAdminDTOResult();
     }
 
     // 5. 좌석 점유 취소, 주문 취소
