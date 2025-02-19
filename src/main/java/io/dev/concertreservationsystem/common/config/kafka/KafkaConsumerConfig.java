@@ -34,6 +34,7 @@ public class KafkaConsumerConfig {
     public KafkaAdmin.NewTopics topics() {
 
         return new KafkaAdmin.NewTopics(
+                TopicBuilder.name(KafkaKey.POINT_USE_HISTORY_CREATE_EVENT).partitions(3).replicas(1).build(),
                 TopicBuilder.name(KafkaKey.CONCERT_BASIC_EVENT).partitions(3).replicas(1).build(),
                 TopicBuilder.name(KafkaKey.CONCERT_DETAIL_STATUS_UPDATE_EVENT).partitions(3).replicas(1).build(),
                 TopicBuilder.name(KafkaKey.SEAT_STATUS_UPDATE_EVENT).partitions(3).replicas(1).build(),
