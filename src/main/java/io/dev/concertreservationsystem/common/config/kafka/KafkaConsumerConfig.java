@@ -1,7 +1,6 @@
 package io.dev.concertreservationsystem.common.config.kafka;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +11,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.KafkaAdmin;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.apache.kafka.clients.CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG;
@@ -37,10 +34,13 @@ public class KafkaConsumerConfig {
     public KafkaAdmin.NewTopics topics() {
 
         return new KafkaAdmin.NewTopics(
-                TopicBuilder.name(KafkaKey.CONCERT_BASIC_TOPIC).partitions(3).replicas(1).build(),
-                TopicBuilder.name(KafkaKey.CONCERT_DETAIL_TOPIC).partitions(3).replicas(1).build(),
-                TopicBuilder.name(KafkaKey.SEAT_TOPIC).partitions(3).replicas(1).build(),
-                TopicBuilder.name(KafkaKey.RESERVATION_TOPIC).partitions(3).replicas(1).build()
+                TopicBuilder.name(KafkaKey.CONCERT_BASIC_EVENT).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaKey.CONCERT_DETAIL_STATUS_UPDATE_EVENT).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaKey.SEAT_STATUS_UPDATE_EVENT).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaKey.RESERVATION_CREATE_EVENT).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaKey.RESERVATION_STATUS_UPDATE_EVENT).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaKey.PAYMENT_CREATE_EVENT).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaKey.PAYMENT_STATUS_UPDATE_EVENT).partitions(3).replicas(1).build()
         );
 
     }

@@ -11,9 +11,9 @@ public class KafkaKey {
 
     public static final String RESERVATION_CREATE_EVENT = "RESERVATION_CREATE_EVENT";
 
-    public static final String RESERVATION_UPDATE_EVENT = "RESERVATION_UPDATE_EVENT";
+    public static final String RESERVATION_STATUS_UPDATE_EVENT = "RESERVATION_STATUS_UPDATE_EVENT";
 
     public static final String PAYMENT_CREATE_EVENT = "PAYMENT_CREATE_EVENT";
 
-    public static final String PAYMENT_UPDATE_EVENT = "PAYMENT_UPDATE_EVENT";
+    public static final String PAYMENT_STATUS_UPDATE_EVENT = "PAYMENT_STATUS_UPDATE_EVENT";
 }
