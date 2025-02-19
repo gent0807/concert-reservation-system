@@ -12,7 +12,7 @@ public class ConcertDetailConsumer {
 
     private final ConcertDetailService concertDetailService;
 
-    @KafkaListener(topics = KafkaKey.CONCERT_DETAIL_STATUS_UPDATE_EVENT)
+    @KafkaListener(topics = KafkaKey.CONCERT_DETAIL_STATUS_UPDATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void updateConcertDetailStatus(String kafkaMessage){
 
     }

@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 public class PaymentConsumer {
     private final PaymentService paymentService;
 
-    @KafkaListener(topics = KafkaKey.PAYMENT_CREATE_EVENT)
+    @KafkaListener(topics = KafkaKey.PAYMENT_CREATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void createPayment(String kafkaMessage){
 
     }
 
-    @KafkaListener(topics = KafkaKey.PAYMENT_STATUS_UPDATE_EVENT)
+    @KafkaListener(topics = KafkaKey.PAYMENT_STATUS_UPDATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void updatePaymentStatus(String kafkaMessage){
 
     }

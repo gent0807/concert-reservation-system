@@ -12,7 +12,7 @@ public class SeatConsumer {
 
     private final SeatService seatService;
 
-    @KafkaListener(topics = KafkaKey.SEAT_STATUS_UPDATE_EVENT)
+    @KafkaListener(topics = KafkaKey.SEAT_STATUS_UPDATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void updateSeatStatus(String kafkaMessage){
 
     }

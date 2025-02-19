@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 public class PointHistoryConsumer {
     private final PointHistoryService pointHistoryService;
 
-    @KafkaListener(topics = KafkaKey.POINT_USE_HISTORY_CREATE_EVENT)
+    @KafkaListener(topics = KafkaKey.POINT_USE_HISTORY_CREATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void createPointUseHistory(String kafkaMessage){
 
     }
 
-    @KafkaListener(topics = KafkaKey.POINT_CHARGE_HISTORY_CREATE_EVENT)
+    @KafkaListener(topics = KafkaKey.POINT_CHARGE_HISTORY_CREATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void createPointChargeHistory(String kafkaMessage){
 
     }

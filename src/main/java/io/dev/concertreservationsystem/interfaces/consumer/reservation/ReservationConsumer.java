@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 public class ReservationConsumer {
     private final ReservationService reservationService;
 
-    @KafkaListener(topics = KafkaKey.RESERVATION_CREATE_EVENT)
+    @KafkaListener(topics = KafkaKey.RESERVATION_CREATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void createReservation(String kafkaMessage){
 
     }
 
-    @KafkaListener(topics = KafkaKey.RESERVATION_STATUS_UPDATE_EVENT)
+    @KafkaListener(topics = KafkaKey.RESERVATION_STATUS_UPDATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
     public void updateReservationStatus(String kafkaMessage){
 
     }
