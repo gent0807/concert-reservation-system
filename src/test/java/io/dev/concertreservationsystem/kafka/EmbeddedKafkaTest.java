@@ -1,4 +1,4 @@
 package io.dev.concertreservationsystem.kafka;
 
-public class KafkaConsumerTest {
+public class EmbeddedKafkaTest {
 }
