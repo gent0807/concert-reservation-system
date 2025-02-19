@@ -116,7 +116,7 @@ public class ConcertReserveAdminFacade {
             seatService.updateStatusOfConcertDetailAndSeats(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()), SeatStatusType.RESERVED);
 
             // 외부에 결제 정보 전달
-            externalService.sendPaymentData(paymentDTOResult);
+            //externalService.sendPaymentData(paymentDTOResult);
 
             return paymentDTOResult.convertToConcertReserveAdminDTOResult();
     }
