@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.domain.point_history;
 
+import io.dev.concertreservationsystem.application.reservation.concert.ConcertReserveAdminDTOParam;
 import io.dev.concertreservationsystem.common.exception.error.ErrorCode;
 import io.dev.concertreservationsystem.common.exception.error.ServiceDataNotFoundException;
 import io.dev.concertreservationsystem.domain.payment.Payment;
@@ -13,9 +14,13 @@ import io.dev.concertreservationsystem.interfaces.api.point_history.PointTransac
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -31,6 +36,7 @@ public class PointHistoryService {
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Validated(CreatePointHistory.class)
     @Transactional
@@ -60,6 +66,8 @@ public class PointHistoryService {
     }
 
     @Validated(ProcessPayment.class)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void useUserPoint(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
 
         // 유저 정보가 없으면, exception 발생
@@ -84,5 +92,7 @@ public class PointHistoryService {
 
         pointHistoryRepository.save(PointHistory.createPointHistory(pointHistoryDTOParam.userId(), PointTransactionType.USE, payment.getTotalPrice(), user.getPoint() ));
 
+
+        // 유저 포인트 정보 수정 성공 이벤트 발행
     }
 }
