@@ -1,6 +1,7 @@
 package io.dev.concertreservationsystem.common.config.kafka;
 
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -19,10 +20,13 @@ import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_
 @Configuration
 public class KafkaProducerConfig {
 
+    @Value( "${spring.kafka.producer.bootstrap-servers}")
+    private String BOOTSTRAP_SERVERS;
+
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");  // Kafka 주소
+        properties.put(BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);  // Kafka 주소
         properties.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 

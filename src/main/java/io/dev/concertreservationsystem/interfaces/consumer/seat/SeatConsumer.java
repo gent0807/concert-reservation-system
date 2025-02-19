@@ -1,6 +1,6 @@
 package io.dev.concertreservationsystem.interfaces.consumer.seat;
 
-import io.dev.concertreservationsystem.common.config.kafka.KafkaKey;
+import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
 import io.dev.concertreservationsystem.domain.seat.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -12,7 +12,7 @@ public class SeatConsumer {
 
     private final SeatService seatService;
 
-    @KafkaListener(topics = KafkaKey.SEAT_STATUS_UPDATE_EVENT, groupId = KafkaKey.CONSUMER_GROUP_ID)
+    @KafkaListener(topics = KafkaTopicKey.SEAT_STATUS_UPDATE_EVENT, groupId = "${spring.kafka.consumer.group-id}")
     public void updateSeatStatus(String kafkaMessage){
 
     }

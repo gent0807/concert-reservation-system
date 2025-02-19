@@ -1,7 +1,6 @@
 package io.dev.concertreservationsystem.common.config.kafka;
 
-public class KafkaKey {
-    public static final String CONSUMER_GROUP_ID = "CONSUMER_GROUP_ID";
+public class KafkaTopicKey {
 
     public static final String POINT_USE_HISTORY_CREATE_EVENT = "POINT_USE_HISTORY_CREATE_EVENT";
 
