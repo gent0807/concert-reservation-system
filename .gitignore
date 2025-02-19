@@ -39,4 +39,6 @@ out/
 ### log ###
 logs/**/*.log
 
+### data ###
+data/mysql/mysql.sock
 
