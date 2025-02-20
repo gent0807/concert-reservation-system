@@ -6,6 +6,7 @@ import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
 import io.dev.concertreservationsystem.domain.common.producer.Producer;
 import io.dev.concertreservationsystem.domain.outbox.OutboxDTOParam;
 import io.dev.concertreservationsystem.domain.outbox.OutboxService;
+import io.dev.concertreservationsystem.domain.outbox.OutboxStatusType;
 import io.dev.concertreservationsystem.domain.payment.PaymentSuccessEvent;
 import io.dev.concertreservationsystem.domain.reservation.ReservationSuccessEvent;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class PaymentEventListener {
                                     .aggregateType(KafkaTopicKey.PAYMENT_SUCCESS_EVENT)
                                     .aggregateId(event.getPaymentId())
                                     .eventType(KafkaTopicKey.PAYMENT_SUCCESS_EVENT)
+                                    .status(OutboxStatusType.INIT)
                                     .payload(objectMapper.writeValueAsString(event))
                                     .build());
     }

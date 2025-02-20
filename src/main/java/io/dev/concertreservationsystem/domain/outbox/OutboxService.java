@@ -21,6 +21,7 @@ public class OutboxService {
                                 .aggregateType(outbox.aggregateType())
                                 .aggregateId(outbox.aggregateId())
                                 .eventType(outbox.eventType())
+                                .status(outbox.status())
                                 .payload(outbox.payload())
                                 .build());
     }

@@ -8,6 +8,7 @@ import io.dev.concertreservationsystem.domain.common.producer.Producer;
 import io.dev.concertreservationsystem.domain.outbox.Outbox;
 import io.dev.concertreservationsystem.domain.outbox.OutboxDTOParam;
 import io.dev.concertreservationsystem.domain.outbox.OutboxService;
+import io.dev.concertreservationsystem.domain.outbox.OutboxStatusType;
 import io.dev.concertreservationsystem.domain.reservation.ReservationSuccessEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -37,6 +38,7 @@ public class ReservationEventListener {
                                     .aggregateType(DomainType.RESERVATION)
                                     .aggregateId(event.getReservationId())
                                     .eventType(KafkaTopicKey.RESERVATION_SUCCESS_EVENT)
+                                    .status(OutboxStatusType.INIT)
                                     .payload(objectMapper.writeValueAsString(event))
                                     .build());
     }

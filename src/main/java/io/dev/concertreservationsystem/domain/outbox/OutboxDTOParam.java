@@ -8,6 +8,7 @@ public record OutboxDTOParam (
         String aggregateType,
         Long aggregateId,
         String eventType,
+        OutboxStatusType status,
         String payload
 ){
 }
