@@ -15,7 +15,7 @@ public class SeatConsumer {
     private final SeatService seatService;
 
     @KafkaListener(topics = KafkaTopicKey.SEAT_STATUS_UPDATE_EVENT, groupId = "${spring.kafka.consumer.group-id}")
-    public void updateSeatStatus(@Payload String kafkaMessage, Acknowledgment acknowledgment){
+    public void updateSeatStatus(@Payload String message, Acknowledgment acknowledgment){
 
     }
 }

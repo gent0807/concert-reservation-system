@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.interfaces.event.consumer.payment;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
 import io.dev.concertreservationsystem.domain.data_platform.DataPlatformService;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
@@ -27,8 +28,15 @@ public class PaymentConsumer {
     }
 
     @KafkaListener(topics = KafkaTopicKey.PAYMENT_SUCCESS_EVENT, groupId =  "${spring.kafka.consumer.group-id}")
-    public void sendPaymentSuccessToDataPlatform(@Payload String message, Acknowledgment acknowledgment){
-        dataPlatformService.sendData(message);
+    public void sendPaymentSuccessToDataPlatform(@Payload String message, Acknowledgment acknowledgment) throws JsonProcessingException {
+
+
+
+        dataPlatformService.sendPaymentSuccessData(message);
+
+
+
+        acknowledgment.acknowledge();
     }
 
 }

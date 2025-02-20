@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.domain.payment;
 
+import io.dev.concertreservationsystem.domain.outbox.OutboxDTOParam;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,4 +16,5 @@ public class PaymentSuccessEvent {
     private PaymentStatusType paymentStatus;
 
     private Long totalPrice;
+
 }

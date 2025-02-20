@@ -14,12 +14,12 @@ public class PointHistoryConsumer {
     private final PointHistoryService pointHistoryService;
 
     @KafkaListener(topics = KafkaTopicKey.POINT_USE_HISTORY_CREATE_EVENT, groupId = "${spring.kafka.consumer.group-id}")
-    public void createPointUseHistory(@Payload String kafkaMessage, Acknowledgment acknowledgment){
+    public void createPointUseHistory(@Payload String message, Acknowledgment acknowledgment){
 
     }
 
     @KafkaListener(topics = KafkaTopicKey.POINT_CHARGE_HISTORY_CREATE_EVENT, groupId = "${spring.kafka.consumer.group-id}")
-    public void createPointChargeHistory(@Payload String kafkaMessage, Acknowledgment acknowledgment){
+    public void createPointChargeHistory(@Payload String message, Acknowledgment acknowledgment){
 
     }
 }

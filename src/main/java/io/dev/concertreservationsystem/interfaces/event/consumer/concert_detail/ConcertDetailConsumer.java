@@ -16,7 +16,7 @@ public class ConcertDetailConsumer {
     private final ConcertDetailService concertDetailService;
 
     @KafkaListener(topics = KafkaTopicKey.CONCERT_DETAIL_STATUS_UPDATE_EVENT, groupId = "${spring.kafka.consumer.group-id}")
-    public void updateConcertDetailStatus(@Payload String kafkaMessage, Acknowledgment acknowledgment){
+    public void updateConcertDetailStatus(@Payload String message, Acknowledgment acknowledgment){
 
     }
 }

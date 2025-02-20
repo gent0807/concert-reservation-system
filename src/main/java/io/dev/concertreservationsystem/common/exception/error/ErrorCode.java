@@ -80,7 +80,9 @@ public enum ErrorCode {
     PAYMENT_OVER_USER_POINT(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_OVER_USER_POINT", "잔고 부족입니다. 유저 포인트 충전이 필요합니다."),
     PAYMENT_STATUS_INVALID(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_STATUS_INVALID", "유효하지 않은 결제 정보 상태입니다."),
     PAYMENT_NOT_OCCUPIED_SEAT(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_NOT_OCCUPIED_SEAT", "점유 상태가 아닌 좌석이 있습니다. 좌석 예약에 대한 금액 결제가 불가합니다."),
-    PAYMENT_STATUS_NOT_PUBLISH(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_STATUS_NOT_PUBLISH", "미결제 상태가 아닌 결제 정보입니다. 결제가 불가합니다.");
+    PAYMENT_STATUS_NOT_PUBLISH(HttpStatus.NOT_ACCEPTABLE, "PAYMENT_STATUS_NOT_PUBLISH", "미결제 상태가 아닌 결제 정보입니다. 결제가 불가합니다."),
+
+    OUTBOX_NOT_FOUND(HttpStatus.NOT_FOUND, "OUTBOX_NOT_FOUND", "아웃박스 테이블에 존재하지 않습니다.");
 
 
 

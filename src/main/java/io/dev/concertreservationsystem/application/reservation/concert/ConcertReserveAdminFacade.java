@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.application.reservation.concert;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOResult;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
@@ -41,6 +42,7 @@ public class ConcertReserveAdminFacade {
     private final ReservationService reservationService;
     private final PaymentService paymentService;
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final ObjectMapper objectMapper;
 
     // 1. 예약 가능한 콘서트 실제 공연 목록 조회
     @Validated(SearchReservableConcertDetail.class)
@@ -83,12 +85,14 @@ public class ConcertReserveAdminFacade {
 
         // 좌석 임시 예약 정보 저장 성공 이벤트 발행, 비동기 트랜잭션 리스너에서 처리
         reservationDTOResultList.stream().forEach(reservationDTOResult -> {
+
             applicationEventPublisher.publishEvent(ReservationSuccessEvent.builder()
                                                         .reservationId(reservationDTOResult.reservationId())
                                                         .seatId(reservationDTOResult.seatId())
                                                         .userId(reservationDTOResult.userId())
                                                         .paymentId(reservationDTOResult.paymentId())
-                                                        .reservationStatus(reservationDTOResult.reservationStatus()));
+                                                        .reservationStatus(reservationDTOResult.reservationStatus())
+                                                        .build());
         });
 
         return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
@@ -125,7 +129,8 @@ public class ConcertReserveAdminFacade {
                                                             .paymentId(paymentDTOResult.paymentId())
                                                             .userId(concertReserveAdminDTOParam.userId())
                                                             .paymentStatus(paymentDTOResult.paymentStatus())
-                                                            .totalPrice(paymentDTOResult.totalPrice()));
+                                                            .totalPrice(paymentDTOResult.totalPrice())
+                                                            .build());
 
             return paymentDTOResult.convertToConcertReserveAdminDTOResult();
     }

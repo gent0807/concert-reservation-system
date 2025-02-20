@@ -2,7 +2,7 @@ package io.dev.concertreservationsystem.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dev.concertreservationsystem.domain.TestEvent;
-import io.dev.concertreservationsystem.infrastructure.common.producer.KafkaProducer;
+import io.dev.concertreservationsystem.domain.common.producer.Producer;
 import io.dev.concertreservationsystem.interfaces.consumer.TestConsumer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
         ports = { 29092 })
 public class EmbeddedKafkaTest {
     @Autowired
-    KafkaProducer producer;
+    Producer producer;
 
     @Autowired
     ObjectMapper objectMapper;

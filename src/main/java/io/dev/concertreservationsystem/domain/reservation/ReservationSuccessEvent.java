@@ -1,5 +1,6 @@
 package io.dev.concertreservationsystem.domain.reservation;
 
+import io.dev.concertreservationsystem.domain.outbox.OutboxDTOParam;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,4 +18,5 @@ public class ReservationSuccessEvent {
     private Long paymentId;
 
     private Integer reservationStatus;
+
 }
