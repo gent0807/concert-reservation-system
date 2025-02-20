@@ -42,7 +42,6 @@ public class ConcertReserveAdminFacade {
     private final ReservationService reservationService;
     private final PaymentService paymentService;
     private final ApplicationEventPublisher applicationEventPublisher;
-    private final ObjectMapper objectMapper;
 
     // 1. 예약 가능한 콘서트 실제 공연 목록 조회
     @Validated(SearchReservableConcertDetail.class)
