@@ -30,7 +30,7 @@ public class EmbeddedKafkaTest {
 
 
     @Test
-    void test() throws Exception {
+    void 연동_테스트() throws Exception {
         // given
         TestEvent event = TestEvent.idOf(1L);
         String payload = objectMapper.writeValueAsString(event);
