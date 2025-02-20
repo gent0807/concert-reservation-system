@@ -16,7 +16,11 @@ public class KafkaTopicKey {
 
     public static final String RESERVATION_STATUS_UPDATE_EVENT = "RESERVATION_STATUS_UPDATE_EVENT";
 
+    public static final String RESERVATION_SUCCESS_EVENT = "RESERVATION_SUCCESS_EVENT";
+
     public static final String PAYMENT_CREATE_EVENT = "PAYMENT_CREATE_EVENT";
 
     public static final String PAYMENT_STATUS_UPDATE_EVENT = "PAYMENT_STATUS_UPDATE_EVENT";
+
+    public static final String PAYMENT_SUCCESS_EVENT = "PAYMENT_SUCCESS_EVENT";
 }
