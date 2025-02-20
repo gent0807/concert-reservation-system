@@ -1,4 +1,4 @@
-package io.dev.concertreservationsystem.interfaces.consumer.concert_detail;
+package io.dev.concertreservationsystem.interfaces.event.consumer.concert_detail;
 
 import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;

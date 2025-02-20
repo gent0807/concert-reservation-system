@@ -1,4 +1,4 @@
-package io.dev.concertreservationsystem.interfaces.consumer.payment;
+package io.dev.concertreservationsystem.interfaces.event.consumer.payment;
 
 import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;

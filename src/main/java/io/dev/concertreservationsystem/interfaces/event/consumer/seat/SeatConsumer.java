@@ -1,4 +1,4 @@
-package io.dev.concertreservationsystem.interfaces.consumer.seat;
+package io.dev.concertreservationsystem.interfaces.event.consumer.seat;
 
 import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
 import io.dev.concertreservationsystem.domain.seat.SeatService;

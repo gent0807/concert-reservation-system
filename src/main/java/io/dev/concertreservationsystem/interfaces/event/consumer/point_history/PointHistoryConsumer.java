@@ -1,4 +1,4 @@
-package io.dev.concertreservationsystem.interfaces.consumer.point_history;
+package io.dev.concertreservationsystem.interfaces.event.consumer.point_history;
 
 import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
 import io.dev.concertreservationsystem.domain.point_history.PointHistoryService;
