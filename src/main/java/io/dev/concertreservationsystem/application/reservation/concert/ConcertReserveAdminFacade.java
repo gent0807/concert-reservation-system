@@ -1,14 +1,14 @@
 package io.dev.concertreservationsystem.application.reservation.concert;
 
-import io.dev.concertreservationsystem.common.aop.redis.DistributedLock;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailDTOResult;
 import io.dev.concertreservationsystem.domain.concert_detail.ConcertDetailService;
-import io.dev.concertreservationsystem.domain.external.ExternalService;
 import io.dev.concertreservationsystem.domain.payment.PaymentDTOResult;
 import io.dev.concertreservationsystem.domain.payment.PaymentService;
 import io.dev.concertreservationsystem.domain.payment.PaymentStatusType;
+import io.dev.concertreservationsystem.domain.payment.PaymentSuccessEvent;
 import io.dev.concertreservationsystem.domain.point_history.PointHistoryService;
 import io.dev.concertreservationsystem.domain.reservation.ReservationDTOResult;
+import io.dev.concertreservationsystem.domain.reservation.ReservationSuccessEvent;
 import io.dev.concertreservationsystem.domain.reservation.ReservationService;
 import io.dev.concertreservationsystem.domain.reservation.ReservationStatusType;
 import io.dev.concertreservationsystem.domain.seat.SeatDTOParam;
@@ -21,6 +21,7 @@ import io.dev.concertreservationsystem.common.validation.interfaces.SearchReserv
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -39,8 +40,7 @@ public class ConcertReserveAdminFacade {
     private final SeatService seatService;
     private final ReservationService reservationService;
     private final PaymentService paymentService;
-    private final ExternalService externalService;
-    private final ConcertReserveAdminOrchestration concertReserveAdminOrchestration;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     // 1. 예약 가능한 콘서트 실제 공연 목록 조회
     @Validated(SearchReservableConcertDetail.class)
@@ -81,10 +81,17 @@ public class ConcertReserveAdminFacade {
             return SeatDTOParam.builder().seatId(reservationDTOResult.seatId()).build();
         }).collect(Collectors.toList()), SeatStatusType.OCCUPIED);
 
-
+        // 좌석 임시 예약 정보 저장 성공 이벤트 발행, 비동기 트랜잭션 리스너에서 처리
+        reservationDTOResultList.stream().forEach(reservationDTOResult -> {
+            applicationEventPublisher.publishEvent(ReservationSuccessEvent.builder()
+                                                        .reservationId(reservationDTOResult.reservationId())
+                                                        .seatId(reservationDTOResult.seatId())
+                                                        .userId(reservationDTOResult.userId())
+                                                        .paymentId(reservationDTOResult.paymentId())
+                                                        .reservationStatus(reservationDTOResult.reservationStatus()));
+        });
 
         return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
-
     }
 
     // 4. 주문 금액 결제, 좌석 완전 예약
@@ -101,8 +108,6 @@ public class ConcertReserveAdminFacade {
             // 결제 정보의 상태가 미결제 상태인지 확인
             paymentService.checkPaymentPublished(concertReserveAdminDTOParam.convertToPaymentDTOParam());
 
-            //concertReserveAdminOrchestration.publishUserPointUpdateEvent(concertReserveAdminDTOParam);
-
             // 유저의 포인트 차감
             pointHistoryService.useUserPoint(concertReserveAdminDTOParam.convertToPointHistoryDTOParam());
 
@@ -115,8 +120,12 @@ public class ConcertReserveAdminFacade {
             // 콘서트 실제 공연 좌석들 예약 상태를 reserved 상태로 변경
             seatService.updateStatusOfConcertDetailAndSeats(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()), SeatStatusType.RESERVED);
 
-            // 외부에 결제 정보 전달
-            //externalService.sendPaymentData(paymentDTOResult);
+            // 좌석 예약 주문 결제 성공 이벤트 발행
+            applicationEventPublisher.publishEvent(PaymentSuccessEvent.builder()
+                                                            .paymentId(paymentDTOResult.paymentId())
+                                                            .userId(concertReserveAdminDTOParam.userId())
+                                                            .paymentStatus(paymentDTOResult.paymentStatus())
+                                                            .totalPrice(paymentDTOResult.totalPrice()));
 
             return paymentDTOResult.convertToConcertReserveAdminDTOResult();
     }
