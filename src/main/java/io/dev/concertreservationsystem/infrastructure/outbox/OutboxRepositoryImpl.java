@@ -5,10 +5,12 @@ import io.dev.concertreservationsystem.domain.common.key.DomainType;
 import io.dev.concertreservationsystem.domain.outbox.Outbox;
 import io.dev.concertreservationsystem.domain.outbox.OutboxDTOParam;
 import io.dev.concertreservationsystem.domain.outbox.OutboxRepository;
+import io.dev.concertreservationsystem.domain.outbox.OutboxStatusType;
 import io.dev.concertreservationsystem.domain.reservation.ReservationSuccessEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -24,5 +26,15 @@ public class OutboxRepositoryImpl implements OutboxRepository {
     @Override
     public Optional<Outbox> findOutboxByOutbox(Outbox outbox) {
        return outboxJPARepository.findByAggregateTypeAndAggregateIdAndEventTypeAndPayload(outbox.getAggregateType(), outbox.getAggregateId(), outbox.getEventType(), outbox.getPayload());
+    }
+
+    @Override
+    public List<Outbox> findOutboxToRepublish(OutboxStatusType outboxStatusType, int interval) {
+        return outboxJPARepository.findOutboxToRepublish(outboxStatusType, interval);
+    }
+
+    @Override
+    public void removeExpiredOutbox(OutboxStatusType outboxStatusType, int interval) {
+        outboxJPARepository.removeExpiredOutbox(outboxStatusType, interval);
     }
 }

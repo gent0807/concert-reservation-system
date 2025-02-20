@@ -3,11 +3,17 @@ package io.dev.concertreservationsystem.domain.outbox;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OutboxService {
 
     private final OutboxRepository outboxRepository;
+
+    public List<Outbox> findOutboxToRepublish(OutboxStatusType outboxStatusType, int interval) {
+        return outboxRepository.findOutboxToRepublish(outboxStatusType, interval);
+    }
 
     public void saveOutbox(OutboxDTOParam outbox) {
 
@@ -17,5 +23,11 @@ public class OutboxService {
                                 .eventType(outbox.eventType())
                                 .payload(outbox.payload())
                                 .build());
+    }
+
+
+
+    public void removeExpiredOutbox(OutboxStatusType outboxStatusType, int interval) {
+        outboxRepository.removeExpiredOutbox(outboxStatusType, interval);
     }
 }

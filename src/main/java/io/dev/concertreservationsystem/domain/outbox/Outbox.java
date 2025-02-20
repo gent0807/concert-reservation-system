@@ -3,6 +3,7 @@ package io.dev.concertreservationsystem.domain.outbox;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -38,5 +39,9 @@ public class Outbox {
     @CreatedDate
     // 이벤트 생성 시간
     private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    // 이벤트 최종 수정 시간
+    private LocalDateTime updatedAt;
 
 }
