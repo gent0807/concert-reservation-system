@@ -60,7 +60,7 @@ public class ConcertReserveAdminOrchestration {
     // 좌석 정보 수정 성공 이벤트 리스너
     public void seatUpdateSuccessEventListener(ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
         // 외부에 결제 정보 전송 이벤트 발행
-        applicationEventPublisher.publishEvent(concertReserveAdminDTOParam.convertToExternalDTOParam());
+        //applicationEventPublisher.publishEvent(concertReserveAdminDTOParam.convertToExternalDTOParam());
     }
 
     // 외부에 결제 정보 전송 실패 이벤트 리스너
