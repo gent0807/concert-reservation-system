@@ -26,7 +26,7 @@ import static org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZE
 @Configuration
 public class KafkaConsumerConfig {
 
-    @Value( "${kafka.consumer.group-id}")
+    @Value( "${spring.kafka.consumer.group-id}")
     private String CONSUMER_GROUP_ID;
 
     @Value( "${spring.kafka.consumer.bootstrap-servers}")
