@@ -1,5 +1,10 @@
 version: '3'
 services:
+  k6:
+    image: grafana/k6:latest
+    volumes:
+      - ./scripts:/scripts  # 로컬의 scripts 디렉토리를 컨테이너 내부로 마운트
+    command: run /scripts/script.js
   mysql:
     image: mysql:8.0
     ports:
