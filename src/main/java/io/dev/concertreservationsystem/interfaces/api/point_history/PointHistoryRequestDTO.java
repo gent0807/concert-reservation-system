@@ -5,6 +5,7 @@ import io.dev.concertreservationsystem.application.point_history.PointHistoryFac
 import io.dev.concertreservationsystem.common.validation.annotation.NotInvalidPointTransactionType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -19,16 +20,16 @@ public record PointHistoryRequestDTO(
         Long paymentId,
 
         @JsonProperty(value = "userId", required = true, access = JsonProperty.Access.READ_ONLY)
-        @NotBlank
+        @NotNull
         String userId,
 
         @JsonProperty(value = "type", required = true, access = JsonProperty.Access.READ_ONLY)
-        @NotBlank
+        @NotNull
         @NotInvalidPointTransactionType
         PointTransactionType type,
 
         @JsonProperty(value = "amount", required = true, access = JsonProperty.Access.READ_ONLY)
-        @NotBlank
+        @NotNull
         @Min(0)
         Long amount,
 
