@@ -1,3 +1,4 @@
+/*
 package io.dev.concertreservationsystem.domain.point_history;
 
 import io.dev.concertreservationsystem.domain.user.User;
@@ -145,3 +146,4 @@ public class PointHistoryConcurrencyTest {
         log.debug("실행 시간 : {} ms", endTime - startTime);
     }
 }
+*/

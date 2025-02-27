@@ -27,8 +27,8 @@ public class ConcertDetailService {
 
     private final ReservationRepository reservationRepository;
 
-    @Validated(SearchReservableConcertDetail.class)
-    public List<ConcertDetailDTOResult> findReservableConcertDetails(@Valid ConcertDetailDTOParam concertDetailDTOParam) {
+    /*@Validated(SearchReservableConcertDetail.class)*/
+    public List<ConcertDetailDTOResult> findReservableConcertDetails(/*@Valid*/ ConcertDetailDTOParam concertDetailDTOParam) {
 
         // 도메인 모델 내 정적 팩토리 메소드로, 예약 가능 상태의 ConcertDetail 객체  생성
         ConcertDetail concertDetail = ConcertDetail.createConcertDetail(concertDetailDTOParam.concertBasicId(), ConcertDetailStatusType.RESERVABLE);

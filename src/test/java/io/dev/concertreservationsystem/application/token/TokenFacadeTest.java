@@ -1,3 +1,4 @@
+/*
 package io.dev.concertreservationsystem.application.token;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,3 +8,4 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public class TokenFacadeTest {
 }
+*/

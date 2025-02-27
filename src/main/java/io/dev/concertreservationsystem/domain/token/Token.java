@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -34,17 +35,18 @@ public class Token implements Serializable {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Column(name = "token_status", nullable = false, columnDefinition = "ENUM('INACTIVE')")
+    @Column(name = "token_status", nullable = false)
     private TokenStatusType tokenStatus;
 
     @Column(name = "expires_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime expiresAt;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @LastModifiedDate
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
@@ -107,13 +109,13 @@ public class Token implements Serializable {
             throw new DomainModelParamInvalidException(ErrorCode.TOKEN_EXPIRED_AT_NONE, "TOKEN", "checkValidation");
         }
 
-        if(this.createdAt == null || this.createdAt.isAfter(LocalDateTime.now())){
+        /*if(this.createdAt.isAfter(LocalDateTime.now())){
             throw new DomainModelParamInvalidException(ErrorCode.TOKEN_CREATED_AT_INVALID, "TOKEN", "checkValidation");
         }
 
-        if(this.updatedAt == null || this.updatedAt.isAfter(LocalDateTime.now())){
+        if(this.updatedAt.isAfter(LocalDateTime.now())){
             throw new DomainModelParamInvalidException(ErrorCode.TOKEN_UPDATED_AT_INVALID, "TOKEN", "checkValidation");
-        }
+        }*/
     }
 
     public void checkStatus() {

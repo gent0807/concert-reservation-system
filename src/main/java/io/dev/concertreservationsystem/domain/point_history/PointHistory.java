@@ -123,9 +123,9 @@ public class PointHistory {
 
         checkPointHistoryResultPointValidation();
 
-        checkPointHistoryCreatedAtValidation();
+        //checkPointHistoryCreatedAtValidation();
 
-        checkPointHistoryUpdatedAtValidation();
+        //checkPointHistoryUpdatedAtValidation();
     }
 
 

@@ -1,3 +1,4 @@
+/*
 package io.dev.concertreservationsystem.domain;
 
 import lombok.*;
@@ -14,3 +15,4 @@ public class TestEvent {
         return new TestEvent(l);
     }
 }
+*/

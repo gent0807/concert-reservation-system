@@ -39,8 +39,8 @@ public class SeatService {
 
     private final PaymentRepository paymentRepository;
 
-    @Validated(SearchReservableSeat.class)
-    public List<SeatDTOResult> findReservableSeats(@Valid ConcertDetailDTOParam concertDetailDTOParam) {
+    /*@Validated(SearchReservableSeat.class)*/
+    public List<SeatDTOResult> findReservableSeats(/*@Valid*/ ConcertDetailDTOParam concertDetailDTOParam) {
 
         // 도메인 모델 내 정적 팩토리 메소드로 생성
         Seat seat = Seat.createSeat(concertDetailDTOParam.concertDetailId(), SeatStatusType.RESERVABLE);

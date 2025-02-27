@@ -65,7 +65,6 @@ public record ConcertReserveAdminDTOParam(
 
     //@Validated(CreateReservations.class)
     public static List<SeatDTOParam> convertToSeatDTOParamList(List<ConcertReserveAdminDTOParam> concertReserveAdminDTOParamList) {
-
         return concertReserveAdminDTOParamList.stream().map(ConcertReserveAdminDTOParam::convertToSeatDTOParam).collect(Collectors.toList());
     }
 
@@ -92,7 +91,7 @@ public record ConcertReserveAdminDTOParam(
 
     }
 
-    private SeatDTOParam convertToSeatDTOParam() {
+    public SeatDTOParam convertToSeatDTOParam() {
 
         return SeatDTOParam.builder()
                 .seatId(this.seatId)

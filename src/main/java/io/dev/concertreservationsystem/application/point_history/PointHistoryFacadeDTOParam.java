@@ -16,7 +16,6 @@ public record PointHistoryFacadeDTOParam(
         String userId,
 
         @NotBlank
-        @NotInvalidPointTransactionType
         PointTransactionType type,
 
         @NotBlank

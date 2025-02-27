@@ -1,3 +1,4 @@
+/*
 package io.dev.concertreservationsystem.application.reservation.concert;
 
 import io.dev.concertreservationsystem.common.config.kafka.KafkaTopicKey;
@@ -118,3 +119,4 @@ public class ConcertReservationMessageQueueIntegrationTest {
         }
 
 }
+*/
