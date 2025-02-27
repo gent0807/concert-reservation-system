@@ -26,7 +26,7 @@ public class ReservationController {
     @PostMapping
     @Operation(summary = "콘서트 실제 공연 좌석들에 대한 임시 예약 등록", description = "콘서트 실제 공연의 예약 가능한 좌석에 대한 임시 예약들을 등록합니다.")
     @Validated(CreateReservations.class)
-    public ResponseEntity<List<ReservationResponseDTO>> insertReservations(@RequestBody List<@Valid ReservationRequestDTO> reservationRequestDTOList) {
+    public ResponseEntity<List<ReservationResponseDTO>> insertReservations(@RequestBody List</*@Valid*/ ReservationRequestDTO> reservationRequestDTOList) {
 
             // concertReserveAdminDTOParamList 정보를 이용하여 콘서트 실제 공연의 좌석들에 대한 예약 정보를 등록하고,
             // 콘서트 실제 공연 좌석들의 예약 상태를 확인/수정하고, 콘서트 실제 공연 좌석들의 예약 상태를 occupied 상태로 수정하는,
