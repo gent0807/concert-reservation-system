@@ -44,8 +44,8 @@ public class ConcertReserveAdminFacade {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     // 1. 예약 가능한 콘서트 실제 공연 목록 조회
-    @Validated(SearchReservableConcertDetail.class)
-    public List<ConcertReserveAdminDTOResult> findReservableConcertDetails(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    /* @Validated(SearchReservableConcertDetail.class)*/
+    public List<ConcertReserveAdminDTOResult> findReservableConcertDetails(/*@Valid*/ ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
 
             // 콘서트의 예약 가능한 실제 공연 목록 조회
             List<ConcertDetailDTOResult> concertDetailDTOResultList = concertDetailService.findReservableConcertDetails(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
@@ -55,8 +55,8 @@ public class ConcertReserveAdminFacade {
     }
 
     // 2. 콘서트 실제 공연의 예약 가능 좌석 목록 조회
-    @Validated(SearchReservableSeat.class)
-    public List<ConcertReserveAdminDTOResult> findReservableSeats(@Valid ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
+    /*@Validated(SearchReservableSeat.class)*/
+    public List<ConcertReserveAdminDTOResult> findReservableSeats(/*@Valid*/ ConcertReserveAdminDTOParam concertReserveAdminDTOParam) {
         List<SeatDTOResult> seatDTOResultList = seatService.findReservableSeats(concertReserveAdminDTOParam.convertToConcertDetailDTOParam());
 
         return SeatDTOResult.convertToConcertReserveAdminDTOResultList(seatDTOResultList);
@@ -83,7 +83,7 @@ public class ConcertReserveAdminFacade {
         }).collect(Collectors.toList()), SeatStatusType.OCCUPIED);
 
         // 좌석 임시 예약 정보 저장 성공 이벤트 발행, 비동기 트랜잭션 리스너에서 처리
-        reservationDTOResultList.stream().forEach(reservationDTOResult -> {
+        /*reservationDTOResultList.stream().forEach(reservationDTOResult -> {
 
             applicationEventPublisher.publishEvent(ReservationSuccessEvent.builder()
                                                         .reservationId(reservationDTOResult.reservationId())
@@ -92,7 +92,7 @@ public class ConcertReserveAdminFacade {
                                                         .paymentId(reservationDTOResult.paymentId())
                                                         .reservationStatus(reservationDTOResult.reservationStatus())
                                                         .build());
-        });
+        });*/
 
         return ReservationDTOResult.convertToConcertReserveAdminDTOResultList(reservationDTOResultList);
     }
@@ -124,12 +124,12 @@ public class ConcertReserveAdminFacade {
             seatService.updateStatusOfConcertDetailAndSeats(reservationService.convertReservationDTOParamToSeatDTOParamList(concertReserveAdminDTOParam.convertToReservationDTOParam()), SeatStatusType.RESERVED);
 
             // 좌석 예약 주문 결제 성공 이벤트 발행
-            applicationEventPublisher.publishEvent(PaymentSuccessEvent.builder()
+            /*applicationEventPublisher.publishEvent(PaymentSuccessEvent.builder()
                                                             .paymentId(paymentDTOResult.paymentId())
                                                             .userId(concertReserveAdminDTOParam.userId())
                                                             .paymentStatus(paymentDTOResult.paymentStatus())
                                                             .totalPrice(paymentDTOResult.totalPrice())
-                                                            .build());
+                                                            .build());*/
 
             return paymentDTOResult.convertToConcertReserveAdminDTOResult();
     }

@@ -6,45 +6,46 @@ import io.dev.concertreservationsystem.common.validation.interfaces.CreateReserv
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record ReservationRequestDTO(
-        @JsonProperty("reservationId")
-        Long reservationId,
 
-        @JsonProperty("concertDetailId")
-        @NotNull(groups = CreateReservations.class)
-        @Min(value = 0, groups = CreateReservations.class)
-        Long concertDetailId,
+@Data
+@NoArgsConstructor
+public class ReservationRequestDTO{
 
-        @JsonProperty("seatId")
-        @NotNull(groups = CreateReservations.class)
-        @Min(value = 0, groups = CreateReservations.class)
-        Long seatId,
+        Long reservationId;
 
-        @JsonProperty("userId")
-        @NotNull(groups = CreateReservations.class)
-        String userId,
+        Long concertDetailId;
 
-        @NotNull
-        @Min(value = 0)
-        @JsonProperty("paymentId") Long paymentId,
+        Long seatId;
 
-        @JsonProperty("reservationStatus") Integer reservationStatus,
-        @JsonProperty("createdAt") LocalDateTime createdAt,
-        @JsonProperty("updatedAt") LocalDateTime updatedAt
-) {
-    public static List<ConcertReserveAdminDTOParam> convertToConcertReserveAdminDTOParamList(List<ReservationRequestDTO> reservationRequestDTOList) {
-        return reservationRequestDTOList.stream().map(ReservationRequestDTO::convertToConcertReserveAdminDTOParam).toList();
-    }
+        String userId;
 
-    private ConcertReserveAdminDTOParam convertToConcertReserveAdminDTOParam() {
-        return ConcertReserveAdminDTOParam.builder()
-                .seatId(this.seatId)
-                .userId(this.userId)
-                .paymentId(this.paymentId)
-                .build();
-    }
+        Long paymentId;
+
+        Integer reservationStatus;
+
+        LocalDateTime createdAt;
+
+        LocalDateTime updatedAt;
+
+        public static List<ConcertReserveAdminDTOParam> convertToConcertReserveAdminDTOParamList(List<ReservationRequestDTO> reservationRequestDTOList) {
+
+            return reservationRequestDTOList.stream().map(ReservationRequestDTO::convertToConcertReserveAdminDTOParam).toList();
+        }
+
+        private ConcertReserveAdminDTOParam convertToConcertReserveAdminDTOParam() {
+            return ConcertReserveAdminDTOParam.builder()
+                    .seatId(this.seatId)
+                    .userId(this.userId)
+                    .concertDetailId(this.concertDetailId)
+                    .build();
+        }
+
+
 }

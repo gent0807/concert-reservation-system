@@ -25,7 +25,7 @@ public class ConcertDetailController {
 
         private final ConcertReserveAdminFacade concertReserveAdminFacade;
 
-        @GetMapping("{concert-id}/reservable")
+        @GetMapping("{concert-basic-id}/reservable")
         @Operation(summary = "예약가능한 콘서트 실제 공연 목록 조회", description = "예약가능한 콘서트 실제 공연 목록 조회")
         public ResponseEntity<List<ConcertDetailResponseDTO>> findReservableConcertDetails(@PathVariable("concert-basic-id") @NotNull @Min(0) Long concertBasicId) {
 

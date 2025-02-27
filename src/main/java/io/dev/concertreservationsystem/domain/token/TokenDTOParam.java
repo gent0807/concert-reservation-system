@@ -11,7 +11,7 @@ public record TokenDTOParam(
         @NotNull(groups = CheckTokenStatusValid.class)
         String tokenId,
 
-        @NotBlank(groups = {CreateUser.class, CheckTokenStatusValid.class})
+        @NotNull(groups = {CreateUser.class, CheckTokenStatusValid.class})
         String userId
 ) {
 }

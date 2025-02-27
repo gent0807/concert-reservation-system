@@ -40,7 +40,7 @@ public class PointHistoryService {
 
     @Validated(CreatePointHistory.class)
     @Transactional
-    public List<PointHistoryDTOResult> insertChargeUserPointHistory(@Valid PointHistoryDTOParam pointHistoryDTOParam) {
+    public List<PointHistoryDTOResult> insertChargeUserPointHistory(PointHistoryDTOParam pointHistoryDTOParam) {
 
         // 유저 포인트 동시 충전에 대한 동시성 제어 위해 데이터베에스 테이블 특정 유저 row lock: 각 트랜잭션마다 적용
         User user = userRepository.findUserByUserIdWithLock(pointHistoryDTOParam.userId());

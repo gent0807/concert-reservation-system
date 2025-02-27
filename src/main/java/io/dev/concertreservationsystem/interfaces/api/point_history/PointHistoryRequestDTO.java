@@ -7,40 +7,35 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Builder
-public record PointHistoryRequestDTO(
+@Data
+@NoArgsConstructor
+public class PointHistoryRequestDTO{
 
-        @JsonProperty(value = "pointHistoryId", access = JsonProperty.Access.READ_ONLY)
-        Long pointHistoryId,
+    Long pointHistoryId;
 
-        @JsonProperty(value = "paymentId", access = JsonProperty.Access.READ_ONLY)
-        Long paymentId,
+    Long paymentId;
 
-        @JsonProperty(value = "userId", required = true, access = JsonProperty.Access.READ_ONLY)
-        @NotNull
-        String userId,
+    @NotNull
+    String userId;
 
-        @JsonProperty(value = "type", required = true, access = JsonProperty.Access.READ_ONLY)
-        @NotNull
-        @NotInvalidPointTransactionType
-        PointTransactionType type,
+    @NotNull
+    PointTransactionType type;
 
-        @JsonProperty(value = "amount", required = true, access = JsonProperty.Access.READ_ONLY)
-        @NotNull
-        @Min(0)
-        Long amount,
+    @NotNull
+    Long amount;
 
-        @JsonProperty(value = "startDate", access = JsonProperty.Access.READ_ONLY)
-        LocalDateTime startDate,
-
-        @JsonProperty(value = "endDate", access = JsonProperty.Access.READ_ONLY)
-        LocalDateTime endDate
-) {
     public PointHistoryFacadeDTOParam convertToPointHistoryFacadeDTOParam() {
         return PointHistoryFacadeDTOParam.builder()
-                    .build();
+                .userId(userId)
+                .type(type)
+                .amount(amount)
+                .build();
     }
 }
+
+
