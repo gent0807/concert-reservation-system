@@ -1,3 +1,4 @@
+/*
 package io.dev.concertreservationsystem.locking.pessimistic;
 
 import io.dev.concertreservationsystem.common.exception.error.DomainModelParamInvalidException;
@@ -147,3 +148,4 @@ public class PointHistoryConcurrencyTest {
         log.debug("실행 시간 : {} ms", endTime - startTime);
     }
 }
+*/

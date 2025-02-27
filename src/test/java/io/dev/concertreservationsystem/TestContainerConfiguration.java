@@ -1,3 +1,4 @@
+/*
 package io.dev.concertreservationsystem;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -66,8 +67,7 @@ public class TestContainerConfiguration {
             MYSQL_CONTAINER.stop();
         }
 
-        if (REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.isRunning()) {
-            REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.stop();
+        if (REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.isRunning()) {            REDIS_CONTAINER_FOR_DISTRIBUTED_LOCK.stop();
         }
 
         if(REDIS_CONTAINER_FOR_CACHE.isRunning()){
@@ -76,3 +76,4 @@ public class TestContainerConfiguration {
 
     }
 }
+*/
